@@ -9,5 +9,14 @@
         android:id="@+id/checklist"
         android:name="com.dalydays.android.reminderlist.Checklist"
         android:label="fragment_checklist"
-        tools:layout="@layout/fragment_checklist" />
+        tools:layout="@layout/fragment_checklist" >
+        <action
+            android:id="@+id/action_checklist_to_newItem"
+            app:destination="@id/newItem" />
+    </fragment>
+    <fragment
+        android:id="@+id/newItem"
+        android:name="com.dalydays.android.reminderlist.NewItem"
+        android:label="fragment_new_item"
+        tools:layout="@layout/fragment_new_item" />
 </navigation>

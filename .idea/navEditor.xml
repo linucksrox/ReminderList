@@ -13,8 +13,29 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-174" />
-                            <option name="y" value="-71" />
+                            <option name="x" value="-363" />
+                            <option name="y" value="-86" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_checklist_to_newItem">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="newItem">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-153" />
+                            <option name="y" value="-67" />
                           </Point>
                         </option>
                       </LayoutPositions>

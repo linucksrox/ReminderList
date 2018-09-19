@@ -5,10 +5,12 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_checklist.*
 
 class Checklist : Fragment() {
@@ -21,20 +23,9 @@ class Checklist : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fab.setOnClickListener { addNewItemDialog() }
-    }
-
-    private fun addNewItemDialog() {
-        val alert = AlertDialog.Builder(context)
-
-        val itemEditText = EditText(context)
-        alert.setTitle("Enter To Do Item Text")
-
-        alert.setView(itemEditText)
-
-        alert.setPositiveButton("Save") {_, _ -> }
-
-        alert.show()
+        fab.setOnClickListener {
+            Log.w("CHECKLIST", "trying to open new item screen")
+            Navigation.createNavigateOnClickListener(R.id.newItem) }
     }
 
 }
