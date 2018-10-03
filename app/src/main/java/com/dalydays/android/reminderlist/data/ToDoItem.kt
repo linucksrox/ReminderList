@@ -1,4 +1,4 @@
-package com.dalydays.android.reminderlist
+package com.dalydays.android.reminderlist.data
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
