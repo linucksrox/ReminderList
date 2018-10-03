@@ -1,12 +1,11 @@
 package com.dalydays.android.reminderlist
 
-class ToDoItem {
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 
-    companion object {
-        fun create(): ToDoItem = ToDoItem()
-    }
-
-    var objectId: String? = null
-    var itemText: String? = null
-    var done: Boolean? = false
-}
+@Entity(tableName = "item")
+data class ToDoItem(@PrimaryKey(autoGenerate = true) var id: Long? = null,
+                    @ColumnInfo(name = "description") var description: String? = null,
+                    @ColumnInfo(name = "checked") var checked: Boolean = false
+)
