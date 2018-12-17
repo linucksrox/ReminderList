@@ -2,7 +2,7 @@ package com.dalydays.android.reminderlist
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,11 +36,14 @@ class Checklist : Fragment() {
         mDbWorkerThread = DbWorkerThread("dbWorkerThread")
         mDbWorkerThread.start()
 
-        mDb = ToDoItemDatabase.getInstance(view.context)
+        mDb = ToDoItemDatabase.getDatabase(view.context)
 
         // Insert a test record
         Log.e(TAG, "Inserting test record")
         DatabaseUtilities.insertToDoItem(ToDoItem(description = "demo description", checked = true), mDbWorkerThread, mDb)
+
+        // Refresh screen
+        DatabaseUtilities.fetchToDoItems(mDbWorkerThread, mDb, mUiHandler, view.context)
     }
 
 }
