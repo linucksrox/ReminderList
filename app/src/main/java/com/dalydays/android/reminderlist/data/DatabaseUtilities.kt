@@ -15,13 +15,13 @@ class DatabaseUtilities {
 
         fun fetchToDoItems(workerThread: DbWorkerThread, db: ToDoItemDatabase?, uiHandler: Handler, context: Context) {
             val task = Runnable {
-                val allUsers = db?.ToDoItemDao()?.getAll()
+                val allItems = db?.ToDoItemDao()?.getAll()
                 uiHandler.post {
-                    if (allUsers == null || allUsers.isEmpty()) {
-                        Toast.makeText(context, "No data found in db", Toast.LENGTH_SHORT).show()
+                    if (allItems == null || allItems.isEmpty()) {
+                        Toast.makeText(context, "No items found in db", Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        Toast.makeText(context, "Found ${allUsers.size} user(s) in the database", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Found ${allItems.size} items(s) in the database", Toast.LENGTH_SHORT).show()
 //                    bindDataWithUi(allUsers[0])
                     }
                 }

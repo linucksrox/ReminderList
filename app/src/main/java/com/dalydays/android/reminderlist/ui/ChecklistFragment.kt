@@ -42,7 +42,7 @@ class ChecklistFragment : Fragment() {
         mDb = ToDoItemDatabase.getDatabase(view.context)
 
         // Insert a test record
-        Log.e(TAG, "Inserting test record")
+        Log.d(TAG, "Inserting test record")
         DatabaseUtilities.insertToDoItem(ToDoItem(description = "demo description", checked = true), mDbWorkerThread, mDb)
 
         // Refresh screen
