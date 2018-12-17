@@ -1,10 +1,10 @@
-package com.dalydays.android.reminderlist
+package com.dalydays.android.reminderlist.data
 
 import android.content.Context
 import android.os.Handler
 import android.widget.Toast
-import com.dalydays.android.reminderlist.data.ToDoItem
-import com.dalydays.android.reminderlist.data.ToDoItemDatabase
+import com.dalydays.android.reminderlist.data.db.ToDoItem
+import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 
 class DatabaseUtilities {
     companion object {

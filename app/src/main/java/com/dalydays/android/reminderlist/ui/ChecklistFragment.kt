@@ -1,4 +1,4 @@
-package com.dalydays.android.reminderlist
+package com.dalydays.android.reminderlist.ui
 
 import android.os.Bundle
 import android.os.Handler
@@ -8,13 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
-import com.dalydays.android.reminderlist.data.ToDoItem
-import com.dalydays.android.reminderlist.data.ToDoItemDatabase
+import com.dalydays.android.reminderlist.data.DatabaseUtilities
+import com.dalydays.android.reminderlist.data.DbWorkerThread
+import com.dalydays.android.reminderlist.R
+import com.dalydays.android.reminderlist.data.db.ToDoItem
+import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 import kotlinx.android.synthetic.main.fragment_checklist.*
 
-class Checklist : Fragment() {
+class ChecklistFragment : Fragment() {
 
-    private val TAG: String = Checklist::class.java.simpleName
+    private val TAG: String = ChecklistFragment::class.java.simpleName
 
     private var mDb: ToDoItemDatabase? = null
 

@@ -1,4 +1,4 @@
-package com.dalydays.android.reminderlist
+package com.dalydays.android.reminderlist.data
 
 import android.os.Handler
 import android.os.HandlerThread
