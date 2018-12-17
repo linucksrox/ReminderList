@@ -40,6 +40,8 @@ class ChecklistFragment : Fragment() {
         mDbWorkerThread.start()
 
         mDb = ToDoItemDatabase.getDatabase(view.context)
+        val toDoItemDao = ToDoItemDatabase.getDatabase(view.context).ToDoItemDao()
+        val allItems = toDoItemDao.getAll()
 
         // Insert a test record
         Log.d(TAG, "Inserting test record")
