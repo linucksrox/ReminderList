@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
+import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [ToDoItem::class], version = 1, exportSchema = true)
 abstract class ToDoItemDatabase : RoomDatabase() {
@@ -14,7 +15,7 @@ abstract class ToDoItemDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: ToDoItemDatabase? = null
 
-        fun getDatabase(context: Context): ToDoItemDatabase {
+        fun getInstance(context: Context, scope: CoroutineScope): ToDoItemDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                         context.applicationContext,

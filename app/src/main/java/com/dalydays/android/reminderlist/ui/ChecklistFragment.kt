@@ -34,13 +34,20 @@ class ChecklistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up RecyclerView
+        TODO("set up RecyclerView")
+
+        // Set up ViewModel
+        TODO("set up ViewModel")
+
+        // Set up fab
         add_list_item_fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_checklist_to_newItem))
 
         mDbWorkerThread = DbWorkerThread("dbWorkerThread")
         mDbWorkerThread.start()
 
-        mDb = ToDoItemDatabase.getDatabase(view.context)
-        val toDoItemDao = ToDoItemDatabase.getDatabase(view.context).ToDoItemDao()
+        mDb = ToDoItemDatabase.getInstance(view.context)
+        val toDoItemDao = ToDoItemDatabase.getInstance(view.context).ToDoItemDao()
         val allItems = toDoItemDao.getAll()
 
         // Insert a test record
