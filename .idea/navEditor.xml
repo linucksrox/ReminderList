@@ -19,7 +19,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_checklist_to_newItem">
+                            <entry key="action_checklist_to_new_item">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -29,12 +29,12 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="newItem">
+                  <entry key="new_item">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="265" />
+                            <option name="x" value="256" />
                             <option name="y" value="12" />
                           </Point>
                         </option>

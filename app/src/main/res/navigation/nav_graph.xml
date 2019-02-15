@@ -11,11 +11,11 @@
         android:label="fragment_checklist"
         tools:layout="@layout/fragment_checklist" >
         <action
-            android:id="@+id/action_checklist_to_newItem"
-            app:destination="@id/newItem" />
+            android:id="@+id/action_checklist_to_new_item"
+            app:destination="@id/new_item" />
     </fragment>
     <fragment
-        android:id="@+id/newItem"
+        android:id="@+id/new_item"
         android:name="com.dalydays.android.reminderlist.ui.NewItemFragment"
         android:label="fragment_new_item"
         tools:layout="@layout/fragment_new_item" />

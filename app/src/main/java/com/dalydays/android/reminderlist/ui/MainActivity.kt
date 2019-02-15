@@ -1,7 +1,7 @@
 package com.dalydays.android.reminderlist.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.dalydays.android.reminderlist.R
 
 class MainActivity : AppCompatActivity() {
