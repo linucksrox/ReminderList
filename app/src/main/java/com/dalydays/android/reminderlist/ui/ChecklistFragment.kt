@@ -1,61 +1,41 @@
 package com.dalydays.android.reminderlist.ui
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import com.dalydays.android.reminderlist.data.DatabaseUtilities
-import com.dalydays.android.reminderlist.data.DbWorkerThread
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dalydays.android.reminderlist.R
-import com.dalydays.android.reminderlist.data.db.ToDoItem
-import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
+import com.dalydays.android.reminderlist.ui.viewmodel.ChecklistViewModel
 import kotlinx.android.synthetic.main.fragment_checklist.*
 
 class ChecklistFragment : Fragment() {
 
-    private val TAG: String = ChecklistFragment::class.java.simpleName
-
-    private var mDb: ToDoItemDatabase? = null
-
-    private lateinit var mDbWorkerThread: DbWorkerThread
-
-    private val mUiHandler = Handler()
+    private lateinit var checklistViewModel: ChecklistViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checklist, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         // Set up RecyclerView
-        TODO("set up RecyclerView")
+        items_list.layoutManager = LinearLayoutManager(activity)
+        val adapter = ToDoItemAdapter()
+        items_list.adapter = adapter
 
         // Set up ViewModel
-        TODO("set up ViewModel")
+        checklistViewModel = ViewModelProviders.of(this).get(ChecklistViewModel::class.java)
+        checklistViewModel.allToDoItems.observe(this, Observer { toDoItems ->
+            toDoItems?.let { adapter.setToDoItems(it) }
+        })
 
         // Set up fab
         add_list_item_fab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_checklist_to_newItem))
 
-        mDbWorkerThread = DbWorkerThread("dbWorkerThread")
-        mDbWorkerThread.start()
-
-        mDb = ToDoItemDatabase.getInstance(view.context)
-        val toDoItemDao = ToDoItemDatabase.getInstance(view.context).ToDoItemDao()
-        val allItems = toDoItemDao.getAll()
-
-        // Insert a test record
-        Log.d(TAG, "Inserting test record")
-        DatabaseUtilities.insertToDoItem(ToDoItem(description = "demo description", checked = true), mDbWorkerThread, mDb)
-
-        // Refresh screen
-        DatabaseUtilities.fetchToDoItems(mDbWorkerThread, mDb, mUiHandler, view.context)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_checklist, container, false)
     }
 
 }
