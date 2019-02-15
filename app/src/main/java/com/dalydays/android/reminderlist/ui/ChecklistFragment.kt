@@ -42,6 +42,7 @@ class ChecklistFragment : Fragment() {
         add_list_item_fab.setOnClickListener {
             checklistViewModel.insert(ToDoItem(description = "Item1", checked = false))
             // TODO("Navigate to the add item screen")
+//            Navigation.createNavigateOnClickListener(R.id.action_checklist_to_new_item)
         }
     }
 }
