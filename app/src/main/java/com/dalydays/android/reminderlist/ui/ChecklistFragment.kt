@@ -12,6 +12,7 @@ import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.ui.viewmodel.ChecklistViewModel
 import kotlinx.android.synthetic.main.fragment_checklist.*
+import kotlin.random.Random
 
 class ChecklistFragment : Fragment() {
 
@@ -40,7 +41,7 @@ class ChecklistFragment : Fragment() {
 
         // Set up fab
         add_list_item_fab.setOnClickListener {
-            checklistViewModel.insert(ToDoItem(description = "Item1", checked = false))
+            checklistViewModel.insert(ToDoItem(description = "Item ${Random.nextInt(1,999)}", checked = Random.nextBoolean()))
             // TODO("Navigate to the add item screen")
 //            Navigation.createNavigateOnClickListener(R.id.action_checklist_to_new_item)
         }
