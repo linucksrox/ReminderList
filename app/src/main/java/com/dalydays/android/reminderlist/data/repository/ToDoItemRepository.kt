@@ -13,4 +13,9 @@ class ToDoItemRepository(private val toDoItemDao: ToDoItemDao) {
     suspend fun insert(toDoItem: ToDoItem) {
         toDoItemDao.insert(toDoItem)
     }
+
+    @WorkerThread
+    suspend fun update(toDoItem: ToDoItem) {
+        toDoItemDao.update(toDoItem)
+    }
 }

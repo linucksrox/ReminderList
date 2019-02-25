@@ -42,7 +42,7 @@ class ChecklistFragment : Fragment() {
         // Set up fab
         add_list_item_fab.setOnClickListener {
             checklistViewModel.insert(ToDoItem(description = "Item ${Random.nextInt(1,999)}", checked = Random.nextBoolean()))
-            // TODO("Navigate to the add item screen")
+            // TODO("Navigate to the add item screen to get data for new todo item")
 //            Navigation.createNavigateOnClickListener(R.id.action_checklist_to_new_item)
         }
     }
