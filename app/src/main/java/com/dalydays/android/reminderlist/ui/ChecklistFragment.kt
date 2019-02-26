@@ -33,9 +33,8 @@ class ChecklistFragment : Fragment() {
 
         // Set up RecyclerView
         items_list.layoutManager = LinearLayoutManager(activity)
-        val adapter = ToDoItemAdapter()
-        adapter.setCheckedListener(object: ToDoItemAdapter.OnCheckedListener {
-            override fun onChecked(item: ToDoItem) {
+        val adapter = ToDoItemAdapter(object: CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 Toast.makeText(activity, "checked", Toast.LENGTH_SHORT).show()
             }
         })

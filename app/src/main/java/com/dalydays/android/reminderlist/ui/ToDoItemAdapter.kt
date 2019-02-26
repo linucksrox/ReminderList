@@ -11,26 +11,17 @@ import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import kotlinx.android.synthetic.main.checklist_item.view.*
 
-class ToDoItemAdapter : RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
+class ToDoItemAdapter(val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener) : RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
 
     private var toDoItems = emptyList<ToDoItem>()
-    private lateinit var checkedListener: OnCheckedListener
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val checkbox: CheckBox = view.checkbox
         val tvDescription: TextView = view.tv_description
 
-        init {
-            checkbox.setOnCheckedChangeListener { _, isChecked ->
-                val position = getItemId().toInt()
-                if (checkedListener != null && position != RecyclerView.NO_POSITION) {
-                    checkedListener.onChecked(toDoItems[position])
-                }
-            }
-        }
-
         fun bind(position: Int) {
             checkbox.isChecked = toDoItems[position].checked
+            checkbox.setOnCheckedChangeListener(onCheckedChangeListener)
             tvDescription.text = toDoItems[position].description
         }
     }
@@ -55,9 +46,5 @@ class ToDoItemAdapter : RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
 
     interface OnCheckedListener {
         fun onChecked(item: ToDoItem)
-    }
-
-    fun setCheckedListener(listener: OnCheckedListener) {
-        checkedListener = listener
     }
 }
