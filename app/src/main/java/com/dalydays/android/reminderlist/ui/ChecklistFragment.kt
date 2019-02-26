@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.ui.viewmodel.ChecklistViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_checklist.*
 import kotlin.random.Random
 
@@ -31,6 +34,11 @@ class ChecklistFragment : Fragment() {
         // Set up RecyclerView
         items_list.layoutManager = LinearLayoutManager(activity)
         val adapter = ToDoItemAdapter()
+        adapter.setCheckedListener(object: ToDoItemAdapter.OnCheckedListener {
+            override fun onChecked(item: ToDoItem) {
+                Toast.makeText(activity, "checked", Toast.LENGTH_SHORT).show()
+            }
+        })
         items_list.adapter = adapter
 
         // Set up ViewModel

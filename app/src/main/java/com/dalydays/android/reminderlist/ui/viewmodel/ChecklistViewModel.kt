@@ -32,6 +32,10 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
         repository.insert(toDoItem)
     }
 
+    fun update(toDoItem: ToDoItem) = scope.launch(Dispatchers.IO) {
+        repository.update(toDoItem)
+    }
+
     override fun onCleared() {
         super.onCleared()
         parentJob.cancel()
