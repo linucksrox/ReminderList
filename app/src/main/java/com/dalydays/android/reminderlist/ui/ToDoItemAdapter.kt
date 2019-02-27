@@ -1,5 +1,6 @@
 package com.dalydays.android.reminderlist.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +12,22 @@ import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import kotlinx.android.synthetic.main.checklist_item.view.*
 
-class ToDoItemAdapter(val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener) : RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
+class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
 
     private var toDoItems = emptyList<ToDoItem>()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val checkbox: CheckBox = view.checkbox
-        val tvDescription: TextView = view.tv_description
+        private val checkbox: CheckBox = view.checkbox
+        private val tvDescription: TextView = view.tv_description
 
         fun bind(position: Int) {
             checkbox.isChecked = toDoItems[position].checked
-            checkbox.setOnCheckedChangeListener(onCheckedChangeListener)
+            checkbox.setOnCheckedChangeListener(object: CompoundButton.OnCheckedChangeListener {
+                override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                    Log.d("recyclerview", "Checked box in position $position")
+                    todoItemCheckedListener.onChecked(position)
+                }
+            })
             tvDescription.text = toDoItems[position].description
         }
     }
@@ -44,7 +50,7 @@ class ToDoItemAdapter(val onCheckedChangeListener: CompoundButton.OnCheckedChang
         notifyDataSetChanged()
     }
 
-    interface OnCheckedListener {
-        fun onChecked(item: ToDoItem)
+    interface OnTodoCheckedListener {
+        fun onChecked(position: Int)
     }
 }
