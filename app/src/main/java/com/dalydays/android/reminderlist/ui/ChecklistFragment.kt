@@ -35,7 +35,7 @@ class ChecklistFragment : Fragment() {
         items_list.layoutManager = LinearLayoutManager(activity)
         val adapter = ToDoItemAdapter(object: ToDoItemAdapter.OnTodoCheckedListener {
             override fun onChecked(position: Int) {
-                Log.d("fragment", "Checked box in position $position")
+                Log.d("clicky fragment", "Checked box in position $position")
             }
         })
         items_list.adapter = adapter

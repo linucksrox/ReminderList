@@ -1,11 +1,9 @@
 package com.dalydays.android.reminderlist.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dalydays.android.reminderlist.R
@@ -22,12 +20,9 @@ class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): Recyc
 
         fun bind(position: Int) {
             checkbox.isChecked = toDoItems[position].checked
-            checkbox.setOnCheckedChangeListener(object: CompoundButton.OnCheckedChangeListener {
-                override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                    Log.d("recyclerview", "Checked box in position $position")
-                    todoItemCheckedListener.onChecked(position)
-                }
-            })
+            checkbox.setOnClickListener {
+                todoItemCheckedListener.onChecked(position)
+            }
             tvDescription.text = toDoItems[position].description
         }
     }
