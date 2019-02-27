@@ -1,11 +1,9 @@
 package com.dalydays.android.reminderlist.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,8 +32,8 @@ class ChecklistFragment : Fragment() {
         // Set up RecyclerView
         items_list.layoutManager = LinearLayoutManager(activity)
         val adapter = ToDoItemAdapter(object: ToDoItemAdapter.OnTodoCheckedListener {
-            override fun onChecked(position: Int) {
-                Log.d("clicky fragment", "Checked box in position $position")
+            override fun onChecked(toDoItemId: Long?) {
+                Toast.makeText(context, "Checked box for item id $toDoItemId", Toast.LENGTH_SHORT).show()
             }
         })
         items_list.adapter = adapter
