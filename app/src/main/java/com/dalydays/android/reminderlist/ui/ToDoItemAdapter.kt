@@ -21,7 +21,9 @@ class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): Recyc
         fun bind(position: Int) {
             checkbox.isChecked = toDoItems[position].checked
             checkbox.setOnClickListener {
-                todoItemCheckedListener.onChecked(toDoItems[position].id)
+                val updatedToDoItem = toDoItems[position]
+                updatedToDoItem.checked = checkbox.isChecked
+                todoItemCheckedListener.onChecked(updatedToDoItem)
             }
             tvDescription.text = toDoItems[position].description
         }
@@ -46,6 +48,6 @@ class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): Recyc
     }
 
     interface OnTodoCheckedListener {
-        fun onChecked(toDoItemId: Long?)
+        fun onChecked(toDoItem: ToDoItem)
     }
 }

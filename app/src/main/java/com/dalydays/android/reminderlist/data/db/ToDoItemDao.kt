@@ -11,7 +11,7 @@ interface ToDoItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: ToDoItem): Long
 
-    @Update(onConflict = OnConflictStrategy.IGNORE)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(item: ToDoItem)
 
     @Query("DELETE FROM item")
