@@ -1,37 +1,34 @@
 package com.dalydays.android.reminderlist.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
-import kotlinx.android.synthetic.main.checklist_item.view.*
+import com.dalydays.android.reminderlist.databinding.ChecklistItemBinding
 
 class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
 
     private var toDoItems = emptyList<ToDoItem>()
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val checkbox: CheckBox = view.checkbox
-        private val tvDescription: TextView = view.tv_description
+    inner class ViewHolder(private val binding: ChecklistItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) {
-            checkbox.isChecked = toDoItems[position].checked
-            checkbox.setOnClickListener {
-                val updatedToDoItem = toDoItems[position]
-                updatedToDoItem.checked = checkbox.isChecked
-                todoItemCheckedListener.onChecked(updatedToDoItem)
-            }
-            tvDescription.text = toDoItems[position].description
+            binding.todoItem = toDoItems[position]
+            binding.executePendingBindings()
+            //TODO("figure out how to set this click listener up with the data binding")
+//            checkbox.setOnClickListener {
+//                val updatedToDoItem = toDoItems[position]
+//                updatedToDoItem.checked = checkbox.isChecked
+//                todoItemCheckedListener.onChecked(updatedToDoItem)
+//            }
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.checklist_item, parent, false)
-        return ViewHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ChecklistItemBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

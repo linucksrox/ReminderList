@@ -10,12 +10,12 @@ class ToDoItemRepository(private val toDoItemDao: ToDoItemDao) {
     val allToDoItems: LiveData<List<ToDoItem>> = toDoItemDao.getAll()
 
     @WorkerThread
-    suspend fun insert(toDoItem: ToDoItem) {
+    fun insert(toDoItem: ToDoItem) {
         toDoItemDao.insert(toDoItem)
     }
 
     @WorkerThread
-    suspend fun update(toDoItem: ToDoItem) {
+    fun update(toDoItem: ToDoItem) {
         toDoItemDao.update(toDoItem)
     }
 }
