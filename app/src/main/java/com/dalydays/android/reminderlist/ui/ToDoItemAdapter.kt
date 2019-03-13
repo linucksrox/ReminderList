@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.ChecklistItemBinding
 
-class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
+class ToDoItemAdapter: RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
 
     private var toDoItems = emptyList<ToDoItem>()
 
@@ -15,13 +15,6 @@ class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): Recyc
         fun bind(position: Int) {
             binding.todoItem = toDoItems[position]
             binding.executePendingBindings()
-            //TODO("figure out how to set this click listener up with the data binding")
-//            checkbox.setOnClickListener {
-//                val updatedToDoItem = toDoItems[position]
-//                updatedToDoItem.checked = checkbox.isChecked
-//                todoItemCheckedListener.onChecked(updatedToDoItem)
-//            }
-
         }
     }
 
@@ -42,9 +35,5 @@ class ToDoItemAdapter(val todoItemCheckedListener: OnTodoCheckedListener): Recyc
         // TODO("this should be changed to specific notify... method for performance and to allow animations to work properly")
         // But how do you know which "position" to update when doing something like notifyItemInserted()?
         notifyDataSetChanged()
-    }
-
-    interface OnTodoCheckedListener {
-        fun onChecked(toDoItem: ToDoItem)
     }
 }

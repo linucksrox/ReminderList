@@ -1,6 +1,8 @@
 package com.dalydays.android.reminderlist.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
@@ -34,6 +36,12 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun update(toDoItem: ToDoItem) = scope.launch(Dispatchers.IO) {
         repository.update(toDoItem)
+    }
+
+    fun onItemChecked(toDoItem: ToDoItem) {
+        toDoItem.checked = !toDoItem.checked
+        Log.d("onItemChecked", "checked: " + toDoItem.checked + " description: " + toDoItem.description)
+        update(toDoItem)
     }
 
     override fun onCleared() {

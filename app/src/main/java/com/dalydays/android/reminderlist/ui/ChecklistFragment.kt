@@ -30,11 +30,7 @@ class ChecklistFragment : Fragment() {
 
         // Set up RecyclerView
         items_list.layoutManager = LinearLayoutManager(activity)
-        val adapter = ToDoItemAdapter(object: ToDoItemAdapter.OnTodoCheckedListener {
-            override fun onChecked(toDoItem: ToDoItem) {
-                checklistViewModel.update(toDoItem)
-            }
-        })
+        val adapter = ToDoItemAdapter()
         items_list.adapter = adapter
 
         // Set up ViewModel
