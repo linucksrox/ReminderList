@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:checked="@{todoItem.checked}"
-                android:onClick="@{() -> viewmodel.onItemChecked(todoItem)}"
+                android:onClick="@{() -> viewmodel.onCheckboxClicked(todoItem)}"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView

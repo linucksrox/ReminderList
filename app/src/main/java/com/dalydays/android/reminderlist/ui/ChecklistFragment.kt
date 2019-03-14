@@ -8,42 +8,36 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dalydays.android.reminderlist.R
-import com.dalydays.android.reminderlist.data.db.ToDoItem
+import com.dalydays.android.reminderlist.databinding.FragmentChecklistBinding
 import com.dalydays.android.reminderlist.ui.viewmodel.ChecklistViewModel
 import kotlinx.android.synthetic.main.fragment_checklist.*
-import kotlin.random.Random
 
 class ChecklistFragment : Fragment() {
 
     private lateinit var checklistViewModel: ChecklistViewModel
+    private lateinit var binding: FragmentChecklistBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checklist, container, false)
+        binding = FragmentChecklistBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set up RecyclerView
-        items_list.layoutManager = LinearLayoutManager(activity)
-        val adapter = ToDoItemAdapter()
-        items_list.adapter = adapter
-
-        // Set up ViewModel
+        // Set up ViewModel and RecyclerView
         checklistViewModel = ViewModelProviders.of(this).get(ChecklistViewModel::class.java)
+        val adapter = ToDoItemAdapter(checklistViewModel)
         checklistViewModel.allToDoItems.observe(this, Observer { toDoItems ->
             toDoItems?.let { adapter.setToDoItems(it) }
         })
+        items_list.layoutManager = LinearLayoutManager(activity)
+        items_list.adapter = adapter
 
         // Set up fab
-        add_list_item_fab.setOnClickListener {
-            checklistViewModel.insert(ToDoItem(description = "Item ${Random.nextInt(1,999)}", checked = Random.nextBoolean()))
-            // TODO("Navigate to the add item screen to get data for new todo item")
-//            Navigation.createNavigateOnClickListener(R.id.action_checklist_to_new_item)
-        }
+        binding.viewmodel = checklistViewModel
     }
 }

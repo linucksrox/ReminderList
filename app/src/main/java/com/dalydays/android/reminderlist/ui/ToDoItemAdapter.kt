@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.ChecklistItemBinding
+import com.dalydays.android.reminderlist.ui.viewmodel.ChecklistViewModel
 
-class ToDoItemAdapter: RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
+class ToDoItemAdapter(private val checklistViewModel: ChecklistViewModel): RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
 
     private var toDoItems = emptyList<ToDoItem>()
 
@@ -21,6 +22,7 @@ class ToDoItemAdapter: RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ChecklistItemBinding.inflate(inflater, parent, false)
+        binding.viewmodel = checklistViewModel
         return ViewHolder(binding)
     }
 
