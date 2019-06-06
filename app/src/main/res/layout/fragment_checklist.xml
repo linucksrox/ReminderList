@@ -6,20 +6,22 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.dalydays.android.reminderlist.ui.viewmodel.ChecklistViewModel" />
+            name="checklistViewModel"
+            type="com.dalydays.android.reminderlist.ui.checklist.ChecklistViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.ChecklistFragment">
+        tools:context=".ui.checklist.ChecklistFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/items_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:scrollbars="none" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:onClick="@{() -> viewmodel.onFabClicked()}"
+            android:onClick="@{() -> checklistViewModel.onFabButtonClicked()}"
             android:src="@drawable/ic_fab_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

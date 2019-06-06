@@ -9,13 +9,13 @@ import kotlinx.coroutines.CoroutineScope
 @Database(entities = [ToDoItem::class], version = 1, exportSchema = true)
 abstract class ToDoItemDatabase : RoomDatabase() {
 
-    abstract fun ToDoItemDao(): ToDoItemDao
+    abstract val toDoItemDao: ToDoItemDao
 
     companion object {
         @Volatile
         private var INSTANCE: ToDoItemDatabase? = null
 
-        fun getInstance(context: Context, scope: CoroutineScope): ToDoItemDatabase {
+        fun getInstance(context: Context): ToDoItemDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
@@ -26,9 +26,5 @@ abstract class ToDoItemDatabase : RoomDatabase() {
                 instance
             }
         }
-    }
-
-    fun destroyInstance() {
-        INSTANCE = null
     }
 }

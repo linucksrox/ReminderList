@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/checklist"
-        android:name="com.dalydays.android.reminderlist.ui.ChecklistFragment"
+        android:name="com.dalydays.android.reminderlist.ui.checklist.ChecklistFragment"
         android:label="fragment_checklist"
         tools:layout="@layout/fragment_checklist" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/new_item"
-        android:name="com.dalydays.android.reminderlist.ui.NewItemFragment"
+        android:name="com.dalydays.android.reminderlist.ui.newitem.NewItemFragment"
         android:label="fragment_new_item"
         tools:layout="@layout/fragment_new_item" />
 </navigation>

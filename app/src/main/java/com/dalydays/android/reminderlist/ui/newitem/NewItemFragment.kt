@@ -1,4 +1,4 @@
-package com.dalydays.android.reminderlist.ui
+package com.dalydays.android.reminderlist.ui.newitem
 
 import android.os.Bundle
 import android.view.LayoutInflater
