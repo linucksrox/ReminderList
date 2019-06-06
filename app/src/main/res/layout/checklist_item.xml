@@ -10,7 +10,7 @@
 
         <variable
             name="viewmodel"
-            type="com.dalydays.android.reminderlist.ui.viewmodel.ChecklistViewModel" />
+            type="com.dalydays.android.reminderlist.ui.checklist.ChecklistViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
