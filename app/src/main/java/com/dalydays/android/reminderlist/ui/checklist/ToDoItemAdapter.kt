@@ -1,5 +1,6 @@
 package com.dalydays.android.reminderlist.ui.checklist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.ChecklistItemBinding
 
-class ToDoItemAdapter : ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
+class ToDoItemAdapter: ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -28,6 +29,11 @@ class ToDoItemAdapter : ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemD
 
         fun bind(toDoItem: ToDoItem) {
             binding.todoItem = toDoItem
+            binding.checkbox.setOnClickListener {
+                Log.d("todoitemadapter", "clicked a checkbox somewhere")
+                // todo using the event pattern, emit data from here to the fragment so that it can take appropriate
+                //  action in the viewmodel
+            }
             binding.executePendingBindings()
         }
 

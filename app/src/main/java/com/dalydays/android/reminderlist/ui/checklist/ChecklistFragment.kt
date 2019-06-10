@@ -47,13 +47,25 @@ class ChecklistFragment : Fragment() {
             }
         })
 
-        checklistViewModel.addedActivityEvent.observe(this, Observer { message ->
+        checklistViewModel.addedActivityEvent.observe(viewLifecycleOwner, Observer { message ->
             message?.let {
-                Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT)
+                showSnackbarMessage(message)
                 checklistViewModel.addedActivityEventComplete()
             }
         })
 
+        checklistViewModel.checkedBoxEvent.observe(viewLifecycleOwner, Observer { message ->
+            message?.let {
+                showSnackbarMessage(message)
+                checklistViewModel.checkedBoxEventComplete()
+            }
+        })
+
         return binding.root
+    }
+
+    private fun showSnackbarMessage(message: String) {
+        val view = requireNotNull(view)
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
     }
 }

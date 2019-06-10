@@ -22,7 +22,7 @@ class ChecklistViewModel(
     private val checklistUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val repository: ToDoItemRepository
-    val allToDoItems = database.getAll()
+    val allToDoItems: LiveData<List<ToDoItem>>
 
     private var _addedActivityEvent = MutableLiveData<String>()
     val addedActivityEvent: LiveData<String>
@@ -32,15 +32,18 @@ class ChecklistViewModel(
         _addedActivityEvent.value = null
     }
 
+    private var _checkedBoxEvent = MutableLiveData<String>()
+    val checkedBoxEvent: LiveData<String>
+        get() = _checkedBoxEvent
+
+    fun checkedBoxEventComplete() {
+        _checkedBoxEvent.value = null
+    }
+
     init {
         val toDoItemDao = ToDoItemDatabase.getInstance(application).toDoItemDao
         repository = ToDoItemRepository(toDoItemDao)
-    }
-
-    fun onCheckboxClicked(toDoItem: ToDoItem) {
-        // Toggle the checked state and update this item in the repository
-        toDoItem.checked = !toDoItem.checked
-        update(toDoItem)
+        allToDoItems = repository.allToDoItems
     }
 
     private fun insert(toDoItem: ToDoItem) = checklistUiScope.launch(Dispatchers.IO) {
@@ -51,7 +54,7 @@ class ChecklistViewModel(
         repository.update(toDoItem)
     }
 
-    fun onFabButtonClicked() = checklistUiScope.launch(Dispatchers.IO) {
+    fun onFabButtonClicked() = checklistUiScope.launch {
         val description = "Item ${Random.nextInt(1, 999)}"
         val checked = Random.nextBoolean()
         _addedActivityEvent.value = "Added new item: $description"

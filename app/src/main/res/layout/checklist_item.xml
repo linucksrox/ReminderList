@@ -7,10 +7,6 @@
         <variable
             name="todoItem"
             type="com.dalydays.android.reminderlist.data.db.ToDoItem" />
-
-        <variable
-            name="viewmodel"
-            type="com.dalydays.android.reminderlist.ui.checklist.ChecklistViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -34,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:checked="@{todoItem.checked}"
-                android:onClick="@{() -> viewmodel.onCheckboxClicked(todoItem)}"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
