@@ -7,8 +7,6 @@ import com.dalydays.android.reminderlist.data.db.ToDoItemDao
 
 class ToDoItemRepository(private val toDoItemDao: ToDoItemDao) {
 
-    val allToDoItems: LiveData<List<ToDoItem>> = toDoItemDao.getAll()
-
     @WorkerThread
     fun insert(toDoItem: ToDoItem) {
         toDoItemDao.insert(toDoItem)

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 import com.dalydays.android.reminderlist.databinding.FragmentChecklistBinding
+import com.google.android.material.snackbar.Snackbar
 
 class ChecklistFragment : Fragment() {
 
@@ -43,6 +44,13 @@ class ChecklistFragment : Fragment() {
         checklistViewModel.allToDoItems.observe(viewLifecycleOwner, Observer { allItems ->
             allItems?.let {
                 adapter.submitList(allItems)
+            }
+        })
+
+        checklistViewModel.addedActivityEvent.observe(this, Observer { message ->
+            message?.let {
+                Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT)
+                checklistViewModel.addedActivityEventComplete()
             }
         })
 

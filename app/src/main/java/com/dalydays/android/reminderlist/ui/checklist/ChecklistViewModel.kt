@@ -2,6 +2,8 @@ package com.dalydays.android.reminderlist.ui.checklist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.db.ToDoItemDao
 import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
@@ -21,6 +23,14 @@ class ChecklistViewModel(
 
     private val repository: ToDoItemRepository
     val allToDoItems = database.getAll()
+
+    private var _addedActivityEvent = MutableLiveData<String>()
+    val addedActivityEvent: LiveData<String>
+        get() = _addedActivityEvent
+
+    fun addedActivityEventComplete() {
+        _addedActivityEvent.value = null
+    }
 
     init {
         val toDoItemDao = ToDoItemDatabase.getInstance(application).toDoItemDao
@@ -42,7 +52,10 @@ class ChecklistViewModel(
     }
 
     fun onFabButtonClicked() = checklistUiScope.launch(Dispatchers.IO) {
-        insert(ToDoItem(description = "Item ${Random.nextInt(1,999)}", checked = Random.nextBoolean()))
+        val description = "Item ${Random.nextInt(1, 999)}"
+        val checked = Random.nextBoolean()
+        _addedActivityEvent.value = "Added new item: $description"
+        insert(ToDoItem(description = description, checked = checked))
     }
 
     override fun onCleared() {
