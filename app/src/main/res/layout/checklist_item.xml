@@ -7,6 +7,10 @@
         <variable
             name="todoItem"
             type="com.dalydays.android.reminderlist.data.db.ToDoItem" />
+        
+        <variable
+            name="callback"
+            type="com.dalydays.android.reminderlist.ui.checklist.ToDoClickCallback" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -30,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:checked="@{todoItem.checked}"
+                android:onClick="@{() -> callback.onClick(todoItem)}"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView

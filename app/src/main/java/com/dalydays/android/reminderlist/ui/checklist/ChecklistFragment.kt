@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dalydays.android.reminderlist.R
+import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 import com.dalydays.android.reminderlist.databinding.FragmentChecklistBinding
 import com.google.android.material.snackbar.Snackbar
@@ -37,7 +38,11 @@ class ChecklistFragment : Fragment() {
 
         binding.itemsList.layoutManager = LinearLayoutManager(activity)
 
-        val adapter = ToDoItemAdapter()
+        val adapter = ToDoItemAdapter(object: ToDoClickCallback {
+            override fun onClick(toDoItem: ToDoItem) {
+                Snackbar.make(view!!, "clicked item ${toDoItem.id} with description ${toDoItem.description}", Snackbar.LENGTH_SHORT).show()
+            }
+        })
 
         binding.itemsList.adapter = adapter
 
