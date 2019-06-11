@@ -1,13 +1,19 @@
 package com.dalydays.android.reminderlist.data.repository
 
+import android.app.Application
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
-import com.dalydays.android.reminderlist.data.db.ToDoItemDao
+import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 
-class ToDoItemRepository(private val toDoItemDao: ToDoItemDao) {
+class ToDoItemRepository(application: Application) {
 
-    val allToDoItems: LiveData<List<ToDoItem>> = toDoItemDao.getAll()
+    private val toDoItemDao = ToDoItemDatabase.getInstance(application).toDoItemDao
+    val allToDoItems: LiveData<List<ToDoItem>>
+
+    init {
+        allToDoItems = toDoItemDao.getAll()
+    }
 
     @WorkerThread
     suspend fun insert(toDoItem: ToDoItem) {

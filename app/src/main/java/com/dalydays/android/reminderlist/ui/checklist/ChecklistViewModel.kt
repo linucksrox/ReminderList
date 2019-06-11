@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
-import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +17,7 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     private var viewModelJob = Job()
     private val checklistUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private val repository: ToDoItemRepository
+    private val repository = ToDoItemRepository(application)
     val allToDoItems: LiveData<List<ToDoItem>>
 
     private var _addedActivityEvent = MutableLiveData<String>()
@@ -30,8 +29,6 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     init {
-        val toDoItemDao = ToDoItemDatabase.getInstance(application).toDoItemDao
-        repository = ToDoItemRepository(toDoItemDao)
         allToDoItems = repository.allToDoItems
     }
 
