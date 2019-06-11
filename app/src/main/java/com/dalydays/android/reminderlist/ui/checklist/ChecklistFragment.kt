@@ -40,7 +40,7 @@ class ChecklistFragment : Fragment() {
 
         val adapter = ToDoItemAdapter(object: ToDoClickCallback {
             override fun onClick(toDoItem: ToDoItem) {
-                Snackbar.make(view!!, "clicked item ${toDoItem.id} with description ${toDoItem.description}", Snackbar.LENGTH_SHORT).show()
+                showSnackbarMessage("clicked item ${toDoItem.id} with description ${toDoItem.description}")
             }
         })
 
