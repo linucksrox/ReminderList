@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
-import com.dalydays.android.reminderlist.data.db.ToDoItemDao
 import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import kotlinx.coroutines.CoroutineScope
@@ -14,9 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class ChecklistViewModel(
-        database: ToDoItemDao,
-        application: Application) : AndroidViewModel(application) {
+class ChecklistViewModel(application: Application) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
     private val checklistUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -30,14 +27,6 @@ class ChecklistViewModel(
 
     fun addedActivityEventComplete() {
         _addedActivityEvent.value = null
-    }
-
-    private var _checkedBoxEvent = MutableLiveData<String>()
-    val checkedBoxEvent: LiveData<String>
-        get() = _checkedBoxEvent
-
-    fun checkedBoxEventComplete() {
-        _checkedBoxEvent.value = null
     }
 
     init {
@@ -59,6 +48,11 @@ class ChecklistViewModel(
         val checked = Random.nextBoolean()
         _addedActivityEvent.value = "Added new item: $description"
         insert(ToDoItem(description = description, checked = checked))
+    }
+
+    fun toggleCheckbox(toDoItem: ToDoItem) {
+        toDoItem.checked = !toDoItem.checked
+        update(toDoItem)
     }
 
     override fun onCleared() {

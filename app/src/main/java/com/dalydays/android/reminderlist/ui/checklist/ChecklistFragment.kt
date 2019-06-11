@@ -10,8 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dalydays.android.reminderlist.R
-import com.dalydays.android.reminderlist.data.db.ToDoItem
-import com.dalydays.android.reminderlist.data.db.ToDoItemDatabase
 import com.dalydays.android.reminderlist.databinding.FragmentChecklistBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,10 +22,7 @@ class ChecklistFragment : Fragment() {
                 inflater, R.layout.fragment_checklist, container, false)
 
         val application = requireNotNull(this.activity).application
-
-        val dataSource = ToDoItemDatabase.getInstance(application).toDoItemDao
-
-        val viewModelFactory = CheckListViewModelFactory(dataSource, application)
+        val viewModelFactory = CheckListViewModelFactory(application)
 
         val checklistViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ChecklistViewModel::class.java)
@@ -38,11 +33,9 @@ class ChecklistFragment : Fragment() {
 
         binding.itemsList.layoutManager = LinearLayoutManager(activity)
 
-        val adapter = ToDoItemAdapter(object: ToDoClickCallback {
-            override fun onClick(toDoItem: ToDoItem) {
-                showSnackbarMessage("clicked item ${toDoItem.id} with description ${toDoItem.description}")
-            }
-        })
+        val adapter = ToDoItemAdapter { toDoItem ->
+            checklistViewModel.toggleCheckbox(toDoItem)
+        }
 
         binding.itemsList.adapter = adapter
 
@@ -56,13 +49,6 @@ class ChecklistFragment : Fragment() {
             message?.let {
                 showSnackbarMessage(message)
                 checklistViewModel.addedActivityEventComplete()
-            }
-        })
-
-        checklistViewModel.checkedBoxEvent.observe(viewLifecycleOwner, Observer { message ->
-            message?.let {
-                showSnackbarMessage(message)
-                checklistViewModel.checkedBoxEventComplete()
             }
         })
 
