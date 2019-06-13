@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface ToDoItemDao {
-    @Query("SELECT * FROM item ORDER BY checked ASC, id ASC")
+    @Query("SELECT * FROM item")
     fun getAll(): LiveData<List<ToDoItem>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
