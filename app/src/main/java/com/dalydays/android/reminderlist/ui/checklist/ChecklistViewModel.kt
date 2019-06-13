@@ -20,12 +20,13 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     private val repository = ToDoItemRepository(application)
     val allToDoItems: LiveData<List<ToDoItem>>
 
-    private var _addedActivityEvent = MutableLiveData<String>()
-    val addedActivityEvent: LiveData<String>
-        get() = _addedActivityEvent
+    private var _navigateToNewToDoItem = MutableLiveData<Boolean?>()
+    val navigateToNewToDoItem: LiveData<Boolean?>
+        get() = _navigateToNewToDoItem
 
-    fun addedActivityEventComplete() {
-        _addedActivityEvent.value = null
+    fun doneNavigating() {
+        // reset all navigation events here
+        _navigateToNewToDoItem.value = null
     }
 
     init {
@@ -41,10 +42,8 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun onFabButtonClicked() = checklistUiScope.launch {
-        val description = "Item ${Random.nextInt(1, 999)}"
-        val checked = Random.nextBoolean()
-        _addedActivityEvent.value = "Added new item: $description"
-        insert(ToDoItem(description = description, checked = checked))
+        // navigate to new item screen
+        _navigateToNewToDoItem.value = true
     }
 
     fun toggleCheckbox(toDoItem: ToDoItem) {

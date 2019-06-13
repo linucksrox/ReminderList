@@ -12,11 +12,20 @@
         tools:layout="@layout/fragment_checklist" >
         <action
             android:id="@+id/action_checklist_to_new_item"
-            app:destination="@id/new_item" />
+            app:destination="@id/new_item"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/new_item"
         android:name="com.dalydays.android.reminderlist.ui.newitem.NewItemFragment"
         android:label="fragment_new_item"
-        tools:layout="@layout/fragment_new_item" />
+        tools:layout="@layout/fragment_new_item" >
+        <action
+            android:id="@+id/action_new_item_to_checklist"
+            app:destination="@id/checklist"
+            app:launchSingleTop="false" />
+    </fragment>
 </navigation>

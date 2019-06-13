@@ -6,4 +6,5 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="edit_description">Description</string>
     <string name="edit_schedule">Schedule</string>
+    <string name="menu_save_text">Save</string>
 </resources>
