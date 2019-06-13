@@ -41,7 +41,10 @@ class ChecklistFragment : Fragment() {
 
         checklistViewModel.allToDoItems.observe(viewLifecycleOwner, Observer { allItems ->
             allItems?.let {
-                adapter.submitList(allItems.sortedWith(CompareToDoItems))
+                adapter.submitList(allItems.sortedWith(compareBy(
+                        {it.checked},
+                        {it.id}))
+                )
             }
         })
 
