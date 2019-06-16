@@ -5,29 +5,31 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.databinding.FragmentNewItemBinding
+import com.google.android.material.snackbar.Snackbar
 
 class NewItemFragment : Fragment() {
+
+    private lateinit var binding: FragmentNewItemBinding
+    private lateinit var newItemViewModel: NewItemViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val binding: FragmentNewItemBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_new_item, container, false)
 
         val application = requireNotNull(this.activity).application
         val viewModelFactory = NewItemViewModelFactory(application)
 
-        val newItemViewModel = ViewModelProviders.of(this, viewModelFactory)
+        newItemViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(NewItemViewModel::class.java)
 
         binding.viewmodel = newItemViewModel
 
         binding.lifecycleOwner = this
-
-        // observe stuff here
-
 
         setHasOptionsMenu(true)
         return binding.root
@@ -36,5 +38,21 @@ class NewItemFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.new_item_save_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.save -> {
+            saveAndReturn()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun saveAndReturn() {
+        newItemViewModel.addNewItem(binding.descriptionInput.text.toString())
+        val view = requireNotNull(view)
+        Snackbar.make(view, "New todo item saved!", Snackbar.LENGTH_SHORT).show()
+        binding.invalidateAll()
+        this.findNavController().navigate(NewItemFragmentDirections.actionNewItemToChecklist())
     }
 }
