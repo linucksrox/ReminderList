@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a8f9b4b9f8ae6f9e4428f04cbc5b3f73",
+    "identityHash": "66a66fe4adb84ff8ffd9ecebebe11fb1",
     "entities": [
       {
         "tableName": "item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sort` INTEGER, `description` TEXT, `checked` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sort` INTEGER, `description` TEXT NOT NULL, `checked` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -24,7 +24,7 @@
             "fieldPath": "description",
             "columnName": "description",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "checked",
@@ -46,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a8f9b4b9f8ae6f9e4428f04cbc5b3f73\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '66a66fe4adb84ff8ffd9ecebebe11fb1')"
     ]
   }
 }
