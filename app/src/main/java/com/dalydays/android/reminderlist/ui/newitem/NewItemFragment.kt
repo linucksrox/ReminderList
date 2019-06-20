@@ -1,7 +1,9 @@
 package com.dalydays.android.reminderlist.ui.newitem
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -49,10 +51,20 @@ class NewItemFragment : Fragment() {
     }
 
     private fun saveAndReturn() {
+        // insert new ToDoItem into the database
         newItemViewModel.addNewItem(binding.descriptionInput.text.toString())
+
+        // show a snackbar that the new item was saved
         val view = requireNotNull(view)
         Snackbar.make(view, "New todo item saved!", Snackbar.LENGTH_SHORT).show()
-        binding.invalidateAll()
+
+        // close the soft keyboard if it's open
+        view.let { v ->
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(v.windowToken, 0)
+        }
+
+        // go back!
         this.findNavController().navigate(NewItemFragmentDirections.actionNewItemToChecklist())
     }
 }
