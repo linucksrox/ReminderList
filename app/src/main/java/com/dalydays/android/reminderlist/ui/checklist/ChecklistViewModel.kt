@@ -46,7 +46,7 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun toggleCheckbox(toDoItem: ToDoItem) {
-        toDoItem.checked = !toDoItem.checked
+        toDoItem.completed = !toDoItem.completed
         update(toDoItem)
     }
 

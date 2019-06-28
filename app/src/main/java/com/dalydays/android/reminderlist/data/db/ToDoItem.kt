@@ -9,5 +9,6 @@ data class ToDoItem(
         @PrimaryKey(autoGenerate = true) var id: Long? = null,
         @ColumnInfo(name = "sort") var sort: Long? = null,
         @ColumnInfo(name = "description") var description: String,
-        @ColumnInfo(name = "checked") var checked: Boolean = false
+        @ColumnInfo(name = "completed") var completed: Boolean = false,
+        @ColumnInfo(name = "scheduled") var scheduled: Boolean = false
 )

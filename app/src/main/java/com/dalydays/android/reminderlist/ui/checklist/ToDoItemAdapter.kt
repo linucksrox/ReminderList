@@ -28,7 +28,7 @@ class ToDoItemAdapter(private val onClick: (ToDoItem) -> Unit): ListAdapter<ToDo
 
         fun bind(toDoItem: ToDoItem, onClick: (ToDoItem) -> Unit) {
             binding.todoItem = toDoItem
-            binding.checkbox.setOnClickListener {
+            binding.checkboxCompleted.setOnClickListener {
                 onClick(toDoItem)
             }
             binding.executePendingBindings()

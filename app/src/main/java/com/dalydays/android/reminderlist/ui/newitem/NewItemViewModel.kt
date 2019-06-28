@@ -16,8 +16,8 @@ class NewItemViewModel(application: Application) : AndroidViewModel(application)
 
     private val repository = ToDoItemRepository(application)
 
-    fun addNewItem(description: String) {
-        insert(ToDoItem(description = description))
+    fun addNewItem(description: String, scheduled: Boolean) {
+        insert(ToDoItem(description = description, scheduled = scheduled))
     }
 
     private fun insert(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {

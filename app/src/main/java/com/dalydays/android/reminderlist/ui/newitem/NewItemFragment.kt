@@ -52,7 +52,8 @@ class NewItemFragment : Fragment() {
 
     private fun saveAndReturn() {
         // insert new ToDoItem into the database
-        newItemViewModel.addNewItem(binding.descriptionInput.text.toString())
+        newItemViewModel.addNewItem(binding.descriptionInput.text.toString(),
+                binding.switchScheduled.isChecked)
 
         // show a snackbar that the new item was saved
         val view = requireNotNull(view)
