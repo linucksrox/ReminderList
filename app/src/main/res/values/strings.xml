@@ -7,4 +7,6 @@
     <string name="edit_description">Description</string>
     <string name="edit_schedule">Schedule</string>
     <string name="menu_save_text">Save</string>
+    <string name="reminder_channel_name">Reminder</string>
+    <string name="reminder_channel_description">Reminder Channel Description</string>
 </resources>

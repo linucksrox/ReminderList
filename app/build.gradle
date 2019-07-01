@@ -74,4 +74,7 @@ dependencies {
     // WorkManager
     def work_version = "2.0.1"
     implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // Notifications (general support library)
+    implementation "androidx.core:core:1.0.2"
 }
