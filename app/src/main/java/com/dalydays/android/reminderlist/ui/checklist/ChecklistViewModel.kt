@@ -11,6 +11,7 @@ import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.background.ReminderWorker
+import com.dalydays.android.reminderlist.util.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,14 +25,9 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     private val repository = ToDoItemRepository(application)
     val allToDoItems: LiveData<List<ToDoItem>>
 
-    private var _navigateToNewToDoItem = MutableLiveData<Boolean?>()
-    val navigateToNewToDoItem: LiveData<Boolean?>
+    private var _navigateToNewToDoItem = MutableLiveData<Event<String>>()
+    val navigateToNewToDoItem: LiveData<Event<String>>
         get() = _navigateToNewToDoItem
-
-    fun doneNavigating() {
-        // reset all navigation events here
-        _navigateToNewToDoItem.value = null
-    }
 
     init {
         allToDoItems = repository.allToDoItems
@@ -47,7 +43,7 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun onFabButtonClicked() = checklistUiScope.launch {
         // navigate to new item screen
-        _navigateToNewToDoItem.value = true
+        _navigateToNewToDoItem.value = Event("clicked")
     }
 
     fun toggleCheckbox(toDoItem: ToDoItem) {

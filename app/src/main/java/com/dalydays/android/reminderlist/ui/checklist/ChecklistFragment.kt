@@ -50,9 +50,8 @@ class ChecklistFragment : Fragment() {
         })
 
         checklistViewModel.navigateToNewToDoItem.observe(viewLifecycleOwner, Observer {
-            it?.let {
+            it.getContentIfNotHandled()?.let {
                 this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToNewItem())
-                checklistViewModel.doneNavigating()
             }
         })
 
