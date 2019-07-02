@@ -4,8 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
+import com.dalydays.android.reminderlist.ui.newitem.ReminderWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -48,6 +52,26 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     fun toggleCheckbox(toDoItem: ToDoItem) {
         toDoItem.completed = !toDoItem.completed
         update(toDoItem)
+
+        // If the user just checked off an item and it has scheduling enabled, then schedule the reminder
+        if (toDoItem.completed && toDoItem.scheduled) {
+            // Build constraints
+            val constraints = Constraints.Builder()
+                    .build()
+
+            // Schedule this worker to fire the notification based on the interval set for this item in the app
+            val notificationWork = OneTimeWorkRequestBuilder<ReminderWorker>()
+                    .setConstraints(constraints)
+                        // override null safety here for now, should probably handle this differently to avoid breakage
+                    .setInitialDelay(toDoItem.duration!!, toDoItem.timeUnit!!)
+                    .build()
+
+            // Queue up the work!
+            WorkManager.getInstance().enqueue(notificationWork)
+        }
+
+        // If the user unchecks an item, cancel the schedule
+        // TODO: unschedule background task
     }
 
     override fun onCleared() {

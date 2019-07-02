@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.dalydays.android.reminderlist.util.TimeUnitTypeConverter
 
 @Database(entities = [ToDoItem::class], version = 1, exportSchema = true)
+@TypeConverters(TimeUnitTypeConverter::class)
 abstract class ToDoItemDatabase : RoomDatabase() {
 
     abstract val toDoItemDao: ToDoItemDao

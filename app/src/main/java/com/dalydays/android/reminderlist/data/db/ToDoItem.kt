@@ -12,6 +12,6 @@ data class ToDoItem(
         @ColumnInfo(name = "description") var description: String,
         @ColumnInfo(name = "completed") var completed: Boolean = false,
         @ColumnInfo(name = "scheduled") var scheduled: Boolean = false,
-        @ColumnInfo(name = "duration") var duration: Int? = null,
+        @ColumnInfo(name = "duration") var duration: Long? = null,
         @ColumnInfo(name = "time_unit") var timeUnit: TimeUnit? = null
 )
