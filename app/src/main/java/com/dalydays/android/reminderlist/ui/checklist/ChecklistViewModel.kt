@@ -5,11 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Constraints
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
-import com.dalydays.android.reminderlist.ui.newitem.ReminderWorker
+import com.dalydays.android.reminderlist.background.ReminderWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -54,24 +55,35 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
         update(toDoItem)
 
         // If the user just checked off an item and it has scheduling enabled, then schedule the reminder
+        scheduleRedoItem(toDoItem)
+
+        // If the user unchecks an item, cancel the schedule
+        // TODO: unschedule background task
+    }
+
+    private fun scheduleRedoItem(toDoItem: ToDoItem) {
         if (toDoItem.completed && toDoItem.scheduled) {
             // Build constraints
             val constraints = Constraints.Builder()
                     .build()
 
+            // Build data that we'll send into the worker
+            val itemId = requireNotNull(toDoItem.id)
+            val data = Data.Builder()
+                    .putLong("toDoItemId", itemId)
+                    .build()
+
             // Schedule this worker to fire the notification based on the interval set for this item in the app
             val notificationWork = OneTimeWorkRequestBuilder<ReminderWorker>()
                     .setConstraints(constraints)
-                        // override null safety here for now, should probably handle this differently to avoid breakage
+                    // override null safety here for now, should probably handle this differently to avoid breakage
                     .setInitialDelay(toDoItem.duration!!, toDoItem.timeUnit!!)
+                    .setInputData(data)
                     .build()
 
             // Queue up the work!
             WorkManager.getInstance().enqueue(notificationWork)
         }
-
-        // If the user unchecks an item, cancel the schedule
-        // TODO: unschedule background task
     }
 
     override fun onCleared() {

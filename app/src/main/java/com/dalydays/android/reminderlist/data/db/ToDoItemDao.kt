@@ -8,6 +8,9 @@ interface ToDoItemDao {
     @Query("SELECT * FROM item")
     fun getAll(): LiveData<List<ToDoItem>>
 
+    @Query("SELECT * FROM item WHERE id = :id")
+    fun getItem(id: Long): ToDoItem
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: ToDoItem): Long
 
