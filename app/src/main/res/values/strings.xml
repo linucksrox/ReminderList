@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Reminder List</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="edit_description">Description</string>
     <string name="edit_schedule">Schedule</string>
     <string name="menu_save_text">Save</string>
+
+    <!-- Notifications -->
     <string name="reminder_channel_name">Reminder</string>
     <string name="reminder_channel_description">Reminder Channel Description</string>
+    <string name="notification_title">You have work to do!</string>
 </resources>

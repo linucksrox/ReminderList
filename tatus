@@ -1,0 +1,122 @@
+[1mdiff --git a/.idea/assetWizardSettings.xml b/.idea/assetWizardSettings.xml[m
+[1mindex 478a566..93618af 100644[m
+[1m--- a/.idea/assetWizardSettings.xml[m
+[1m+++ b/.idea/assetWizardSettings.xml[m
+[36m@@ -18,7 +18,7 @@[m
+                                 <PersistentState>[m
+                                   <option name="values">[m
+                                     <map>[m
+[31m-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_black_24dp.xml" />[m
+[32m+[m[32m                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_playlist_add_check_black_24dp.xml" />[m
+                                     </map>[m
+                                   </option>[m
+                                 </PersistentState>[m
+[36m@@ -29,7 +29,7 @@[m
+                         <option name="values">[m
+                           <map>[m
+                             <entry key="color" value="ffffff" />[m
+[31m-                            <entry key="outputName" value="ic_add" />[m
+[32m+[m[32m                            <entry key="outputName" value="ic_notification" />[m
+                             <entry key="sourceFile" value="C:\Users\edaly" />[m
+                           </map>[m
+                         </option>[m
+[1mdiff --git a/app/src/main/java/com/dalydays/android/reminderlist/ReminderListApp.kt b/app/src/main/java/com/dalydays/android/reminderlist/ReminderListApp.kt[m
+[1mindex 8af51a9..224b84f 100644[m
+[1m--- a/app/src/main/java/com/dalydays/android/reminderlist/ReminderListApp.kt[m
+[1m+++ b/app/src/main/java/com/dalydays/android/reminderlist/ReminderListApp.kt[m
+[36m@@ -16,8 +16,9 @@[m [mclass ReminderListApp : Application() {[m
+             val name = getString(R.string.reminder_channel_name)[m
+             val descriptionText = getString(R.string.reminder_channel_description)[m
+             val importance = NotificationManager.IMPORTANCE_DEFAULT[m
+[31m-            val reminderChannel = NotificationChannel(CHANNEL_ID, name, importance)[m
+[31m-            reminderChannel.description = descriptionText[m
+[32m+[m[32m            val reminderChannel = NotificationChannel(CHANNEL_ID, name, importance).apply {[m
+[32m+[m[32m                description = descriptionText[m
+[32m+[m[32m            }[m
+ [m
+             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager[m
+             notificationManager.createNotificationChannel(reminderChannel)[m
+[1mdiff --git a/app/src/main/java/com/dalydays/android/reminderlist/background/ReminderWorker.kt b/app/src/main/java/com/dalydays/android/reminderlist/background/ReminderWorker.kt[m
+[1mindex d9d896a..b47546b 100644[m
+[1m--- a/app/src/main/java/com/dalydays/android/reminderlist/background/ReminderWorker.kt[m
+[1m+++ b/app/src/main/java/com/dalydays/android/reminderlist/background/ReminderWorker.kt[m
+[36m@@ -1,12 +1,15 @@[m
+ package com.dalydays.android.reminderlist.background[m
+ [m
+[32m+[m[32mimport android.app.PendingIntent[m
+ import android.content.Context[m
+[32m+[m[32mimport android.content.Intent[m
+ import androidx.core.app.NotificationCompat[m
+ import androidx.core.app.NotificationManagerCompat[m
+ import androidx.work.Worker[m
+ import androidx.work.WorkerParameters[m
+ import com.dalydays.android.reminderlist.R[m
+ import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository[m
+[32m+[m[32mimport com.dalydays.android.reminderlist.ui.MainActivity[m
+ import kotlinx.coroutines.*[m
+ [m
+ class ReminderWorker(private val context: Context, private val workerParameters: WorkerParameters) : Worker(context, workerParameters) {[m
+[36m@@ -24,22 +27,35 @@[m [mclass ReminderWorker(private val context: Context, private val workerParameters:[m
+             val toDoItem = toDoItemRepository.getItem(itemId)[m
+             toDoItem.completed = !toDoItem.completed[m
+             toDoItemRepository.update(toDoItem)[m
+[32m+[m
+[32m+[m[32m            showNotification(context, context.getString(R.string.notification_title), toDoItem.description)[m
+         }[m
+ [m
+[31m-        // build the notification[m
+[32m+[m[32m        return Result.success()[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private fun showNotification(context: Context, title: String, text: String) {[m
+[32m+[m
+[32m+[m[32m        // Open the app when clicking the notification[m
+[32m+[m[32m        val intent = Intent(context, MainActivity::class.java).apply {[m
+[32m+[m[32m            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK[m
+[32m+[m[32m        }[m
+[32m+[m[32m        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)[m
+[32m+[m
+[32m+[m[32m        // Build the notification[m
+         val notificationId = 1[m
+ [m
+         val notificationBuilder = NotificationCompat.Builder(context, "reminder_channel_id")[m
+[31m-                .setSmallIcon(R.drawable.notification_icon)[m
+[31m-                .setContentTitle("itworks!")[m
+[31m-                .setContentText("this is a notification from ReminderWorker")[m
+[32m+[m[32m                .setSmallIcon(R.drawable.ic_notification)[m
+[32m+[m[32m                .setContentTitle(title)[m
+[32m+[m[32m                .setContentText(text)[m
+                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)[m
+[32m+[m[32m                .setContentIntent(pendingIntent)[m
+[32m+[m[32m                .setAutoCancel(true)[m
+ [m
+[31m-        // show the notification[m
+[32m+[m[32m        // Show the notification[m
+         with(NotificationManagerCompat.from(context)) {[m
+             notify(notificationId, notificationBuilder.build())[m
+         }[m
+[31m-[m
+[31m-        return Result.success()[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml[m
+[1mindex afd8253..8c3e6d0 100644[m
+[1m--- a/app/src/main/res/values/strings.xml[m
+[1m+++ b/app/src/main/res/values/strings.xml[m
+[36m@@ -1,12 +1,12 @@[m
+ <resources>[m
+     <string name="app_name">Reminder List</string>[m
+ [m
+[31m-    <!-- TODO: Remove or change this placeholder text -->[m
+[31m-    <string name="hello_blank_fragment">Hello blank fragment</string>[m
+[31m-    <string name="title_activity_main2">Main2Activity</string>[m
+     <string name="edit_description">Description</string>[m
+     <string name="edit_schedule">Schedule</string>[m
+     <string name="menu_save_text">Save</string>[m
+[32m+[m
+[32m+[m[32m    <!-- Notifications -->[m
+     <string name="reminder_channel_name">Reminder</string>[m
+     <string name="reminder_channel_description">Reminder Channel Description</string>[m
+[32m+[m[32m    <string name="notification_title">You have work to do!</string>[m
+ </resources>[m
