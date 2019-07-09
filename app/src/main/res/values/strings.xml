@@ -2,7 +2,7 @@
     <string name="app_name">Reminder List</string>
 
     <string name="edit_description">Description</string>
-    <string name="edit_schedule">Schedule</string>
+    <string name="edit_recurring">Recurring</string>
     <string name="menu_save_text">Save</string>
 
     <!-- Notifications -->

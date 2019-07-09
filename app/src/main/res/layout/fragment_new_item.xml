@@ -30,14 +30,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Switch
-            android:id="@+id/switch_scheduled"
+            android:id="@+id/switch_recurring"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:checked="false"
-            android:text="@string/edit_schedule"
+            android:text="@string/edit_recurring"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_input" />

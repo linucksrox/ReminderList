@@ -58,7 +58,7 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun scheduleRedoItem(toDoItem: ToDoItem) {
-        if (toDoItem.completed && toDoItem.scheduled) {
+        if (toDoItem.completed && toDoItem.recurring) {
             // Build constraints
             val constraints = Constraints.Builder()
                     .build()

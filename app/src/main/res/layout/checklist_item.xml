@@ -51,16 +51,16 @@
                 tools:text="Item 1" />
 
             <TextView
-                android:id="@+id/tv_scheduled"
+                android:id="@+id/tv_recurring"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{Boolean.toString(todoItem.scheduled)}"
+                android:text="@{Boolean.toString(todoItem.recurring)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/checkbox_completed"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description"
-                tools:text="scheduled" />
+                tools:text="Recurring" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "39fd836ca3e11841a04d22482e9e6e62",
+    "identityHash": "d5c6ad8e88b0c5852e1edd8d8f1148b4",
     "entities": [
       {
         "tableName": "item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sort` INTEGER, `description` TEXT NOT NULL, `completed` INTEGER NOT NULL, `scheduled` INTEGER NOT NULL, `duration` INTEGER, `time_unit` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sort` INTEGER, `description` TEXT NOT NULL, `completed` INTEGER NOT NULL, `recurring` INTEGER NOT NULL, `duration` INTEGER, `time_unit` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -33,8 +33,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "scheduled",
-            "columnName": "scheduled",
+            "fieldPath": "recurring",
+            "columnName": "recurring",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -64,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '39fd836ca3e11841a04d22482e9e6e62')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5c6ad8e88b0c5852e1edd8d8f1148b4')"
     ]
   }
 }
