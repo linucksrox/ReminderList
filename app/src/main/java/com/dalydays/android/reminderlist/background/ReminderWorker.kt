@@ -13,9 +13,12 @@ import com.dalydays.android.reminderlist.ui.MainActivity
 import kotlinx.coroutines.*
 
 class ReminderWorker(private val context: Context, private val workerParameters: WorkerParameters) : Worker(context, workerParameters) {
+
+    private lateinit var reminderWorkerJob: Job
+
     override fun doWork(): Result {
 
-        val reminderWorkerJob = Job()
+        reminderWorkerJob = Job()
         val reminderWorkerScope = CoroutineScope(Dispatchers.IO + reminderWorkerJob)
         val toDoItemRepository = ToDoItemRepository(context)
 
@@ -57,5 +60,11 @@ class ReminderWorker(private val context: Context, private val workerParameters:
         with(NotificationManagerCompat.from(context)) {
             notify(notificationId, notificationBuilder.build())
         }
+    }
+
+    override fun onStopped() {
+        super.onStopped()
+
+        reminderWorkerJob.cancel()
     }
 }

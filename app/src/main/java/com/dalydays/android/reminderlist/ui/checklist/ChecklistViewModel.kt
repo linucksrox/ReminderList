@@ -51,14 +51,13 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
         update(toDoItem)
 
         // If the user just checked off an item and it has scheduling enabled, then schedule the reminder
-        scheduleRedoItem(toDoItem)
-
-        // If the user unchecks an item, cancel the schedule
-        // TODO: unschedule background task
+        if (toDoItem.recurring) {
+            scheduleOrCancelRedoBackgroundTask(toDoItem)
+        }
     }
 
-    private fun scheduleRedoItem(toDoItem: ToDoItem) {
-        if (toDoItem.completed && toDoItem.recurring) {
+    private fun scheduleOrCancelRedoBackgroundTask(toDoItem: ToDoItem) {
+        if (toDoItem.completed) {
             // Build constraints
             val constraints = Constraints.Builder()
                     .build()
@@ -79,6 +78,12 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
 
             // Queue up the work!
             WorkManager.getInstance().enqueue(notificationWork)
+
+            // Update the item's background work UUID in the database
+            toDoItem.backgroundWorkUUID = notificationWork.id
+            update(toDoItem)
+        } else {
+            // TODO: cancel the background task
         }
     }
 
