@@ -23,6 +23,11 @@ android {
         kotlinOptions {
             jvmTarget = "1.8"
         }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
     buildTypes {
         release {
@@ -52,7 +57,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
     // Material design
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.google.android.material:material:1.1.0-alpha08'
 
     // Room
     def room_version = '2.1.0'

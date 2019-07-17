@@ -41,5 +41,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_input" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/btn_group_time_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Days" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_weeks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weeks" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_months"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Months" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_years"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Years" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
