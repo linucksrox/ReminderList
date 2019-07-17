@@ -16,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ChecklistViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -59,8 +60,8 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     private fun scheduleOrCancelRedoBackgroundTask(toDoItem: ToDoItem) {
         if (toDoItem.completed) {
             // Build constraints
-            val constraints = Constraints.Builder()
-                    .build()
+//            val constraints = Constraints.Builder()
+//                    .build()
 
             // Build data that we'll send into the worker
             val itemId = requireNotNull(toDoItem.id)
@@ -70,20 +71,20 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
 
             // Schedule this worker to fire the notification based on the interval set for this item in the app
             val notificationWork = OneTimeWorkRequestBuilder<ReminderWorker>()
-                    .setConstraints(constraints)
+//                    .setConstraints(constraints)
                     // override null safety here for now, should probably handle this differently to avoid breakage
                     .setInitialDelay(toDoItem.duration!!, toDoItem.timeUnit!!)
                     .setInputData(data)
                     .build()
 
             // Queue up the work!
-            WorkManager.getInstance().enqueue(notificationWork)
+            WorkManager.getInstance(getApplication()).enqueue(notificationWork)
 
             // Update the item's background work UUID in the database
             toDoItem.backgroundWorkUUID = notificationWork.id.toString()
             update(toDoItem)
         } else {
-            // TODO: cancel the background task
+            WorkManager.getInstance(getApplication()).cancelWorkById(UUID.fromString(toDoItem.backgroundWorkUUID))
         }
     }
 
