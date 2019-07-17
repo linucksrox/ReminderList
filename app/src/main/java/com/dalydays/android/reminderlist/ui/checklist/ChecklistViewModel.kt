@@ -85,6 +85,8 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
             update(toDoItem)
         } else {
             WorkManager.getInstance(getApplication()).cancelWorkById(UUID.fromString(toDoItem.backgroundWorkUUID))
+            toDoItem.backgroundWorkUUID = null
+            update(toDoItem)
         }
     }
 

@@ -29,6 +29,7 @@ class ReminderWorker(private val context: Context, private val workerParameters:
         reminderWorkerScope.launch {
             val toDoItem = toDoItemRepository.getItem(itemId)
             toDoItem.completed = !toDoItem.completed
+            toDoItem.backgroundWorkUUID = null
             toDoItemRepository.update(toDoItem)
 
             showNotification(context, context.getString(R.string.notification_title), toDoItem.description)
