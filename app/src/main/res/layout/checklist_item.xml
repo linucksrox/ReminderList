@@ -51,12 +51,12 @@
                 tools:text="Item 1" />
 
             <TextView
-                android:id="@+id/tv_recurring"
+                android:id="@+id/tv_background_uuid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{Boolean.toString(todoItem.recurring)}"
+                android:text="@{todoItem.backgroundWorkUUID}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/checkbox_completed"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description"

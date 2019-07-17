@@ -80,7 +80,7 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
             WorkManager.getInstance().enqueue(notificationWork)
 
             // Update the item's background work UUID in the database
-            toDoItem.backgroundWorkUUID = notificationWork.id
+            toDoItem.backgroundWorkUUID = notificationWork.id.toString()
             update(toDoItem)
         } else {
             // TODO: cancel the background task

@@ -15,5 +15,5 @@ data class ToDoItem(
         @ColumnInfo(name = "recurring") var recurring: Boolean = false,
         @ColumnInfo(name = "duration") var duration: Long? = null,
         @ColumnInfo(name = "time_unit") var timeUnit: TimeUnit? = null,
-        @ColumnInfo(name = "background_work_uuid") var backgroundWorkUUID: UUID? = null
+        @ColumnInfo(name = "background_work_uuid") var backgroundWorkUUID: String? = null
 )
