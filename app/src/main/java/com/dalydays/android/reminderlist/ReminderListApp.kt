@@ -5,12 +5,26 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ReminderListApp : Application() {
+
+    private val applicationScope = CoroutineScope(Dispatchers.Default)
+
     override fun onCreate() {
         super.onCreate()
+        delayedInit()
+    }
 
-        // set up notification channel required for Android Oreo and later
+    private fun delayedInit() {
+        applicationScope.launch {
+            setupNotificationChannels()
+        }
+    }
+
+    private fun setupNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val CHANNEL_ID = "reminder_channel_id"
             val name = getString(R.string.reminder_channel_name)

@@ -1,11 +1,12 @@
 package com.dalydays.android.reminderlist.util
 
 import androidx.room.TypeConverter
+import java.util.*
 import java.util.concurrent.TimeUnit
 
-class TimeUnitTypeConverter {
+class CustomTypeConverters {
     @TypeConverter
-    fun toTimeUnit(timeUnit: String): TimeUnit? {
+    fun stringToTimeUnit(timeUnit: String): TimeUnit? {
         return when (timeUnit) {
             "seconds" -> TimeUnit.SECONDS
             "minutes" -> TimeUnit.MINUTES
@@ -16,7 +17,7 @@ class TimeUnitTypeConverter {
     }
 
     @TypeConverter
-    fun toString(timeUnit: TimeUnit): String? {
+    fun timeUnitToString(timeUnit: TimeUnit): String? {
         return when (timeUnit) {
             TimeUnit.SECONDS -> "seconds"
             TimeUnit.MINUTES -> "minutes"
