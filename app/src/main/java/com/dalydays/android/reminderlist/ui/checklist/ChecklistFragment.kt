@@ -44,7 +44,7 @@ class ChecklistFragment : Fragment() {
             allItems?.let {
                 adapter.submitList(allItems.sortedWith(compareBy(
                         {it.completed},
-                        {it.id}))
+                        {it.description}))
                 )
             }
         })
