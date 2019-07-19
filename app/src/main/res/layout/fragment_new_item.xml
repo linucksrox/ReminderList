@@ -40,43 +40,42 @@
             android:text="@string/edit_recurring"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_input" />
+            app:layout_constraintTop_toBottomOf="@+id/description_input"
+            tools:checked="true" />
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/btn_group_time_interval"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/time_input"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:singleLine="true"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="@+id/switch_recurring"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:text="3" />
+
+        <Spinner
+            android:id="@+id/time_unit_spinner"
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="@+id/time_input"
+            app:layout_constraintEnd_toEndOf="@+id/switch_recurring" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch_recurring" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Days" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_weeks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Weeks" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_months"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Months" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_years"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Years" />
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

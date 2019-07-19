@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -31,6 +32,16 @@ class NewItemFragment : Fragment() {
 
         binding.viewmodel = newItemViewModel
 
+        // Populate time unit dropdown
+        ArrayAdapter.createFromResource(
+                context,
+                R.array.time_units_array,
+                android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.timeUnitSpinner.adapter = adapter
+        }
+
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
@@ -55,9 +66,12 @@ class NewItemFragment : Fragment() {
         newItemViewModel.addNewItem(binding.descriptionInput.text.toString(),
                 binding.switchRecurring.isChecked)
 
+        val time = binding.timeInput.text.toString()
+        val timeUnit = binding.timeUnitSpinner.selectedItem.toString()
+
         // show a snackbar that the new item was saved
         val view = requireNotNull(view)
-        Snackbar.make(view, "New todo item saved!", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view, "time: $time, timeUnit: $timeUnit", Snackbar.LENGTH_SHORT).show()
 
         // close the soft keyboard if it's open
         view.let { v ->
