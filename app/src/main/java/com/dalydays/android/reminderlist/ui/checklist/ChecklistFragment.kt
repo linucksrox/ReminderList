@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -24,7 +23,7 @@ class ChecklistFragment : Fragment() {
             backPressedCounter++
 
             when (backPressedCounter) {
-                1 -> Toast.makeText(activity, "Press back again to quit ($backPressedCounter)", Toast.LENGTH_SHORT).show()
+                1 -> showSnackbarMessage("Press back again to quit")
                 2 -> activity?.finish()
             }
         }
