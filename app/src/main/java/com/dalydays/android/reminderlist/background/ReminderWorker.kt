@@ -28,11 +28,13 @@ class ReminderWorker(private val context: Context, private val workerParameters:
         // Update the item in the database (on a background thread)
         reminderWorkerScope.launch {
             val toDoItem = toDoItemRepository.getItem(itemId)
-            toDoItem.completed = !toDoItem.completed
-            toDoItem.backgroundWorkUUID = null
-            toDoItemRepository.update(toDoItem)
-
-            showNotification(context, context.getString(R.string.notification_title), toDoItem.description)
+            // Proceed to notify if item is still checked, otherwise if it has been unchecked then we're already done
+            if (toDoItem.completed) {
+                toDoItem.completed = false
+                toDoItem.backgroundWorkUUID = null
+                toDoItemRepository.update(toDoItem)
+                showNotification(context, context.getString(R.string.notification_title), toDoItem.description)
+            }
         }
 
         return Result.success()
