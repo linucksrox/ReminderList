@@ -8,7 +8,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 
 class NewItemViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,8 +16,8 @@ class NewItemViewModel(application: Application) : AndroidViewModel(application)
 
     private val repository = ToDoItemRepository(application)
 
-    fun addNewItem(description: String, recurring: Boolean) {
-        insert(ToDoItem(description = description, recurring = recurring, duration = 15, timeUnit = TimeUnit.SECONDS))
+    fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
+        insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
     }
 
     private fun insert(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {

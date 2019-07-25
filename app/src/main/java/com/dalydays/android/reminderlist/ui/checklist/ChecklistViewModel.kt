@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -12,6 +11,7 @@ import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.background.ReminderWorker
 import com.dalydays.android.reminderlist.util.Event
+import com.dalydays.android.reminderlist.util.Schedule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -69,11 +69,14 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
                     .putLong("toDoItemId", itemId)
                     .build()
 
+            // Convert the duration and timeUnit to something that the work request builder understands
+            val schedule = Schedule.build(toDoItem.duration!!, toDoItem.timeUnit!!)
+
             // Schedule this worker to fire the notification based on the interval set for this item in the app
             val notificationWork = OneTimeWorkRequestBuilder<ReminderWorker>()
 //                    .setConstraints(constraints)
                     // override null safety here for now, should probably handle this differently to avoid breakage
-                    .setInitialDelay(toDoItem.duration!!, toDoItem.timeUnit!!)
+                    .setInitialDelay(schedule.duration, schedule.timeUnit)
                     .setInputData(data)
                     .build()
 
