@@ -12,7 +12,7 @@
         android:background="@color/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
     <fragment
         android:id="@+id/my_nav_host_fragment"
