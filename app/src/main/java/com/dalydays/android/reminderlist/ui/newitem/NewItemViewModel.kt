@@ -2,8 +2,11 @@ package com.dalydays.android.reminderlist.ui.newitem
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
+import com.dalydays.android.reminderlist.util.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -16,6 +19,10 @@ class NewItemViewModel(application: Application) : AndroidViewModel(application)
 
     private val repository = ToDoItemRepository(application)
 
+    private var _toggleScheduleEvent = MutableLiveData<Event<String>>()
+    val toggleScheduleEvent: LiveData<Event<String>>
+        get() = _toggleScheduleEvent
+
     fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
     }
@@ -24,4 +31,8 @@ class NewItemViewModel(application: Application) : AndroidViewModel(application)
         repository.insert(toDoItem)
     }
 
+    fun toggleSchedule() {
+        // Notify fragment to enable/disable input views based on the state of the schedule toggle
+        _toggleScheduleEvent.value = Event("switched")
+    }
 }

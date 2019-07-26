@@ -2,7 +2,7 @@
     <string name="app_name">Reminder List</string>
 
     <string name="edit_description">Description</string>
-    <string name="edit_recurring">Mark Unchecked After</string>
+    <string name="edit_recurring">Add Back To List After</string>
     <string name="menu_save_text">Save</string>
 
     <!-- Notifications -->

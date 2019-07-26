@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.dalydays.android.reminderlist.R
@@ -43,10 +44,30 @@ class NewItemFragment : Fragment() {
             binding.timeUnitSpinner.adapter = adapter
         }
 
+        // Handle enable/disable input views when scheduling is toggled on or off
+        newItemViewModel.toggleScheduleEvent.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                toggleEnableInputs()
+            }
+        })
+
+        // Default inputs enabled/disabled based on default state of schedule toggle defined in the layout
+        toggleEnableInputs()
+
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
         return binding.root
+    }
+
+    private fun toggleEnableInputs() {
+        if (binding.switchRecurring.isChecked) {
+            binding.timeInput.isEnabled = true
+            binding.timeUnitSpinner.isEnabled = true
+        } else {
+            binding.timeInput.isEnabled = false
+            binding.timeUnitSpinner.isEnabled = false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -60,6 +81,10 @@ class NewItemFragment : Fragment() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun toggleEnabledForInputViews() {
+
     }
 
     private fun saveAndReturn() {
@@ -88,4 +113,5 @@ class NewItemFragment : Fragment() {
         // go back!
         this.findNavController().navigate(NewItemFragmentDirections.actionNewItemToChecklist())
     }
+
 }
