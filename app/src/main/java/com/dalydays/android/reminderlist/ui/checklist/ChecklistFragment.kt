@@ -50,10 +50,12 @@ class ChecklistFragment : Fragment() {
 
         binding.itemsList.layoutManager = LinearLayoutManager(activity)
 
-        // set the plus icon color on the fab
-        val fabIconColor =  ContextCompat.getColor(context!!, R.color.fab_color)
+        // Define fab icon colors (foreground and background)
+            // foreground
+        val fabIconColor = ContextCompat.getColor(context!!, R.color.fabColor)
         val fabIconColorFilter = PorterDuffColorFilter(fabIconColor, PorterDuff.Mode.SRC_IN)
         binding.addListItemFab.drawable.colorFilter = fabIconColorFilter
+            // background
 
         val adapter = ToDoItemAdapter { toDoItem ->
             checklistViewModel.toggleCheckbox(toDoItem)
