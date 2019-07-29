@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.databinding.FragmentNewItemBinding
-import com.dalydays.android.reminderlist.util.Schedule
-import com.google.android.material.snackbar.Snackbar
 
 class NewItemFragment : Fragment() {
 
@@ -83,10 +81,6 @@ class NewItemFragment : Fragment() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun toggleEnabledForInputViews() {
-
-    }
-
     private fun saveAndReturn() {
         // insert new ToDoItem into the database
         newItemViewModel.addNewItem(
@@ -95,16 +89,8 @@ class NewItemFragment : Fragment() {
                 binding.timeInput.text.toString().toLong(),
                 binding.timeUnitSpinner.selectedItem.toString())
 
-        val time = binding.timeInput.text.toString()
-        val timeUnit = binding.timeUnitSpinner.selectedItem.toString()
-        val schedule = Schedule.build(time.toLong(), timeUnit)
-
-        // show a snackbar that the new item was saved
-        val view = requireNotNull(view)
-//        Snackbar.make(view, "schedule duration: ${schedule.duration}, schedule timeUnit: ${schedule.getTimeUnitAsString()}", Snackbar.LENGTH_LONG).show()
-        Snackbar.make(view, "storing values duration: $time, timeUnit: $timeUnit", Snackbar.LENGTH_LONG).show()
-
         // close the soft keyboard if it's open
+        val view = requireNotNull(view)
         view.let { v ->
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(v.windowToken, 0)
