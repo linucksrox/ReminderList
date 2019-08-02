@@ -100,4 +100,8 @@ class NewItemFragment : Fragment() {
         this.findNavController().navigate(NewItemFragmentDirections.actionNewItemToChecklist())
     }
 
+    override fun onResume() {
+        super.onResume()
+        toggleEnableInputs()
+    }
 }
