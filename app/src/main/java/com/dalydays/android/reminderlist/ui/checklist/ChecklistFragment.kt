@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dalydays.android.reminderlist.R
+import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.FragmentChecklistBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -47,9 +48,17 @@ class ChecklistFragment : Fragment() {
 
         binding.itemsList.layoutManager = LinearLayoutManager(activity)
 
-        val adapter = ToDoItemAdapter { toDoItem ->
+        val onCheckboxClickHandler: (ToDoItem) -> Unit = { toDoItem ->
             checklistViewModel.toggleCheckbox(toDoItem)
         }
+
+        val onCardClickHandler: (ToDoItem) -> Unit = { toDoItem ->
+            resetBackHandler()
+            val itemId = toDoItem.id ?: -1L
+            this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToEditItem(itemId))
+        }
+
+        val adapter = ToDoItemAdapter(onCheckboxClickHandler, onCardClickHandler)
 
         binding.itemsList.adapter = adapter
 
@@ -66,7 +75,7 @@ class ChecklistFragment : Fragment() {
             it.getContentIfNotHandled()?.let {
                 // reset back handler and counter when navigating away from this fragment
                 resetBackHandler()
-                this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToNewItem())
+                this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToEditItem())
             }
         })
 

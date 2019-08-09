@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.ChecklistItemBinding
 
-class ToDoItemAdapter(private val onClick: (ToDoItem) -> Unit): ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
+class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private val onCardClick: (ToDoItem) -> Unit): ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -18,7 +18,7 @@ class ToDoItemAdapter(private val onClick: (ToDoItem) -> Unit): ListAdapter<ToDo
         when (holder) {
             is ViewHolder -> {
                 val toDoItem = getItem(position)
-                holder.bind(toDoItem, onClick)
+                holder.bind(toDoItem, onCheckboxClick, onCardClick)
             }
         }
     }
@@ -26,10 +26,13 @@ class ToDoItemAdapter(private val onClick: (ToDoItem) -> Unit): ListAdapter<ToDo
     class ViewHolder private constructor(private val binding: ChecklistItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(toDoItem: ToDoItem, onClick: (ToDoItem) -> Unit) {
+        fun bind(toDoItem: ToDoItem, onCheckboxClick: (ToDoItem) -> Unit, onCardClick: (ToDoItem) -> Unit) {
             binding.todoItem = toDoItem
             binding.checkboxCompleted.setOnClickListener {
-                onClick(toDoItem)
+                onCheckboxClick(toDoItem)
+            }
+            binding.cardTodo.setOnClickListener {
+                onCardClick(toDoItem)
             }
             binding.executePendingBindings()
         }

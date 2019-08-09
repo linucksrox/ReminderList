@@ -7,14 +7,14 @@
 
         <variable
             name="viewmodel"
-            type="com.dalydays.android.reminderlist.ui.newitem.NewItemViewModel" />
+            type="com.dalydays.android.reminderlist.ui.edititem.EditItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_item_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.newitem.NewItemFragment">
+        tools:context=".ui.edititem.EditItemFragment">
 
         <EditText
             android:id="@+id/description_input"

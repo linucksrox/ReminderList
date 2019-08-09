@@ -34,10 +34,6 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
         allToDoItems = repository.allToDoItems
     }
 
-    private fun insert(toDoItem: ToDoItem) = checklistUiScope.launch(Dispatchers.IO) {
-        repository.insert(toDoItem)
-    }
-
     private fun update(toDoItem: ToDoItem) = checklistUiScope.launch(Dispatchers.IO) {
         repository.update(toDoItem)
     }

@@ -9,23 +9,31 @@
         android:id="@+id/checklist"
         android:name="com.dalydays.android.reminderlist.ui.checklist.ChecklistFragment"
         android:label="fragment_checklist"
-        tools:layout="@layout/fragment_checklist" >
+        tools:layout="@layout/fragment_checklist">
         <action
-            android:id="@+id/action_checklist_to_new_item"
-            app:destination="@id/new_item"
+            android:id="@+id/action_checklist_to_edit_item"
+            app:destination="@id/edit_item"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
-        android:id="@+id/new_item"
-        android:name="com.dalydays.android.reminderlist.ui.newitem.NewItemFragment"
-        android:label="fragment_new_item"
-        tools:layout="@layout/fragment_new_item" >
+        android:id="@+id/edit_item"
+        android:name="com.dalydays.android.reminderlist.ui.edititem.EditItemFragment"
+        android:label="fragment_edit_item"
+        tools:layout="@layout/fragment_edit_item">
         <action
-            android:id="@+id/action_new_item_to_checklist"
+            android:id="@+id/action_edit_item_to_checklist"
             app:destination="@id/checklist"
-            app:launchSingleTop="false" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="item_id"
+            android:defaultValue="-1L"
+            app:argType="long" />
     </fragment>
 </navigation>

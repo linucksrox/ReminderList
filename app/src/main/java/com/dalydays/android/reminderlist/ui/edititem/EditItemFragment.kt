@@ -1,4 +1,4 @@
-package com.dalydays.android.reminderlist.ui.newitem
+package com.dalydays.android.reminderlist.ui.edititem
 
 import android.content.Context
 import android.os.Bundle
@@ -10,28 +10,46 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.dalydays.android.reminderlist.R
-import com.dalydays.android.reminderlist.databinding.FragmentNewItemBinding
+import com.dalydays.android.reminderlist.databinding.FragmentEditItemBinding
 
-class NewItemFragment : Fragment() {
+class EditItemFragment : Fragment() {
 
-    private lateinit var binding: FragmentNewItemBinding
-    private lateinit var newItemViewModel: NewItemViewModel
+    private lateinit var binding: FragmentEditItemBinding
+    private lateinit var newItemViewModel: EditItemViewModel
+    private val args: EditItemFragmentArgs by navArgs()
 
+    // Create and inflate views and set up bindings
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_new_item, container, false)
+                inflater, R.layout.fragment_edit_item, container, false)
 
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = NewItemViewModelFactory(application)
+        val viewModelFactory = EditItemViewModelFactory(application)
 
         newItemViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(NewItemViewModel::class.java)
+                .get(EditItemViewModel::class.java)
 
         binding.viewmodel = newItemViewModel
 
+        // Handle enable/disable input views when scheduling is toggled on or off
+        newItemViewModel.toggleScheduleEvent.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                toggleEnableInputs()
+            }
+        })
+
+        binding.lifecycleOwner = this
+
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+    // Initialize values
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Populate time unit dropdown
         ArrayAdapter.createFromResource(
                 context,
@@ -42,20 +60,15 @@ class NewItemFragment : Fragment() {
             binding.timeUnitSpinner.adapter = adapter
         }
 
-        // Handle enable/disable input views when scheduling is toggled on or off
-        newItemViewModel.toggleScheduleEvent.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let {
-                toggleEnableInputs()
-            }
-        })
+        // pull in existing data if a valid id was passed in (user clicked an item for editing instead of add new)
+        // TODO: if id is not -1L then grab item data and populate fields
+        if (args.itemId != -1L) {
+            // or is this the wrong approach? Don't want to be dealing with data in the fragment... hand this
+            // off to the viewmodel for lookup and population
+        }
 
         // Default inputs enabled/disabled based on default state of schedule toggle defined in the layout
         toggleEnableInputs()
-
-        binding.lifecycleOwner = this
-
-        setHasOptionsMenu(true)
-        return binding.root
     }
 
     private fun toggleEnableInputs() {
@@ -97,7 +110,7 @@ class NewItemFragment : Fragment() {
         }
 
         // go back!
-        this.findNavController().navigate(NewItemFragmentDirections.actionNewItemToChecklist())
+        this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
     }
 
     override fun onResume() {

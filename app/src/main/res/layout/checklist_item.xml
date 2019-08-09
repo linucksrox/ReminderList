@@ -11,6 +11,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_todo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -49,18 +50,6 @@
                 app:layout_constraintStart_toEndOf="@+id/checkbox_completed"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mow the lawn" />
-
-            <TextView
-                android:id="@+id/tv_background_uuid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{todoItem.backgroundWorkUUID}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/checkbox_completed"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description"
-                tools:text="debug: background work UUID" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

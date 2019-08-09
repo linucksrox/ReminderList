@@ -1,4 +1,4 @@
-package com.dalydays.android.reminderlist.ui.newitem
+package com.dalydays.android.reminderlist.ui.edititem
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class NewItemViewModel(application: Application) : AndroidViewModel(application) {
+class EditItemViewModel(application: Application) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
     private val newItemUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
