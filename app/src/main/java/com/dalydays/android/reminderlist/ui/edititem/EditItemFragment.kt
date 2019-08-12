@@ -52,7 +52,7 @@ class EditItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Populate time unit dropdown
         ArrayAdapter.createFromResource(
-                context,
+                requireNotNull(context),
                 R.array.time_units_array,
                 android.R.layout.simple_spinner_item
         ).also { adapter ->
