@@ -7,10 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.util.Event
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -23,6 +20,10 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val toggleScheduleEvent: LiveData<Event<String>>
         get() = _toggleScheduleEvent
 
+    private var _description = MutableLiveData<String?>()
+    val description: LiveData<String?>
+        get() = _description
+
     fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
     }
@@ -34,5 +35,22 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     fun toggleSchedule() {
         // Notify fragment to enable/disable input views based on the state of the schedule toggle
         _toggleScheduleEvent.value = Event("switched")
+    }
+
+    fun initializeById(id: Long) {
+        // If id is -1L then we're adding a new item, otherwise look up this item in the database and populate values
+        if (id != -1L) {
+            // look up data
+            newItemUiScope.launch(Dispatchers.IO) {
+                val toDoItem = repository.getItem(id)
+                withContext(Dispatchers.Main) {
+                    // TODO: use livedata so we can observe from fragment and update UI when data is updated from repo
+                    _description.value = toDoItem.description
+//                    duration = toDoItem.duration
+//                    timeUnit = toDoItem.timeUnit
+//                    recurring = toDoItem.recurring
+                }
+            }
+        }
     }
 }

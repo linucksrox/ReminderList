@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dalydays.android.reminderlist.R
+import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.FragmentEditItemBinding
 
 class EditItemFragment : Fragment() {
@@ -35,11 +36,18 @@ class EditItemFragment : Fragment() {
 
         binding.viewmodel = newItemViewModel
 
+        // Initialize data
+        newItemViewModel.initializeById(args.itemId)
+
         // Handle enable/disable input views when scheduling is toggled on or off
         newItemViewModel.toggleScheduleEvent.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 toggleEnableInputs()
             }
+        })
+
+        newItemViewModel.description.observe(viewLifecycleOwner, Observer {
+            binding.descriptionInput.setText(it)
         })
 
         binding.lifecycleOwner = this
@@ -60,12 +68,15 @@ class EditItemFragment : Fragment() {
             binding.timeUnitSpinner.adapter = adapter
         }
 
-        /* TODO: I think this logic should be in the ViewModel, not here. We can pass this data to the ViewModel,
-            but it's up to the ViewModel to decide what to do with the data. I think we need to implement
-            data binding on fragment_edit_item, maybe two way binding, so the data pulled into the layout
-            comes from the ViewModel. Then we can initialize the values in the ViewModel and have them reflected
-            on the screen when editing an item, or in the case of a new item leave them all blank.
+        /* TODO: Yet to complete:
+            -
+            - tie recurring to switch
+            - tie duration to text field
+            - tie time unit to spinner
+            - when saving, be sure to update if editing an existing item, or add new if id is -1L
         */
+
+        // TODO: form validation: binding.descriptionInput.setError() try this
 
         // Default inputs enabled/disabled based on default state of schedule toggle defined in the layout
         toggleEnableInputs()
