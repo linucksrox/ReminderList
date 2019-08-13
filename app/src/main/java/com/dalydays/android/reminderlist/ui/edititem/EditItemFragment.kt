@@ -60,12 +60,12 @@ class EditItemFragment : Fragment() {
             binding.timeUnitSpinner.adapter = adapter
         }
 
-        // pull in existing data if a valid id was passed in (user clicked an item for editing instead of add new)
-        // TODO: if id is not -1L then grab item data and populate fields
-        if (args.itemId != -1L) {
-            // or is this the wrong approach? Don't want to be dealing with data in the fragment... hand this
-            // off to the viewmodel for lookup and population
-        }
+        /* TODO: I think this logic should be in the ViewModel, not here. We can pass this data to the ViewModel,
+            but it's up to the ViewModel to decide what to do with the data. I think we need to implement
+            data binding on fragment_edit_item, maybe two way binding, so the data pulled into the layout
+            comes from the ViewModel. Then we can initialize the values in the ViewModel and have them reflected
+            on the screen when editing an item, or in the case of a new item leave them all blank.
+        */
 
         // Default inputs enabled/disabled based on default state of schedule toggle defined in the layout
         toggleEnableInputs()
