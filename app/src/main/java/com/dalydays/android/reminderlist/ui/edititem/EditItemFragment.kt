@@ -46,10 +46,6 @@ class EditItemFragment : Fragment() {
             }
         })
 
-        newItemViewModel.description.observe(viewLifecycleOwner, Observer {
-            binding.descriptionInput.setText(it)
-        })
-
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)

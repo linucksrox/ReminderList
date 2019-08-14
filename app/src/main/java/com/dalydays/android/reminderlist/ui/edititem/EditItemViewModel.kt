@@ -24,6 +24,10 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     val description: LiveData<String?>
         get() = _description
 
+    private var _recurring = MutableLiveData<Boolean?>()
+    val recurring: LiveData<Boolean?>
+        get() = _recurring
+
     fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
     }
@@ -48,7 +52,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
                     _description.value = toDoItem.description
 //                    duration = toDoItem.duration
 //                    timeUnit = toDoItem.timeUnit
-//                    recurring = toDoItem.recurring
+                    _recurring.value = toDoItem.recurring
                 }
             }
         }
