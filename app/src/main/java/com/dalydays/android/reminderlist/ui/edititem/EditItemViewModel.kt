@@ -21,12 +21,16 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         get() = _toggleScheduleEvent
 
     private var _description = MutableLiveData<String?>()
-    val description: LiveData<String?>
-        get() = _description
+    val description: LiveData<String?> = _description
+
+    private var _duration = MutableLiveData<Long?>()
+    val duration: LiveData<Long?> = _duration
+
+    private var _timeUnit = MutableLiveData<String?>()
+    val timeUnit: LiveData<String?> = _timeUnit
 
     private var _recurring = MutableLiveData<Boolean?>()
-    val recurring: LiveData<Boolean?>
-        get() = _recurring
+    val recurring: LiveData<Boolean?> = _recurring
 
     fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
