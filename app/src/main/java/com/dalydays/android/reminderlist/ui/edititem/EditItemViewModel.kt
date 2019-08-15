@@ -1,13 +1,11 @@
 package com.dalydays.android.reminderlist.ui.edititem
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
-import com.dalydays.android.reminderlist.util.Event
 import kotlinx.coroutines.*
 
 class EditItemViewModel(application: Application) : AndroidViewModel(application) {
@@ -45,7 +43,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         _scheduled.value?.let {
             _scheduled.value = !it
         }
-        Log.d("edit vm", "_scheduled_value = ${_scheduled.value}")
     }
 
     private fun insert(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
