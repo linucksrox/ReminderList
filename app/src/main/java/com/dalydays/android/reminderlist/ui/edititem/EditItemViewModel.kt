@@ -32,6 +32,9 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     private var _recurring = MutableLiveData<Boolean?>()
     val recurring: LiveData<Boolean?> = _recurring
 
+    // TODO: store enabled/disabled status for time input and units input, bind to those in layout
+    //  instead of manually checking everywhere that we need to rerun toggleEnableInputs() in fragment
+
     fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
     }
@@ -52,10 +55,9 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
             newItemUiScope.launch(Dispatchers.IO) {
                 val toDoItem = repository.getItem(id)
                 withContext(Dispatchers.Main) {
-                    // TODO: use livedata so we can observe from fragment and update UI when data is updated from repo
                     _description.value = toDoItem.description
-//                    duration = toDoItem.duration
-//                    timeUnit = toDoItem.timeUnit
+                    _duration.value = toDoItem.duration
+                    _timeUnit.value = toDoItem.timeUnit
                     _recurring.value = toDoItem.recurring
                 }
             }

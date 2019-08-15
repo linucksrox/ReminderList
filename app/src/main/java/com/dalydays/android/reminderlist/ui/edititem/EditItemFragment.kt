@@ -66,7 +66,6 @@ class EditItemFragment : Fragment() {
 
         /* TODO: Yet to complete:
             -
-            - tie duration to text field
             - tie time unit to spinner
             - when saving, be sure to update if editing an existing item, or add new if id is -1L
         */
