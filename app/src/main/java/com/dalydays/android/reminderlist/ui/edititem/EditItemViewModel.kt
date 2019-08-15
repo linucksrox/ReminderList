@@ -1,6 +1,7 @@
 package com.dalydays.android.reminderlist.ui.edititem
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,9 +17,8 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     private val repository = ToDoItemRepository(application)
 
-    private var _toggleScheduleEvent = MutableLiveData<Event<String>>()
-    val toggleScheduleEvent: LiveData<Event<String>>
-        get() = _toggleScheduleEvent
+    private var _scheduled = MutableLiveData<Boolean>()
+    val scheduled: LiveData<Boolean> = _scheduled
 
     private var _description = MutableLiveData<String?>()
     val description: LiveData<String?> = _description
@@ -32,30 +32,35 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     private var _recurring = MutableLiveData<Boolean?>()
     val recurring: LiveData<Boolean?> = _recurring
 
-    // TODO: store enabled/disabled status for time input and units input, bind to those in layout
-    //  instead of manually checking everywhere that we need to rerun toggleEnableInputs() in fragment
+    init {
+        _scheduled.value = false
+    }
 
     fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
+    }
+
+    fun toggleSchedule() {
+        // Reverse the value of scheduled
+        _scheduled.value?.let {
+            _scheduled.value = !it
+        }
+        Log.d("edit vm", "_scheduled_value = ${_scheduled.value}")
     }
 
     private fun insert(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
         repository.insert(toDoItem)
     }
 
-    fun toggleSchedule() {
-        // Notify fragment to enable/disable input views based on the state of the schedule toggle
-        _toggleScheduleEvent.value = Event("switched")
-    }
-
     fun initializeById(id: Long) {
         // If id is -1L then we're adding a new item, otherwise look up this item in the database and populate values
         if (id != -1L) {
-            // look up data
+            // Look up data
             newItemUiScope.launch(Dispatchers.IO) {
                 val toDoItem = repository.getItem(id)
                 withContext(Dispatchers.Main) {
                     _description.value = toDoItem.description
+                    _scheduled.value = toDoItem.recurring
                     _duration.value = toDoItem.duration
                     _timeUnit.value = toDoItem.timeUnit
                     _recurring.value = toDoItem.recurring
