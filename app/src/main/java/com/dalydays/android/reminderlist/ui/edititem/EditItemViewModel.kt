@@ -31,8 +31,11 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
         _scheduled.value = false
     }
 
-    fun addNewItem(description: String, recurring: Boolean, duration: Long, timeUnit: String) {
-        insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
+    fun saveItem(itemId: Long, description: String, recurring: Boolean, duration: Long, timeUnit: String) {
+        when (itemId) {
+            -1L -> insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
+            else -> update(ToDoItem(id = itemId, description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
+        }
     }
 
     fun toggleSchedule() {
@@ -44,6 +47,10 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     private fun insert(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
         repository.insert(toDoItem)
+    }
+
+    private fun update(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
+        repository.update(toDoItem)
     }
 
     fun initializeById(id: Long) {

@@ -2,7 +2,6 @@ package com.dalydays.android.reminderlist.ui.edititem
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -72,8 +71,6 @@ class EditItemFragment : Fragment() {
             binding.timeUnitSpinner.adapter = adapter
         }
 
-        // TODO: when saving, be sure to update if editing an existing item, or add new if id is -1L
-
         // TODO: form validation: binding.descriptionInput.setError() try this
     }
 
@@ -91,8 +88,9 @@ class EditItemFragment : Fragment() {
     }
 
     private fun saveAndReturn() {
-        // insert new ToDoItem into the database
-        newItemViewModel.addNewItem(
+        // Save item to database
+        newItemViewModel.saveItem(
+                args.itemId,
                 binding.descriptionInput.text.toString(),
                 binding.switchRecurring.isChecked,
                 binding.timeInput.text.toString().toLong(),
