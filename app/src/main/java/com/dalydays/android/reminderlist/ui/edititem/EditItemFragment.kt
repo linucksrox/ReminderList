@@ -2,6 +2,7 @@ package com.dalydays.android.reminderlist.ui.edititem
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -66,7 +67,7 @@ class EditItemFragment : Fragment() {
 
         /* TODO: Yet to complete:
             -
-            - tie time unit to spinner
+            - tie time unit to spinner (binding.timeUnitSpinner.adapter as ArrayAdapter<String>).getPosition("Minutes"))
             - when saving, be sure to update if editing an existing item, or add new if id is -1L
         */
 

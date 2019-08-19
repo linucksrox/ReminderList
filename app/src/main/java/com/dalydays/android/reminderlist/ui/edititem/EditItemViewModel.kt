@@ -27,9 +27,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     private var _timeUnit = MutableLiveData<String?>()
     val timeUnit: LiveData<String?> = _timeUnit
 
-    private var _recurring = MutableLiveData<Boolean?>()
-    val recurring: LiveData<Boolean?> = _recurring
-
     init {
         _scheduled.value = false
     }
@@ -60,7 +57,6 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
                     _scheduled.value = toDoItem.recurring
                     _duration.value = toDoItem.duration
                     _timeUnit.value = toDoItem.timeUnit
-                    _recurring.value = toDoItem.recurring
                 }
             }
         }
