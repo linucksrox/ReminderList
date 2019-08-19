@@ -37,7 +37,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:checked="@{safeUnbox(viewmodel.recurring)}"
+            android:checked="@{safeUnbox(viewmodel.scheduled)}"
             android:onClick="@{() -> viewmodel.toggleSchedule()}"
             android:text="@string/edit_recurring"
             app:layout_constraintEnd_toEndOf="parent"

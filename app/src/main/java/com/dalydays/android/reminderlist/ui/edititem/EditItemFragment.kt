@@ -19,6 +19,7 @@ class EditItemFragment : Fragment() {
 
     private lateinit var binding: FragmentEditItemBinding
     private lateinit var newItemViewModel: EditItemViewModel
+    private lateinit var spinnerAdapter: ArrayAdapter<CharSequence>
     private val args: EditItemFragmentArgs by navArgs()
 
     // Create and inflate views and set up bindings
@@ -47,6 +48,12 @@ class EditItemFragment : Fragment() {
             }
         })
 
+        newItemViewModel.timeUnit.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.timeUnitSpinner.setSelection(spinnerAdapter.getPosition(it))
+            }
+        })
+
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
@@ -56,7 +63,7 @@ class EditItemFragment : Fragment() {
     // Initialize values
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Populate time unit dropdown
-        ArrayAdapter.createFromResource(
+        spinnerAdapter = ArrayAdapter.createFromResource(
                 requireNotNull(context),
                 R.array.time_units_array,
                 android.R.layout.simple_spinner_item
@@ -65,11 +72,7 @@ class EditItemFragment : Fragment() {
             binding.timeUnitSpinner.adapter = adapter
         }
 
-        /* TODO: Yet to complete:
-            -
-            - tie time unit to spinner (binding.timeUnitSpinner.adapter as ArrayAdapter<String>).getPosition("Minutes"))
-            - when saving, be sure to update if editing an existing item, or add new if id is -1L
-        */
+        // TODO: when saving, be sure to update if editing an existing item, or add new if id is -1L
 
         // TODO: form validation: binding.descriptionInput.setError() try this
     }
