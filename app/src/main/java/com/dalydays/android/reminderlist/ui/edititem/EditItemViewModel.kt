@@ -8,7 +8,7 @@ import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import kotlinx.coroutines.*
 
-class EditItemViewModel(application: Application) : AndroidViewModel(application) {
+class EditItemViewModel(application: Application, itemId: Long) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
     private val newItemUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -18,8 +18,7 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
     private var _scheduled = MutableLiveData<Boolean>()
     val scheduled: LiveData<Boolean> = _scheduled
 
-    private var _description = MutableLiveData<String?>()
-    val description: LiveData<String?> = _description
+    val description = MutableLiveData<String?>()
 
     private var _duration = MutableLiveData<Long?>()
     val duration: LiveData<Long?> = _duration
@@ -29,6 +28,23 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     init {
         _scheduled.value = false
+        initializeById(itemId)
+    }
+
+    private fun initializeById(id: Long) {
+        // If id is -1L then we're adding a new item, otherwise look up this item in the database and populate values
+        if (id != -1L) {
+            // Look up data
+            newItemUiScope.launch(Dispatchers.IO) {
+                val toDoItem = repository.getItem(id)
+                withContext(Dispatchers.Main) {
+                    description.value = toDoItem.description
+                    _scheduled.value = toDoItem.recurring
+                    _duration.value = toDoItem.duration
+                    _timeUnit.value = toDoItem.timeUnit
+                }
+            }
+        }
     }
 
     fun saveItem(itemId: Long, description: String, recurring: Boolean, duration: Long, timeUnit: String) {
@@ -51,21 +67,5 @@ class EditItemViewModel(application: Application) : AndroidViewModel(application
 
     private fun update(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
         repository.update(toDoItem)
-    }
-
-    fun initializeById(id: Long) {
-        // If id is -1L then we're adding a new item, otherwise look up this item in the database and populate values
-        if (id != -1L) {
-            // Look up data
-            newItemUiScope.launch(Dispatchers.IO) {
-                val toDoItem = repository.getItem(id)
-                withContext(Dispatchers.Main) {
-                    _description.value = toDoItem.description
-                    _scheduled.value = toDoItem.recurring
-                    _duration.value = toDoItem.duration
-                    _timeUnit.value = toDoItem.timeUnit
-                }
-            }
-        }
     }
 }

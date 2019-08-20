@@ -25,7 +25,7 @@
             android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="@string/edit_description"
-            android:text="@{viewmodel.description}"
+            android:text="@={viewmodel.description}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

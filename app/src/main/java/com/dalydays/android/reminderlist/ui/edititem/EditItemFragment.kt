@@ -29,15 +29,12 @@ class EditItemFragment : Fragment() {
                 inflater, R.layout.fragment_edit_item, container, false)
 
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = EditItemViewModelFactory(application)
+        val viewModelFactory = EditItemViewModelFactory(application, args.itemId)
 
         newItemViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(EditItemViewModel::class.java)
 
         binding.viewmodel = newItemViewModel
-
-        // Initialize data
-        newItemViewModel.initializeById(args.itemId)
 
         // Handle enable/disable input views when scheduling is toggled on or off
         newItemViewModel.scheduled.observe(viewLifecycleOwner, Observer {
@@ -70,13 +67,12 @@ class EditItemFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.timeUnitSpinner.adapter = adapter
         }
-
-        // TODO: form validation: binding.descriptionInput.setError() try this
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.new_item_save_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+        // TODO: make it possible to delete an item when editing
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -95,6 +91,10 @@ class EditItemFragment : Fragment() {
                 binding.switchRecurring.isChecked,
                 binding.timeInput.text.toString().toLong(),
                 binding.timeUnitSpinner.selectedItem.toString())
+
+        // TODO: Validation should happen in the VM (or down the line) not here. So what we should do here is check the
+        //  return value of saveItem() (which should return a status) and decide whether that worked and we can
+        //  proceed to navigate back, or it failed so we should not navigate and highlight what's wrong on the form.
 
         // close the soft keyboard if it's open
         val view = requireNotNull(view)
