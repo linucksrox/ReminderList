@@ -81,7 +81,7 @@ class EditItemFragment : Fragment() {
                 args.itemId,
                 binding.descriptionInput.text.toString(),
                 binding.switchRecurring.isChecked,
-                binding.timeInput.text.toString().toLong(),
+                binding.durationInput.text.toString().toLong(),
                 binding.timeUnitSpinner.selectedItem.toString())
 
         // TODO: Validation should happen in the VM (or down the line) not here. So what we should do here is check the

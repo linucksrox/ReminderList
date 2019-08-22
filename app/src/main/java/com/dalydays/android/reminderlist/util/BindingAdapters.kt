@@ -21,12 +21,15 @@ fun setDuration(view: EditText, duration: Long?) {
 
 @InverseBindingAdapter(attribute = "duration")
 fun getDuration(view: EditText): Long {
-    return view.editableText.toString().toLong()
+    return when (view.editableText.isNullOrBlank()) {
+        true -> 0
+        else -> view.editableText.toString().toLong()
+    }
 }
 
 @BindingAdapter("durationAttrChanged")
 fun setListener(view: EditText, listener: InverseBindingListener) {
-    view.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+    view.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
         listener.onChange()
     }
 }

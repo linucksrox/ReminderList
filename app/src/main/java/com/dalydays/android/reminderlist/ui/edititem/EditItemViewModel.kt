@@ -28,6 +28,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
 
     init {
         _scheduled.value = false
+        duration.value = 0L
         initializeById(itemId)
     }
 
