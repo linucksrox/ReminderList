@@ -17,6 +17,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
 
     private var _scheduled = MutableLiveData<Boolean>()
     val scheduled: LiveData<Boolean> = _scheduled
+    val inputEnabled: LiveData<Boolean> = _scheduled
 
     val description = MutableLiveData<String?>()
 

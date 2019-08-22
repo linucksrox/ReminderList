@@ -36,14 +36,6 @@ class EditItemFragment : Fragment() {
 
         binding.viewmodel = newItemViewModel
 
-        // Handle enable/disable input views when scheduling is toggled on or off
-        newItemViewModel.scheduled.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                binding.timeInput.isEnabled = it
-                binding.timeUnitSpinner.isEnabled = it
-            }
-        })
-
         newItemViewModel.timeUnit.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.timeUnitSpinner.setSelection(spinnerAdapter.getPosition(it))
