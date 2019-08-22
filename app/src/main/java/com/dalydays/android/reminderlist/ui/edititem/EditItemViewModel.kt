@@ -21,8 +21,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
 
     val description = MutableLiveData<String?>()
 
-    private var _duration = MutableLiveData<Long?>()
-    val duration: LiveData<Long?> = _duration
+    val duration = MutableLiveData<Long?>()
 
     private var _timeUnit = MutableLiveData<String?>()
     val timeUnit: LiveData<String?> = _timeUnit
@@ -41,7 +40,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
                 withContext(Dispatchers.Main) {
                     description.value = toDoItem.description
                     _scheduled.value = toDoItem.recurring
-                    _duration.value = toDoItem.duration
+                    duration.value = toDoItem.duration
                     _timeUnit.value = toDoItem.timeUnit
                 }
             }

@@ -46,14 +46,14 @@
             tools:checked="true" />
 
         <EditText
-            android:id="@+id/time_input"
+            android:id="@+id/duration_input"
             android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="number"
             android:singleLine="true"
-            android:text="@{String.valueOf(safeUnbox(viewmodel.duration))}"
+            app:duration="@={viewmodel.duration}"
             android:textAlignment="center"
             app:inputEnabled="@{viewmodel.inputEnabled}"
             app:layout_constraintStart_toStartOf="@+id/switch_recurring"
@@ -67,7 +67,7 @@
             android:layout_marginBottom="8dp"
             android:spinnerMode="dropdown"
             app:inputEnabled="@{viewmodel.inputEnabled}"
-            app:layout_constraintBottom_toBottomOf="@+id/time_input"
+            app:layout_constraintBottom_toBottomOf="@+id/duration_input"
             app:layout_constraintEnd_toEndOf="@+id/switch_recurring" />
 
         <View
