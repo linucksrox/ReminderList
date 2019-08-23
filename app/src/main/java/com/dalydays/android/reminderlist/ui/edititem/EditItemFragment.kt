@@ -42,6 +42,12 @@ class EditItemFragment : Fragment() {
             }
         })
 
+        newItemViewModel.saveItem.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                saveAndReturn()
+            }
+        })
+
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
@@ -62,17 +68,32 @@ class EditItemFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.new_item_save_menu, menu)
+        inflater.inflate(R.menu.edit_item_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-        // TODO: make it possible to delete an item when editing
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.save -> {
-            saveAndReturn()
+        R.id.delete -> {
+            deleteAndReturn()
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteAndReturn() {
+        // dialog to confirm the user wants to deleteItem the item
+        // TODO: make dialog here and check return type (true/false)
+
+        // if yes, proceed to deleteItem
+        newItemViewModel.deleteItem(
+                args.itemId,
+                binding.descriptionInput.text.toString(),
+                binding.switchRecurring.isChecked,
+                binding.durationInput.text.toString().toLong(),
+                binding.timeUnitSpinner.selectedItem.toString())
+
+        // navigate back to the main list
+        this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
     }
 
     private fun saveAndReturn() {

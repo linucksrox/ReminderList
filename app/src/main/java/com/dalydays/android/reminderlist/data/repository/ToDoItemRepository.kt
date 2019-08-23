@@ -29,4 +29,9 @@ class ToDoItemRepository(context: Context) {
     suspend fun update(toDoItem: ToDoItem) {
         toDoItemDao.update(toDoItem)
     }
+
+    @WorkerThread
+    suspend fun deleteItem(toDoItem: ToDoItem) {
+        toDoItemDao.deleteItem(toDoItem)
+    }
 }

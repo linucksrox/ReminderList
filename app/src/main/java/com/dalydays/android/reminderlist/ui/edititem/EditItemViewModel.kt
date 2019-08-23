@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
+import com.dalydays.android.reminderlist.util.Event
 import kotlinx.coroutines.*
 
 class EditItemViewModel(application: Application, itemId: Long) : AndroidViewModel(application) {
@@ -25,6 +26,9 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
 
     private var _timeUnit = MutableLiveData<String?>()
     val timeUnit: LiveData<String?> = _timeUnit
+
+    private var _saveItem = MutableLiveData<Event<String>>()
+    val saveItem: LiveData<Event<String>> = _saveItem
 
     init {
         _scheduled.value = false
@@ -48,11 +52,20 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         }
     }
 
+    fun onFabButtonClicked() = newItemUiScope.launch {
+        // navigate to new item screen
+        _saveItem.value = Event("clicked")
+    }
+
     fun saveItem(itemId: Long, description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         when (itemId) {
             -1L -> insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
             else -> update(ToDoItem(id = itemId, description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
         }
+    }
+
+    fun deleteItem(itemId: Long, description: String, recurring: Boolean, duration: Long, timeUnit: String) {
+        delete(ToDoItem(id = itemId, description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
     }
 
     fun toggleSchedule() {
@@ -68,5 +81,9 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
 
     private fun update(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
         repository.update(toDoItem)
+    }
+
+    private fun delete(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
+        repository.deleteItem(toDoItem)
     }
 }

@@ -10,77 +10,95 @@
             type="com.dalydays.android.reminderlist.ui.edititem.EditItemViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/add_item_layout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.edititem.EditItemFragment">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/description_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:hint="@string/edit_description"
-            android:text="@={viewmodel.description}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Switch
-            android:id="@+id/switch_recurring"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:checked="@{viewmodel.scheduled}"
-            android:onClick="@{() -> viewmodel.toggleSchedule()}"
-            android:text="@string/edit_recurring"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_input"
-            tools:checked="true" />
-
-        <EditText
-            android:id="@+id/duration_input"
-            android:layout_width="115dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="number"
-            android:singleLine="true"
-            app:duration="@={viewmodel.duration}"
-            android:textAlignment="center"
-            app:inputEnabled="@{viewmodel.inputEnabled}"
-            app:layout_constraintStart_toStartOf="@+id/switch_recurring"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:text="3" />
-
-        <Spinner
-            android:id="@+id/time_unit_spinner"
-            android:layout_width="195dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:spinnerMode="dropdown"
-            app:inputEnabled="@{viewmodel.inputEnabled}"
-            app:layout_constraintBottom_toBottomOf="@+id/duration_input"
-            app:layout_constraintEnd_toEndOf="@+id/switch_recurring" />
-
-        <View
-            android:id="@+id/divider"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/add_item_layout"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_recurring" />
+            android:layout_height="match_parent"
+            tools:context=".ui.edititem.EditItemFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/description_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="@string/edit_description"
+                android:text="@={viewmodel.description}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/switch_recurring"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:checked="@{viewmodel.scheduled}"
+                android:onClick="@{() -> viewmodel.toggleSchedule()}"
+                android:text="@string/edit_recurring"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description_input"
+                tools:checked="true" />
+
+            <EditText
+                android:id="@+id/duration_input"
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:inputType="number"
+                android:singleLine="true"
+                app:duration="@={viewmodel.duration}"
+                android:textAlignment="center"
+                app:inputEnabled="@{viewmodel.inputEnabled}"
+                app:layout_constraintStart_toStartOf="@+id/switch_recurring"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                tools:text="3" />
+
+            <Spinner
+                android:id="@+id/time_unit_spinner"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:spinnerMode="dropdown"
+                app:inputEnabled="@{viewmodel.inputEnabled}"
+                app:layout_constraintBottom_toBottomOf="@+id/duration_input"
+                app:layout_constraintEnd_toEndOf="@+id/switch_recurring" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_recurring" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save_item_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:backgroundTint="@color/accent"
+            app:tint="@color/icons"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{() -> viewmodel.onFabButtonClicked()}"
+            android:src="@drawable/ic_done" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

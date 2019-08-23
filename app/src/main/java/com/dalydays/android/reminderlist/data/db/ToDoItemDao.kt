@@ -17,6 +17,9 @@ interface ToDoItemDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(item: ToDoItem)
 
+    @Delete
+    suspend fun deleteItem(toDoItem: ToDoItem)
+
     @Query("DELETE FROM item")
     fun deleteAll()
 }
