@@ -2,15 +2,20 @@ package com.dalydays.android.reminderlist.util
 
 import android.view.View
 import android.widget.EditText
+import android.widget.Switch
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 
 @BindingAdapter("inputEnabled")
 fun View.setInputEnabled(inputEnabled: Boolean?) {
-    isEnabled = when (inputEnabled) {
-        true -> true
-        else -> false
+    isEnabled = inputEnabled ?: false
+}
+
+@BindingAdapter("autocheck", requireAll = false)
+fun setChecked(view: Switch, isChecked: Boolean?) {
+    isChecked?.let {
+        view.isChecked = it
     }
 }
 
@@ -28,7 +33,7 @@ fun getDuration(view: EditText): Long {
 }
 
 @BindingAdapter("durationAttrChanged")
-fun setListener(view: EditText, listener: InverseBindingListener) {
+fun setDurationChangedListener(view: EditText, listener: InverseBindingListener) {
     view.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
         listener.onChange()
     }
