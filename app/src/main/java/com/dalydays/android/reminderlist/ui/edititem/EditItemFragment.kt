@@ -96,9 +96,7 @@ class EditItemFragment : Fragment() {
                     // navigate back to the main list
                     this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
                 }
-                .setNegativeButton("Cancel") { _, _ ->
-                    // do nothing
-                }
+                .setNegativeButton("Cancel", null)
                 .show()
     }
 
