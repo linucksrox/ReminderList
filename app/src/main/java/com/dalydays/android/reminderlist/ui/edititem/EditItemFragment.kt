@@ -101,13 +101,21 @@ class EditItemFragment : Fragment() {
     }
 
     private fun saveAndReturn() {
+        val description = binding.descriptionInput.text.toString()
+        val recurring = binding.switchRecurring.isChecked
+        val durationString = binding.durationInput.text.toString()
+        val duration = when (durationString.isBlank()) {
+            true -> 0L
+            else -> durationString.toLong()
+        }
+        val timeUnit = binding.timeUnitSpinner.selectedItem.toString()
         // Save item to database
         newItemViewModel.saveItem(
                 args.itemId,
-                binding.descriptionInput.text.toString(),
-                binding.switchRecurring.isChecked,
-                binding.durationInput.text.toString().toLong(),
-                binding.timeUnitSpinner.selectedItem.toString())
+                description,
+                recurring,
+                duration,
+                timeUnit)
 
         // TODO: Validation should happen in the VM (or down the line) not here. So what we should do here is check the
         //  return value of saveItem() (which should return a status) and decide whether that worked and we can
