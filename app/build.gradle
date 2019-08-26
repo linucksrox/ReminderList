@@ -51,7 +51,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     // RecyclerView
-    implementation "androidx.recyclerview:recyclerview:1.1.0-beta02"
+    implementation "androidx.recyclerview:recyclerview:1.1.0-beta03"
 
     // CardView
     implementation "androidx.cardview:cardview:1.0.0"
@@ -78,10 +78,10 @@ dependencies {
     // Lifecycle components
     def lifecycle_version = "2.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     // WorkManager
-    def work_version = "2.1.0"
+    def work_version = "2.2.0"
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
     // Notifications (general support library)
