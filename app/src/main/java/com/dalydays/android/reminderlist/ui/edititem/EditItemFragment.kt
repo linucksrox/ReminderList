@@ -117,10 +117,6 @@ class EditItemFragment : Fragment() {
                 duration,
                 timeUnit)
 
-        // TODO: Validation should happen in the VM (or down the line) not here. So what we should do here is check the
-        //  return value of saveItem() (which should return a status) and decide whether that worked and we can
-        //  proceed to navigate back, or it failed so we should not navigate and highlight what's wrong on the form.
-
         // close the soft keyboard if it's open
         val view = requireNotNull(view)
         view.let { v ->
