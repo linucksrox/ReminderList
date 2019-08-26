@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.databinding.FragmentEditItemBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class EditItemFragment : Fragment() {
 
@@ -82,18 +83,23 @@ class EditItemFragment : Fragment() {
 
     private fun deleteAndReturn() {
         // dialog to confirm the user wants to deleteItem the item
-        // TODO: make dialog here and check return type (true/false)
-
-        // if yes, proceed to deleteItem
-        newItemViewModel.deleteItem(
-                args.itemId,
-                binding.descriptionInput.text.toString(),
-                binding.switchRecurring.isChecked,
-                binding.durationInput.text.toString().toLong(),
-                binding.timeUnitSpinner.selectedItem.toString())
-
-        // navigate back to the main list
-        this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
+        val alertDialog = MaterialAlertDialogBuilder(context)
+                .setTitle("Delete this item?")
+                .setPositiveButton("Delete") { dialog, which ->
+                    // if yes, proceed to deleteItem
+                    newItemViewModel.deleteItem(
+                            args.itemId,
+                            binding.descriptionInput.text.toString(),
+                            binding.switchRecurring.isChecked,
+                            binding.durationInput.text.toString().toLong(),
+                            binding.timeUnitSpinner.selectedItem.toString())
+                    // navigate back to the main list
+                    this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
+                }
+                .setNegativeButton("Cancel") { _, _ ->
+                    // do nothing
+                }
+                .show()
     }
 
     private fun saveAndReturn() {
