@@ -27,8 +27,8 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     private var _timeUnit = MutableLiveData<String?>()
     val timeUnit: LiveData<String?> = _timeUnit
 
-    private var _saveItem = MutableLiveData<Event<String>>()
-    val saveItem: LiveData<Event<String>> = _saveItem
+    private var _saveItemEvent = MutableLiveData<Event<String>>()
+    val saveItemEvent: LiveData<Event<String>> = _saveItemEvent
 
     init {
         _scheduled.value = false
@@ -54,7 +54,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
 
     fun onFabButtonClicked() = newItemUiScope.launch {
         // navigate to new item screen
-        _saveItem.value = Event("clicked")
+        _saveItemEvent.value = Event("clicked")
     }
 
     fun saveItem(itemId: Long, description: String, recurring: Boolean, duration: Long, timeUnit: String) {

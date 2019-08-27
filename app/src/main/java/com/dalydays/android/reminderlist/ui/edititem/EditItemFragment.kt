@@ -43,7 +43,7 @@ class EditItemFragment : Fragment() {
             }
         })
 
-        newItemViewModel.saveItem.observe(viewLifecycleOwner, Observer {
+        newItemViewModel.saveItemEvent.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 saveAndReturn()
             }
