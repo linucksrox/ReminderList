@@ -12,6 +12,14 @@ fun View.setInputEnabled(inputEnabled: Boolean?) {
     isEnabled = inputEnabled ?: false
 }
 
+@BindingAdapter("saveEnabled")
+fun View.setSaveEnabled(saveEnabled: Boolean?) {
+    visibility = when (saveEnabled) {
+        true -> View.VISIBLE
+        else -> View.GONE
+    }
+}
+
 @BindingAdapter("autocheck", requireAll = false)
 fun setChecked(view: Switch, isChecked: Boolean?) {
     isChecked?.let {

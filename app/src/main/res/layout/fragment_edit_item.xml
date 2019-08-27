@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="viewmodel"
             type="com.dalydays.android.reminderlist.ui.edititem.EditItemViewModel" />
@@ -97,7 +99,8 @@
             app:tint="@color/icons"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="@{() -> viewmodel.onFabButtonClicked()}"
-            android:src="@drawable/ic_done" />
+            android:src="@drawable/ic_done"
+            app:saveEnabled="@{viewmodel.saveButtonEnabled}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

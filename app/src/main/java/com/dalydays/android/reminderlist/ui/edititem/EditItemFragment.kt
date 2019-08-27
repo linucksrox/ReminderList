@@ -82,6 +82,8 @@ class EditItemFragment : Fragment() {
     }
 
     private fun deleteAndReturn() {
+        closeSoftKeyboard()
+
         // dialog to confirm the user wants to deleteItem the item
         MaterialAlertDialogBuilder(context)
                 .setTitle("Delete this item?")
@@ -117,14 +119,17 @@ class EditItemFragment : Fragment() {
                 duration,
                 timeUnit)
 
-        // close the soft keyboard if it's open
+        closeSoftKeyboard()
+
+        // go back!
+        this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
+    }
+
+    private fun closeSoftKeyboard() {
         val view = requireNotNull(view)
         view.let { v ->
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(v.windowToken, 0)
         }
-
-        // go back!
-        this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
     }
 }
