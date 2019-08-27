@@ -33,6 +33,9 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     private var _saveButtonEnabled = MutableLiveData<Boolean>()
     val saveButtonEnabled: LiveData<Boolean> = _saveButtonEnabled
 
+    private val _descriptionError = MutableLiveData<Boolean>()
+    val descriptionError: LiveData<Boolean> = _descriptionError
+
     init {
         _scheduled.value = false
         duration.value = 0L
@@ -54,8 +57,6 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
                 }
             }
         }
-
-        validateInput()
     }
 
     fun onFabButtonClicked() = newItemUiScope.launch {
@@ -79,23 +80,14 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         _scheduled.value?.let {
             _scheduled.value = !it
         }
-        validateInput()
     }
 
     fun validateInput() {
         // require not blank description
         val descriptionIsBlank = description.value.isNullOrBlank()
+        _descriptionError.value = descriptionIsBlank
 
-        // require not blank interval if schedule is enabled
-        val scheduleEnabled = scheduled.value ?: false
-        var durationIsBlank = false
-        if (scheduleEnabled) {
-            duration.value?.let {
-                durationIsBlank = it.toString().isBlank()
-            }
-        }
-
-        _saveButtonEnabled.value = !(descriptionIsBlank || durationIsBlank)
+        _saveButtonEnabled.value = !(descriptionIsBlank)
     }
 
     private fun insert(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {

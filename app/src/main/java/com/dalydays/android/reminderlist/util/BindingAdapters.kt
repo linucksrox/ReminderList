@@ -20,6 +20,13 @@ fun View.setSaveEnabled(saveEnabled: Boolean?) {
     }
 }
 
+@BindingAdapter("error")
+fun setError(editText: EditText, isError: Boolean?) {
+    if (isError == true) {
+        editText.error = "Description required"
+    }
+}
+
 @BindingAdapter("autocheck", requireAll = false)
 fun setChecked(view: Switch, isChecked: Boolean?) {
     isChecked?.let {

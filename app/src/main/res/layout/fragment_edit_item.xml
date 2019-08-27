@@ -34,7 +34,8 @@
                 android:text="@={viewmodel.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:error="@{viewmodel.descriptionError}"/>
 
             <Switch
                 android:id="@+id/switch_recurring"
