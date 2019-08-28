@@ -18,7 +18,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class EditItemFragment : Fragment() {
 
     private lateinit var binding: FragmentEditItemBinding
-    private lateinit var newItemViewModel: EditItemViewModel
+    private lateinit var editItemViewModel: EditItemViewModel
     private lateinit var spinnerAdapter: ArrayAdapter<CharSequence>
     private val args: EditItemFragmentArgs by navArgs()
 
@@ -32,25 +32,25 @@ class EditItemFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val viewModelFactory = EditItemViewModelFactory(application, args.itemId)
 
-        newItemViewModel = ViewModelProviders.of(this, viewModelFactory)
+        editItemViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(EditItemViewModel::class.java)
 
-        binding.viewmodel = newItemViewModel
+        binding.viewmodel = editItemViewModel
 
-        newItemViewModel.timeUnit.observe(viewLifecycleOwner, Observer {
+        editItemViewModel.timeUnit.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.timeUnitSpinner.setSelection(spinnerAdapter.getPosition(it))
             }
         })
 
-        newItemViewModel.saveItemEvent.observe(viewLifecycleOwner, Observer {
+        editItemViewModel.saveItemEvent.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 saveAndReturn()
             }
         })
 
-        newItemViewModel.description.observe(viewLifecycleOwner, Observer {
-            newItemViewModel.validateInput()
+        editItemViewModel.description.observe(viewLifecycleOwner, Observer {
+            editItemViewModel.validateInput()
         })
 
         binding.lifecycleOwner = this
@@ -93,7 +93,7 @@ class EditItemFragment : Fragment() {
                 .setTitle("Delete this item?")
                 .setPositiveButton("Delete") { dialog, which ->
                     // if yes, proceed to deleteItem
-                    newItemViewModel.deleteItem(
+                    editItemViewModel.deleteItem(
                             args.itemId,
                             binding.descriptionInput.text.toString(),
                             binding.switchRecurring.isChecked,
@@ -116,7 +116,7 @@ class EditItemFragment : Fragment() {
         }
         val timeUnit = binding.timeUnitSpinner.selectedItem.toString()
         // Save item to database
-        newItemViewModel.saveItem(
+        editItemViewModel.saveItem(
                 args.itemId,
                 description,
                 recurring,
