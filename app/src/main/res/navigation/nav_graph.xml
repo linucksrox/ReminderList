@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/checklist"
         android:name="com.dalydays.android.reminderlist.ui.checklist.ChecklistFragment"
-        android:label="Todo List"
+        android:label="Reminder List"
         tools:layout="@layout/fragment_checklist">
         <action
             android:id="@+id/action_checklist_to_edit_item"
