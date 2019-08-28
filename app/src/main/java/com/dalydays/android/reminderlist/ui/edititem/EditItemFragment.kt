@@ -20,6 +20,7 @@ class EditItemFragment : Fragment() {
     private lateinit var binding: FragmentEditItemBinding
     private lateinit var editItemViewModel: EditItemViewModel
     private lateinit var spinnerAdapter: ArrayAdapter<CharSequence>
+    private var isDeleteOptionEnabled = false
     private val args: EditItemFragmentArgs by navArgs()
 
     // Create and inflate views and set up bindings
@@ -53,6 +54,12 @@ class EditItemFragment : Fragment() {
             editItemViewModel.validateInput()
         })
 
+        editItemViewModel.showDeleteMenuOption.observe(viewLifecycleOwner, Observer {
+            // update delete status and reset the options menu
+            isDeleteOptionEnabled = it
+            requireActivity().invalidateOptionsMenu()
+        })
+
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
@@ -74,6 +81,7 @@ class EditItemFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.edit_item_menu, menu)
+        menu.findItem(R.id.delete).isVisible = isDeleteOptionEnabled
         super.onCreateOptionsMenu(menu, inflater)
     }
 

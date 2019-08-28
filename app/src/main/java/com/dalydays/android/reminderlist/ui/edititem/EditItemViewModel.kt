@@ -36,10 +36,14 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     private val _descriptionError = MutableLiveData<Boolean>()
     val descriptionError: LiveData<Boolean> = _descriptionError
 
+    private val _showDeleteMenuOption = MutableLiveData<Boolean>()
+    val showDeleteMenuOption: LiveData<Boolean> = _showDeleteMenuOption
+
     init {
         _scheduled.value = false
         duration.value = 0L
         _saveButtonEnabled.value = false
+        _showDeleteMenuOption.value = false
         initializeById(itemId)
     }
 
@@ -56,6 +60,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
                     _timeUnit.value = toDoItem.timeUnit
                 }
             }
+            _showDeleteMenuOption.value = true
         }
     }
 
