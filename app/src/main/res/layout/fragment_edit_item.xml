@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="viewmodel"
@@ -32,10 +32,10 @@
                 android:ems="10"
                 android:hint="@string/edit_description"
                 android:text="@={viewmodel.description}"
+                app:error="@{viewmodel.descriptionError}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:error="@{viewmodel.descriptionError}"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
                 android:id="@+id/switch_recurring"
@@ -60,8 +60,8 @@
                 android:ems="10"
                 android:inputType="number"
                 android:singleLine="true"
-                app:duration="@={viewmodel.duration}"
                 android:textAlignment="center"
+                app:duration="@={viewmodel.duration}"
                 app:inputEnabled="@{viewmodel.inputEnabled}"
                 app:layout_constraintStart_toStartOf="@+id/switch_recurring"
                 app:layout_constraintTop_toBottomOf="@+id/divider"
@@ -96,12 +96,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            app:backgroundTint="@color/accent"
-            app:tint="@color/icons"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="@{() -> viewmodel.onFabButtonClicked()}"
             android:src="@drawable/ic_done"
-            app:saveEnabled="@{viewmodel.saveButtonEnabled}"/>
+            app:backgroundTint="@color/accent"
+            app:saveEnabled="@{viewmodel.saveButtonEnabled}"
+            app:tint="@color/icons" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
