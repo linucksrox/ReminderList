@@ -7,19 +7,27 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.ChecklistItemCheckedBinding
+import com.dalydays.android.reminderlist.databinding.ChecklistItemUncheckedBinding
 
 const val ITEM_UNCHECKED = 0
 const val ITEM_CHECKED = 1
 
 class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private val onCardClick: (ToDoItem) -> Unit): ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ITEM_CHECKED -> ViewHolderChecked.from(parent)
+            else -> ViewHolderUnchecked.from(parent)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ViewHolder -> {
+            is ViewHolderChecked -> {
+                val toDoItem = getItem(position)
+                holder.bind(toDoItem, onCheckboxClick, onCardClick)
+            }
+            is ViewHolderUnchecked -> {
                 val toDoItem = getItem(position)
                 holder.bind(toDoItem, onCheckboxClick, onCardClick)
             }
@@ -36,24 +44,46 @@ class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private v
         }
     }
 
-    class ViewHolder private constructor(private val binding: ChecklistItemCheckedBinding)
+    class ViewHolderChecked private constructor(private val binding: ChecklistItemCheckedBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(toDoItem: ToDoItem, onCheckboxClick: (ToDoItem) -> Unit, onCardClick: (ToDoItem) -> Unit) {
             binding.todoItem = toDoItem
-            binding.checkedCheckboxCompleted.setOnClickListener {
+            binding.checkboxCompleted.setOnClickListener {
                 onCheckboxClick(toDoItem)
             }
-            binding.checkedCardTodo.setOnClickListener {
+            binding.cardTodo.setOnClickListener {
                 onCardClick(toDoItem)
             }
             binding.executePendingBindings()
         }
 
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(parent: ViewGroup): ViewHolderChecked {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                return ViewHolder(ChecklistItemCheckedBinding.inflate(layoutInflater, parent, false))
+                return ViewHolderChecked(ChecklistItemCheckedBinding.inflate(layoutInflater, parent, false))
+            }
+        }
+    }
+
+    class ViewHolderUnchecked private constructor(private val binding: ChecklistItemUncheckedBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(toDoItem: ToDoItem, onCheckboxClick: (ToDoItem) -> Unit, onCardClick: (ToDoItem) -> Unit) {
+            binding.todoItem = toDoItem
+            binding.checkboxCompleted.setOnClickListener {
+                onCheckboxClick(toDoItem)
+            }
+            binding.cardTodo.setOnClickListener {
+                onCardClick(toDoItem)
+            }
+            binding.executePendingBindings()
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolderUnchecked {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                return ViewHolderUnchecked(ChecklistItemUncheckedBinding.inflate(layoutInflater, parent, false))
             }
         }
     }
