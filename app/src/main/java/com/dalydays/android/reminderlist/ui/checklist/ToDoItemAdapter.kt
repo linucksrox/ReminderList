@@ -9,8 +9,8 @@ import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.ChecklistItemCheckedBinding
 import com.dalydays.android.reminderlist.databinding.ChecklistItemUncheckedBinding
 
-const val ITEM_UNCHECKED = 0
-const val ITEM_CHECKED = 1
+const val ITEM_CHECKED = 0
+const val ITEM_UNCHECKED = 1
 
 class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private val onCardClick: (ToDoItem) -> Unit): ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
 
@@ -22,13 +22,12 @@ class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private v
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val toDoItem = getItem(position)
         when (holder) {
             is ViewHolderChecked -> {
-                val toDoItem = getItem(position)
                 holder.bind(toDoItem, onCheckboxClick, onCardClick)
             }
             is ViewHolderUnchecked -> {
-                val toDoItem = getItem(position)
                 holder.bind(toDoItem, onCheckboxClick, onCardClick)
             }
         }
@@ -40,7 +39,7 @@ class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private v
         val toDoItem = getItem(position)
         return when (toDoItem.completed) {
             true -> ITEM_CHECKED
-            false -> ITEM_UNCHECKED
+            else -> ITEM_UNCHECKED
         }
     }
 
