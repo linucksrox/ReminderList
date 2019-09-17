@@ -30,6 +30,8 @@ class ChecklistFragment : Fragment() {
         }
     }
 
+    private lateinit var adapter: ToDoItemAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -48,8 +50,9 @@ class ChecklistFragment : Fragment() {
 
         binding.itemsList.layoutManager = LinearLayoutManager(activity)
 
-        val onCheckboxClickHandler: (ToDoItem) -> Unit = { toDoItem ->
+        val onCheckboxClickHandler: (ToDoItem, Int) -> Unit = { toDoItem, position ->
             checklistViewModel.toggleCheckbox(toDoItem)
+            adapter.notifyItemChanged(position)
         }
 
         val onCardClickHandler: (ToDoItem) -> Unit = { toDoItem ->
@@ -58,7 +61,7 @@ class ChecklistFragment : Fragment() {
             this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToEditItem(itemId))
         }
 
-        val adapter = ToDoItemAdapter(onCheckboxClickHandler, onCardClickHandler)
+        adapter = ToDoItemAdapter(onCheckboxClickHandler, onCardClickHandler)
 
         binding.itemsList.adapter = adapter
 

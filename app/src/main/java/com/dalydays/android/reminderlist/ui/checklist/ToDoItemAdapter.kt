@@ -12,7 +12,7 @@ import com.dalydays.android.reminderlist.databinding.ChecklistItemUncheckedBindi
 const val ITEM_CHECKED = 0
 const val ITEM_UNCHECKED = 1
 
-class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private val onCardClick: (ToDoItem) -> Unit): ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
+class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem, Int) -> Unit, private val onCardClick: (ToDoItem) -> Unit): ListAdapter<ToDoItem, RecyclerView.ViewHolder>(ToDoItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -46,10 +46,10 @@ class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private v
     class ViewHolderChecked private constructor(private val binding: ChecklistItemCheckedBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(toDoItem: ToDoItem, onCheckboxClick: (ToDoItem) -> Unit, onCardClick: (ToDoItem) -> Unit) {
+        fun bind(toDoItem: ToDoItem, onCheckboxClick: (ToDoItem, Int) -> Unit, onCardClick: (ToDoItem) -> Unit) {
             binding.todoItem = toDoItem
             binding.checkboxCompleted.setOnClickListener {
-                onCheckboxClick(toDoItem)
+                onCheckboxClick(toDoItem, layoutPosition)
             }
             binding.cardTodo.setOnClickListener {
                 onCardClick(toDoItem)
@@ -68,10 +68,10 @@ class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem) -> Unit, private v
     class ViewHolderUnchecked private constructor(private val binding: ChecklistItemUncheckedBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(toDoItem: ToDoItem, onCheckboxClick: (ToDoItem) -> Unit, onCardClick: (ToDoItem) -> Unit) {
+        fun bind(toDoItem: ToDoItem, onCheckboxClick: (ToDoItem, Int) -> Unit, onCardClick: (ToDoItem) -> Unit) {
             binding.todoItem = toDoItem
             binding.checkboxCompleted.setOnClickListener {
-                onCheckboxClick(toDoItem)
+                onCheckboxClick(toDoItem, layoutPosition)
             }
             binding.cardTodo.setOnClickListener {
                 onCardClick(toDoItem)
