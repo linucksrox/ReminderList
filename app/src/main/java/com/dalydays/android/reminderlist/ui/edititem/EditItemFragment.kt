@@ -108,7 +108,7 @@ class EditItemFragment : Fragment() {
                             binding.durationInput.text.toString().toLong(),
                             binding.timeUnitSpinner.selectedItem.toString())
                     // navigate back to the main list
-                    this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
+                    this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist(binding.descriptionInput.text.toString()))
                 }
                 .setNegativeButton("Cancel", null)
                 .show()

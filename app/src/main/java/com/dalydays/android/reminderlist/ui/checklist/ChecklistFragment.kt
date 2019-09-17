@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class ChecklistFragment : Fragment() {
 
+    private val args: ChecklistFragmentArgs by navArgs()
     private var backPressedCounter = 0
     private val backHandlerCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -105,5 +107,9 @@ class ChecklistFragment : Fragment() {
         // reset back button and enable custom back handler when starting or returning to this fragment
         backPressedCounter = 0
         backHandlerCallback.isEnabled = true
+
+        if (args.deletedDescription != "default-nothing-deleted") {
+            showSnackbarMessage("Deleted ${args.deletedDescription}")
+        }
     }
 }
