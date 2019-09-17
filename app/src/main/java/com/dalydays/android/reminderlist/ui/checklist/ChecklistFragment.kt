@@ -41,7 +41,7 @@ class ChecklistFragment : Fragment() {
                 inflater, R.layout.fragment_checklist, container, false)
 
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = CheckListViewModelFactory(application)
+        val viewModelFactory = CheckListViewModelFactory(application, args.deletedDescription)
 
         val checklistViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ChecklistViewModel::class.java)
@@ -84,6 +84,12 @@ class ChecklistFragment : Fragment() {
             }
         })
 
+        checklistViewModel.showDeletedSnackBar.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { message ->
+                showSnackbarMessage(message)
+            }
+        })
+
         return binding.root
     }
 
@@ -107,9 +113,5 @@ class ChecklistFragment : Fragment() {
         // reset back button and enable custom back handler when starting or returning to this fragment
         backPressedCounter = 0
         backHandlerCallback.isEnabled = true
-
-        if (args.deletedDescription != "default-nothing-deleted") {
-            showSnackbarMessage("Deleted ${args.deletedDescription}")
-        }
     }
 }

@@ -18,7 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ChecklistViewModel(application: Application) : AndroidViewModel(application) {
+class ChecklistViewModel(application: Application, deletedDescription: String) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
     private val checklistUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -30,8 +30,15 @@ class ChecklistViewModel(application: Application) : AndroidViewModel(applicatio
     val navigateToNewToDoItem: LiveData<Event<String>>
         get() = _navigateToNewToDoItem
 
+    private var _showDeletedSnackBar = MutableLiveData<Event<String>>()
+    val showDeletedSnackBar: LiveData<Event<String>>
+        get() = _showDeletedSnackBar
+
     init {
         allToDoItems = repository.allToDoItems
+        if (deletedDescription != "default-nothing-deleted") {
+            _showDeletedSnackBar.value = Event("Deleted $deletedDescription")
+        }
     }
 
     private fun update(toDoItem: ToDoItem) = checklistUiScope.launch(Dispatchers.IO) {
