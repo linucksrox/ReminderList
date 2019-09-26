@@ -11,9 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.databinding.FragmentEditItemBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.*
 
 class EditItemFragment : Fragment() {
 
@@ -100,14 +102,10 @@ class EditItemFragment : Fragment() {
         MaterialAlertDialogBuilder(context)
                 .setTitle("Delete this item?")
                 .setPositiveButton("Delete") { dialog, which ->
-                    // if yes, proceed to deleteItem
-                    editItemViewModel.deleteItem(
-                            args.itemId,
-                            binding.descriptionInput.text.toString(),
-                            binding.switchRecurring.isChecked,
-                            binding.durationInput.text.toString().toLong(),
-                            binding.timeUnitSpinner.selectedItem.toString())
-                    // navigate back to the main list
+                    // If yes, proceed to deleteItem
+                    editItemViewModel.deleteItem()
+
+                    // Navigate back to the main list
                     this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist(binding.descriptionInput.text.toString()))
                 }
                 .setNegativeButton("Cancel", null)

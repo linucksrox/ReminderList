@@ -4,10 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.util.Event
 import kotlinx.coroutines.*
+import java.util.*
 
 class EditItemViewModel(application: Application, itemId: Long) : AndroidViewModel(application) {
 
@@ -39,6 +41,8 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     private val _showDeleteMenuOption = MutableLiveData<Boolean>()
     val showDeleteMenuOption: LiveData<Boolean> = _showDeleteMenuOption
 
+    private lateinit var toDoItem: ToDoItem
+
     init {
         _scheduled.value = false
         duration.value = 0L
@@ -52,7 +56,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         if (id != -1L) {
             // Look up data
             newItemUiScope.launch(Dispatchers.IO) {
-                val toDoItem = repository.getItem(id)
+                toDoItem = repository.getItem(id)
                 withContext(Dispatchers.Main) {
                     description.value = toDoItem.description
                     _scheduled.value = toDoItem.recurring
@@ -76,8 +80,8 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         }
     }
 
-    fun deleteItem(itemId: Long, description: String, recurring: Boolean, duration: Long, timeUnit: String) {
-        delete(ToDoItem(id = itemId, description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
+    fun deleteItem() {
+        delete(toDoItem)
     }
 
     fun toggleSchedule() {
@@ -104,6 +108,10 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     }
 
     private fun delete(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
+        // Cancel background job if there was one
+        if (!toDoItem.backgroundWorkUUID.isNullOrEmpty()) {
+            WorkManager.getInstance(getApplication()).cancelWorkById(UUID.fromString(toDoItem.backgroundWorkUUID))
+        }
         repository.deleteItem(toDoItem)
     }
 }
