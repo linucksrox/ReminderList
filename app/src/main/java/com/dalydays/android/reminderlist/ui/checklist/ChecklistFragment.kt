@@ -23,9 +23,7 @@ class ChecklistFragment : Fragment() {
     private var backPressedCounter = 0
     private val backHandlerCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            backPressedCounter++
-
-            when (backPressedCounter) {
+            when (++backPressedCounter) {
                 1 -> showSnackbarMessage("Press back again to quit")
                 2 -> activity?.finish()
             }
