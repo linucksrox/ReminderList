@@ -6,7 +6,6 @@
     <string name="menu_save_text">Save</string>
     <string name="scheduled_notification">Scheduled reminder for %1$s from now</string>
     <string name="deleted_notification">Deleted %1$s</string>
-    <string name="not_scheduled">Not Scheduled</string>
 
     <!-- Notifications -->
     <string name="reminder_channel_name">Reminder</string>
