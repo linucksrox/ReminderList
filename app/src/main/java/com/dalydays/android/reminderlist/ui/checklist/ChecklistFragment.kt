@@ -84,7 +84,8 @@ class ChecklistFragment : Fragment() {
 
         checklistViewModel.showDeletedSnackBar.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { message ->
-                showSnackbarMessage(message)
+                val displayMessage = getString(R.string.deleted_notification, message)
+                showSnackbarMessage(displayMessage)
             }
         })
 

@@ -14,4 +14,6 @@ data class ToDoItem(
         @ColumnInfo(name = "duration") var duration: Long? = null,
         @ColumnInfo(name = "time_unit") var timeUnit: String? = null,
         @ColumnInfo(name = "background_work_uuid") var backgroundWorkUUID: String? = null
-)
+) {
+    fun getDurationString() = duration.toString() + " " + timeUnit
+}

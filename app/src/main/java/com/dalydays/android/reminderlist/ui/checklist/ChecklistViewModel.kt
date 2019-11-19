@@ -41,7 +41,7 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
     init {
         allToDoItems = repository.allToDoItems
         if (deletedDescription != "default-nothing-deleted") {
-            _showDeletedSnackBar.value = Event("Deleted $deletedDescription")
+            _showDeletedSnackBar.value = Event(deletedDescription)
         }
     }
 
