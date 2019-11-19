@@ -4,7 +4,7 @@
     <string name="edit_description">Description</string>
     <string name="edit_recurring">Add Back To List After</string>
     <string name="menu_save_text">Save</string>
-    <string name="scheduled_notification">I\'ll remind you to do %1$s in %2$s %3$s</string>
+    <string name="scheduled_notification">Scheduled reminder for %1$s</string>
     <string name="schedule">Schedule: %1$s %2$s</string>
     <string name="not_scheduled">Not Scheduled</string>
 

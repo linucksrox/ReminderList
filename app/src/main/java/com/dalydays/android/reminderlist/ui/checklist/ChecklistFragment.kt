@@ -90,7 +90,8 @@ class ChecklistFragment : Fragment() {
 
         checklistViewModel.showScheduledSnackBar.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { message ->
-                showSnackbarMessage(message)
+                val displayMessage = getString(R.string.scheduled_notification, message)
+                showSnackbarMessage(displayMessage)
             }
         })
 

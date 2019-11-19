@@ -95,7 +95,7 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
             update(toDoItem)
 
             // Notify that the item was scheduled
-            _showScheduledSnackbar.value = Event("Scheduled ${toDoItem.description} for ${toDoItem.duration} ${toDoItem.timeUnit}")
+            _showScheduledSnackbar.value = Event("${toDoItem.duration} ${toDoItem.timeUnit}")
         } else {
             if (!toDoItem.backgroundWorkUUID.isNullOrEmpty()) {
                 WorkManager.getInstance(getApplication()).cancelWorkById(UUID.fromString(toDoItem.backgroundWorkUUID))
