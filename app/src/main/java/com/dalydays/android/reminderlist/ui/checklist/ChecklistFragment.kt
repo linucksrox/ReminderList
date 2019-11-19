@@ -90,6 +90,12 @@ class ChecklistFragment : Fragment() {
             }
         })
 
+        checklistViewModel.showScheduledSnackBar.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { message ->
+                showSnackbarMessage(message)
+            }
+        })
+
         return binding.root
     }
 

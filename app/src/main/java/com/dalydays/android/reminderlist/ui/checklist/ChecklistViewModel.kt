@@ -34,6 +34,10 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
     val showDeletedSnackBar: LiveData<Event<String>>
         get() = _showDeletedSnackBar
 
+    private var _showScheduledSnackbar = MutableLiveData<Event<String>>()
+    val showScheduledSnackBar: LiveData<Event<String>>
+        get() = _showScheduledSnackbar
+
     init {
         allToDoItems = repository.allToDoItems
         if (deletedDescription != "default-nothing-deleted") {
@@ -89,6 +93,9 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
             // Update the item's background work UUID in the database
             toDoItem.backgroundWorkUUID = notificationWork.id.toString()
             update(toDoItem)
+
+            // Notify that the item was scheduled
+            _showScheduledSnackbar.value = Event("Scheduled ${toDoItem.description} for ${toDoItem.duration} ${toDoItem.timeUnit}")
         } else {
             if (!toDoItem.backgroundWorkUUID.isNullOrEmpty()) {
                 WorkManager.getInstance(getApplication()).cancelWorkById(UUID.fromString(toDoItem.backgroundWorkUUID))
