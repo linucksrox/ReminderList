@@ -18,6 +18,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 
+const val TAG_NAME = "scheduledfor"
+
 class ChecklistViewModel(application: Application, deletedDescription: String) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
@@ -79,14 +81,17 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
             // Convert the duration and timeUnit to something that the work request builder understands
             val schedule = Schedule.build(toDoItem.duration!!, toDoItem.timeUnit!!)
 
-            // Schedule this worker to fire the notification based on the interval set for this item in the app
+            // Get scheduled time/date in milliseconds so that we can add it to a WorkInfo tag
+            // in order to see when the reminder will happen for checked items
+            val scheduleDay = GregorianCalendar.getInstance(Locale.getDefault())
+            // TODO: schedule the actual correct duration and time intervals
+            scheduleDay.add(GregorianCalendar.DAY_OF_MONTH, schedule.duration.toInt())
+            val scheduleMillis = scheduleDay.timeInMillis
             val notificationWork = OneTimeWorkRequestBuilder<ReminderWorker>()
 //                    .setConstraints(constraints)
-                    // override null safety here for now, should probably handle this differently to avoid breakage
                     .setInitialDelay(schedule.duration, schedule.timeUnit)
                     .setInputData(data)
-                    // TODO: Set end date with addTag() which can be calculated in the adapter
-                    .addTag("false time remaining 3 weeks")
+                    .addTag("$TAG_NAME:$scheduleMillis")
                     .build()
 
             // Queue up the work!

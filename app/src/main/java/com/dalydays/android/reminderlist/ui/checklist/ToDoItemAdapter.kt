@@ -1,12 +1,13 @@
 package com.dalydays.android.reminderlist.ui.checklist
 
+import android.text.format.DateUtils
+import android.text.format.DateUtils.DAY_IN_MILLIS
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.ChecklistItemCheckedBinding
@@ -69,8 +70,17 @@ class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem, Int) -> Unit,
                 val workUUID = UUID.fromString(toDoItem.backgroundWorkUUID)
                 workManager.getWorkInfoByIdLiveData(workUUID).observe(lifecycleOwner, androidx.lifecycle.Observer { workInfo ->
                     workInfo?.let {
-                        // TODO: calculate time remaining (maybe there's a helper library for this)
-                        binding.tvRecurring.text = workInfo.tags.elementAt(1)
+                        val iterator = workInfo.tags.iterator()
+                        var endDateString = "0"
+                        iterator.forEach {
+                            if (it.startsWith(TAG_NAME)) {
+                                val tokens = it.split(":")
+                                endDateString = tokens[1]
+                            }
+                        }
+                        val endDateMillis = endDateString.toLong()
+                        val timeSpan = DateUtils.getRelativeTimeSpanString(endDateMillis, System.currentTimeMillis(), DAY_IN_MILLIS)
+                        binding.tvRecurring.text = timeSpan
                     }
                 })
             }
