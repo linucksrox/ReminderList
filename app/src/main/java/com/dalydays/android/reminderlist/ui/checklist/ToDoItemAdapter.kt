@@ -65,12 +65,15 @@ class ToDoItemAdapter(private val onCheckboxClick: (ToDoItem, Int) -> Unit,
             binding.cardTodo.setOnClickListener {
                 onCardClick(toDoItem)
             }
-            workManager.getWorkInfoByIdLiveData(UUID.fromString(toDoItem.backgroundWorkUUID)).observe(lifecycleOwner, androidx.lifecycle.Observer { workInfo ->
-                workInfo?.let {
-                    // TODO: calculate time remaining (maybe there's a helper library for this)
-                    binding.tvRecurring.text = workInfo.tags.elementAt(1)
-                }
-            })
+            toDoItem.backgroundWorkUUID?.let {
+                val workUUID = UUID.fromString(toDoItem.backgroundWorkUUID)
+                workManager.getWorkInfoByIdLiveData(workUUID).observe(lifecycleOwner, androidx.lifecycle.Observer { workInfo ->
+                    workInfo?.let {
+                        // TODO: calculate time remaining (maybe there's a helper library for this)
+                        binding.tvRecurring.text = workInfo.tags.elementAt(1)
+                    }
+                })
+            }
             binding.executePendingBindings()
         }
 
