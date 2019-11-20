@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.databinding.FragmentChecklistBinding
@@ -61,7 +62,10 @@ class ChecklistFragment : Fragment() {
             this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToEditItem(itemId))
         }
 
-        adapter = ToDoItemAdapter(onCheckboxClickHandler, onCardClickHandler)
+        val fragmentContext = requireNotNull(context)
+        val workManager = WorkManager.getInstance(fragmentContext)
+
+        adapter = ToDoItemAdapter(onCheckboxClickHandler, onCardClickHandler, workManager, this)
 
         binding.itemsList.adapter = adapter
 

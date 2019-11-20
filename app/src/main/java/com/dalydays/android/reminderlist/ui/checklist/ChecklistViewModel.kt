@@ -85,6 +85,8 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
                     // override null safety here for now, should probably handle this differently to avoid breakage
                     .setInitialDelay(schedule.duration, schedule.timeUnit)
                     .setInputData(data)
+                    // TODO: Set end date with addTag() which can be calculated in the adapter
+                    .addTag("false time remaining 3 weeks")
                     .build()
 
             // Queue up the work!
