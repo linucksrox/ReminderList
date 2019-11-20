@@ -85,14 +85,7 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
             // Get scheduled time/date in milliseconds so that we can add it to a WorkInfo tag
             // in order to see when the reminder will happen for checked items
             val scheduleDay = GregorianCalendar.getInstance(Locale.getDefault())
-            val interval = when (schedule.timeUnit) {
-                TimeUnit.SECONDS -> GregorianCalendar.SECOND
-                TimeUnit.MINUTES -> GregorianCalendar.MINUTE
-                TimeUnit.HOURS -> GregorianCalendar.HOUR
-                TimeUnit.DAYS -> GregorianCalendar.DAY_OF_MONTH
-                else -> GregorianCalendar.DAY_OF_MONTH
-            }
-            scheduleDay.add(interval, schedule.duration.toInt())
+            scheduleDay.add(GregorianCalendar.DAY_OF_MONTH, schedule.duration.toInt())
             val scheduleMillis = scheduleDay.timeInMillis
             val notificationWork = OneTimeWorkRequestBuilder<ReminderWorker>()
 //                    .setConstraints(constraints)
