@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -60,9 +61,15 @@ class EditItemFragment : Fragment() {
             requireActivity().invalidateOptionsMenu()
         })
 
+        editItemViewModel.setToolbarTitleAddItem.observe(viewLifecycleOwner, Observer {
+            // Change the title from Edit Item to Add Item
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = "Add Item"
+        })
+
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
+
         return binding.root
     }
 

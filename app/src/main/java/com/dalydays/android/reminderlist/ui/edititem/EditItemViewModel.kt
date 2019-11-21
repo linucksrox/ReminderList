@@ -41,6 +41,9 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     private val _showDeleteMenuOption = MutableLiveData<Boolean>()
     val showDeleteMenuOption: LiveData<Boolean> = _showDeleteMenuOption
 
+    private val _setToolbarTitleAddItem = MutableLiveData<Boolean>()
+    val setToolbarTitleAddItem: LiveData<Boolean> = _setToolbarTitleAddItem
+
     private lateinit var toDoItem: ToDoItem
 
     init {
@@ -65,6 +68,8 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
                 }
             }
             _showDeleteMenuOption.value = true
+        } else {
+            _setToolbarTitleAddItem.value = true
         }
     }
 
