@@ -55,6 +55,10 @@ class EditItemFragment : Fragment() {
             editItemViewModel.validateInput()
         })
 
+        editItemViewModel.duration.observe(viewLifecycleOwner, Observer {
+            editItemViewModel.validateInput()
+        })
+
         editItemViewModel.showDeleteMenuOption.observe(viewLifecycleOwner, Observer {
             // update delete status and reset the options menu
             isDeleteOptionEnabled = it
@@ -63,7 +67,9 @@ class EditItemFragment : Fragment() {
 
         editItemViewModel.setToolbarTitleAddItem.observe(viewLifecycleOwner, Observer {
             // Change the title from Edit Item to Add Item
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = "Add Item"
+            it.getContentIfNotHandled()?.let {
+                (requireActivity() as AppCompatActivity).supportActionBar?.title = "Add Item"
+            }
         })
 
         binding.lifecycleOwner = this

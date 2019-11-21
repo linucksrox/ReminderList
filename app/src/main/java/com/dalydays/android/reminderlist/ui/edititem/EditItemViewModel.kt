@@ -10,6 +10,7 @@ import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.util.Event
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.math.absoluteValue
 
 class EditItemViewModel(application: Application, itemId: Long) : AndroidViewModel(application) {
 
@@ -41,14 +42,14 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     private val _showDeleteMenuOption = MutableLiveData<Boolean>()
     val showDeleteMenuOption: LiveData<Boolean> = _showDeleteMenuOption
 
-    private val _setToolbarTitleAddItem = MutableLiveData<Boolean>()
-    val setToolbarTitleAddItem: LiveData<Boolean> = _setToolbarTitleAddItem
+    private val _setToolbarTitleAddItem = MutableLiveData<Event<String>>()
+    val setToolbarTitleAddItem: LiveData<Event<String>> = _setToolbarTitleAddItem
 
     private lateinit var toDoItem: ToDoItem
 
     init {
         _scheduled.value = false
-        duration.value = 0L
+        duration.value = 1L
         _saveButtonEnabled.value = false
         _showDeleteMenuOption.value = false
         initializeById(itemId)
@@ -69,7 +70,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
             }
             _showDeleteMenuOption.value = true
         } else {
-            _setToolbarTitleAddItem.value = true
+            _setToolbarTitleAddItem.value = Event("new")
         }
     }
 
@@ -106,6 +107,13 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         // require not blank description
         val descriptionIsBlank = description.value.isNullOrBlank()
         _descriptionError.value = descriptionIsBlank
+
+        // require duration to be greater than 0
+        duration.value?.let {
+            if (it <= 0) {
+                duration.value = 1L
+            }
+        }
 
         _saveButtonEnabled.value = !(descriptionIsBlank)
     }
