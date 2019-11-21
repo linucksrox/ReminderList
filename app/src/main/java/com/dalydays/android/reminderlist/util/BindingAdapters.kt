@@ -42,7 +42,7 @@ fun setDuration(view: EditText, duration: Long?) {
 @InverseBindingAdapter(attribute = "duration")
 fun getDuration(view: EditText): Long {
     return when (view.editableText.isNullOrBlank()) {
-        true -> 0
+        true -> 1
         else -> view.editableText.toString().toLong()
     }
 }

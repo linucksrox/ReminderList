@@ -55,10 +55,6 @@ class EditItemFragment : Fragment() {
             editItemViewModel.validateInput()
         })
 
-        editItemViewModel.duration.observe(viewLifecycleOwner, Observer {
-            editItemViewModel.validateInput()
-        })
-
         editItemViewModel.showDeleteMenuOption.observe(viewLifecycleOwner, Observer {
             // update delete status and reset the options menu
             isDeleteOptionEnabled = it

@@ -108,13 +108,6 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         val descriptionIsBlank = description.value.isNullOrBlank()
         _descriptionError.value = descriptionIsBlank
 
-        // require duration to be greater than 0
-        duration.value?.let {
-            if (it <= 0) {
-                duration.value = 1L
-            }
-        }
-
         _saveButtonEnabled.value = !(descriptionIsBlank)
     }
 
