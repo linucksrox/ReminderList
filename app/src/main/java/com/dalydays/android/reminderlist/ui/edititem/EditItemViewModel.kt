@@ -76,7 +76,16 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
     fun saveItem(itemId: Long, description: String, recurring: Boolean, duration: Long, timeUnit: String) {
         when (itemId) {
             -1L -> insert(ToDoItem(description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
-            else -> update(ToDoItem(id = itemId, description = description, recurring = recurring, duration = duration, timeUnit = timeUnit))
+            else -> {
+                newItemUiScope.launch(Dispatchers.IO) {
+                    val modifiedToDoItem = repository.getItem(itemId)
+                    modifiedToDoItem.description = description
+                    modifiedToDoItem.recurring = recurring
+                    modifiedToDoItem.duration = duration
+                    modifiedToDoItem.timeUnit = timeUnit
+                    update(modifiedToDoItem)
+                }
+            }
         }
     }
 

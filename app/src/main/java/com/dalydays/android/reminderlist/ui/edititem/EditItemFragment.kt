@@ -11,11 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.databinding.FragmentEditItemBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.util.*
 
 class EditItemFragment : Fragment() {
 
