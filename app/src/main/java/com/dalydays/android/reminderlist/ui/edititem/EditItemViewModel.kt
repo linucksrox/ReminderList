@@ -10,7 +10,6 @@ import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.util.Event
 import kotlinx.coroutines.*
 import java.util.*
-import kotlin.math.absoluteValue
 
 class EditItemViewModel(application: Application, itemId: Long) : AndroidViewModel(application) {
 

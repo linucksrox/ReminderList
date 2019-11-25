@@ -25,7 +25,7 @@ class ChecklistFragment : Fragment() {
     private val backHandlerCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             when (++backPressedCounter) {
-                1 -> showSnackbarMessage("Press back again to quit")
+                1 -> showSnackBarMessage("Press back again to quit")
                 2 -> activity?.finish()
             }
         }
@@ -89,14 +89,14 @@ class ChecklistFragment : Fragment() {
         checklistViewModel.showDeletedSnackBar.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { message ->
                 val displayMessage = getString(R.string.deleted_notification, message)
-                showSnackbarMessage(displayMessage)
+                showSnackBarMessage(displayMessage)
             }
         })
 
         checklistViewModel.showScheduledSnackBar.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { message ->
                 val displayMessage = getString(R.string.scheduled_notification, message)
-                showSnackbarMessage(displayMessage)
+                showSnackBarMessage(displayMessage)
             }
         })
 
@@ -108,7 +108,7 @@ class ChecklistFragment : Fragment() {
         backHandlerCallback.isEnabled = false
     }
 
-    private fun showSnackbarMessage(message: String) {
+    private fun showSnackBarMessage(message: String) {
         val view = requireNotNull(view)
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
     }

@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 const val TAG_NAME = "scheduledfor"
 
@@ -37,9 +36,9 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
     val showDeletedSnackBar: LiveData<Event<String>>
         get() = _showDeletedSnackBar
 
-    private var _showScheduledSnackbar = MutableLiveData<Event<String>>()
+    private var _showScheduledSnackBar = MutableLiveData<Event<String>>()
     val showScheduledSnackBar: LiveData<Event<String>>
-        get() = _showScheduledSnackbar
+        get() = _showScheduledSnackBar
 
     init {
         allToDoItems = repository.allToDoItems
@@ -102,7 +101,7 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
             update(toDoItem)
 
             // Notify that the item was scheduled
-            _showScheduledSnackbar.value = Event("${toDoItem.duration} ${toDoItem.timeUnit}")
+            _showScheduledSnackBar.value = Event("${toDoItem.duration} ${toDoItem.timeUnit}")
         } else {
             if (!toDoItem.backgroundWorkUUID.isNullOrEmpty()) {
                 WorkManager.getInstance(getApplication()).cancelWorkById(UUID.fromString(toDoItem.backgroundWorkUUID))

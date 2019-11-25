@@ -108,7 +108,7 @@ class EditItemFragment : Fragment() {
         // dialog to confirm the user wants to deleteItem the item
         MaterialAlertDialogBuilder(context)
                 .setTitle("Delete this item?")
-                .setPositiveButton("Delete") { dialog, which ->
+                .setPositiveButton("Delete") { _, _ ->
                     // If yes, proceed to deleteItem
                     editItemViewModel.deleteItem()
 

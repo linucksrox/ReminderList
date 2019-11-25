@@ -27,13 +27,6 @@ fun setError(editText: EditText, isError: Boolean?) {
     }
 }
 
-@BindingAdapter("autocheck", requireAll = false)
-fun setChecked(view: Switch, isChecked: Boolean?) {
-    isChecked?.let {
-        view.isChecked = it
-    }
-}
-
 @BindingAdapter("duration", requireAll = false)
 fun setDuration(view: EditText, duration: Long?) {
     view.setText(duration.toString())
