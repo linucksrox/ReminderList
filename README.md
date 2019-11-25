@@ -1,6 +1,7 @@
 # ReminderList
-![Screenshot_1569409544](https://user-images.githubusercontent.com/5169868/65595592-2199e180-df63-11e9-95e7-67fc16cf1003.png)
-![Screenshot_1569408612](https://user-images.githubusercontent.com/5169868/65595658-3b3b2900-df63-11e9-8be2-ed5a5d2424b8.png)
+![Screenshot_1574684280](https://user-images.githubusercontent.com/5169868/69540324-566ee880-0f54-11ea-924b-2594b4668d3d.png)
+![Screenshot_1574684284](https://user-images.githubusercontent.com/5169868/69540351-61297d80-0f54-11ea-90e4-34d2b1af86e4.png)
+![Screenshot_1574684400](https://user-images.githubusercontent.com/5169868/69540361-6686c800-0f54-11ea-95fb-2993d3ca8087.png)
 ![Screenshot_1569408769](https://user-images.githubusercontent.com/5169868/65595677-44c49100-df63-11e9-8156-656484956c48.png)
 
 Do you have tasks that need to be done every so often? Maybe you want to change your furnace filter every month on the 1st. You could schedule a recurring appointment on your calendar, but if you don't complete that task right away then you will be out of sync with your calendar. For example, I get the reminder on the January 1, but don't change the filter until the January 14, I'll still get the next reminder on February 1 which now is too soon, because I always want to wait 1 month from when I actaully change the filter. It's tedious to have to edit my recurring appointment every time.
