@@ -8,7 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,7 +42,7 @@ class ChecklistFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val viewModelFactory = CheckListViewModelFactory(application, args.deletedDescription)
 
-        val checklistViewModel = ViewModelProviders.of(this, viewModelFactory)
+        val checklistViewModel = ViewModelProvider(this, viewModelFactory)
                 .get(ChecklistViewModel::class.java)
 
         binding.checklistViewModel = checklistViewModel

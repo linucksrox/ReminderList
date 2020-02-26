@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dalydays.android.reminderlist.R
@@ -34,7 +34,7 @@ class EditItemFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val viewModelFactory = EditItemViewModelFactory(application, args.itemId)
 
-        editItemViewModel = ViewModelProviders.of(this, viewModelFactory)
+        editItemViewModel = ViewModelProvider(this, viewModelFactory)
                 .get(EditItemViewModel::class.java)
 
         binding.viewmodel = editItemViewModel

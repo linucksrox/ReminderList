@@ -2,7 +2,6 @@ package com.dalydays.android.reminderlist.util
 
 import android.view.View
 import android.widget.EditText
-import android.widget.Switch
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
