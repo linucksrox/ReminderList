@@ -8,7 +8,10 @@
     <string name="deleted_notification">Deleted %1$s</string>
 
     <!-- Notifications -->
-    <string name="reminder_channel_name">Reminder</string>
-    <string name="reminder_channel_description">Reminder Channel Description</string>
-    <string name="notification_title">You have work to do!</string>
+    <string name="single_channel_name">Single Item</string>
+    <string name="single_channel_description">Single Todo Item Reminder</string>
+    <string name="single_notification_title">Something Just Came Up!</string>
+    <string name="general_channel_name">General</string>
+    <string name="general_channel_description">General Notification Description</string>
+    <string name="general_notification_title">You have work to do!</string>
 </resources>

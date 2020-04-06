@@ -9,6 +9,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+const val SINGLE_CHANNEL_ID = "single_channel_id"
+const val GENERAL_CHANNEL_ID = "general_channel_id"
+
 class ReminderListApp : Application() {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
@@ -26,16 +29,25 @@ class ReminderListApp : Application() {
 
     private fun setupNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val CHANNEL_ID = "reminder_channel_id"
-            val name = getString(R.string.reminder_channel_name)
-            val descriptionText = getString(R.string.reminder_channel_description)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val reminderChannel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(reminderChannel)
+
+            // Build General Channel
+            val generalName = getString(R.string.general_channel_name)
+            val generalDescriptionText = getString(R.string.general_channel_description)
+            val generalImportance = NotificationManager.IMPORTANCE_DEFAULT
+            val generalReminderChannel = NotificationChannel(GENERAL_CHANNEL_ID, generalName, generalImportance).apply {
+                description = generalDescriptionText
+            }
+            notificationManager.createNotificationChannel(generalReminderChannel)
+
+            // Build Single Channel
+            val singleName = getString(R.string.single_channel_name)
+            val singleDescriptionText = getString(R.string.single_channel_description)
+            val singleImportance = NotificationManager.IMPORTANCE_DEFAULT
+            val singleReminderChannel = NotificationChannel(SINGLE_CHANNEL_ID, singleName, singleImportance).apply {
+                description = singleDescriptionText
+            }
+            notificationManager.createNotificationChannel(singleReminderChannel)
         }
     }
 }
