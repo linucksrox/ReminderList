@@ -1,9 +1,7 @@
 package com.dalydays.android.reminderlist.ui.edititem
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -103,8 +101,6 @@ class EditItemFragment : Fragment() {
     }
 
     private fun deleteAndReturn() {
-        closeSoftKeyboard()
-
         // dialog to confirm the user wants to deleteItem the item
         MaterialAlertDialogBuilder(context)
                 .setTitle("Delete this item?")
@@ -136,17 +132,7 @@ class EditItemFragment : Fragment() {
                 duration,
                 timeUnit)
 
-        closeSoftKeyboard()
-
         // go back!
         this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
-    }
-
-    private fun closeSoftKeyboard() {
-        val view = requireNotNull(view)
-        view.let { v ->
-            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(v.windowToken, 0)
-        }
     }
 }

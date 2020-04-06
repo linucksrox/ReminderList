@@ -1,9 +1,11 @@
 package com.dalydays.android.reminderlist.ui.checklist
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -123,5 +125,16 @@ class ChecklistFragment : Fragment() {
         // reset back button and enable custom back handler when starting or returning to this fragment
         backPressedCounter = 0
         backHandlerCallback.isEnabled = true
+
+        // close soft keyboard if it was open
+        closeSoftKeyboard()
+    }
+
+    private fun closeSoftKeyboard() {
+        val view = requireNotNull(view)
+        view.let { v ->
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(v.windowToken, 0)
+        }
     }
 }
