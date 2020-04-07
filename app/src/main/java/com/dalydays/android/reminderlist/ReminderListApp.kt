@@ -31,24 +31,22 @@ class ReminderListApp : Application() {
 
     private fun setupNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            // Build General Channel
             val generalName = getString(R.string.general_channel_name)
             val generalDescriptionText = getString(R.string.general_channel_description)
             val generalImportance = NotificationManager.IMPORTANCE_LOW
             val generalReminderChannel = NotificationChannel(GENERAL_CHANNEL_ID, generalName, generalImportance).apply {
                 description = generalDescriptionText
             }
-            notificationManager.createNotificationChannel(generalReminderChannel)
 
-            // Build Single Channel
             val singleName = getString(R.string.single_channel_name)
             val singleDescriptionText = getString(R.string.single_channel_description)
             val singleImportance = NotificationManager.IMPORTANCE_DEFAULT
             val singleReminderChannel = NotificationChannel(SINGLE_CHANNEL_ID, singleName, singleImportance).apply {
                 description = singleDescriptionText
             }
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(generalReminderChannel)
             notificationManager.createNotificationChannel(singleReminderChannel)
         }
     }
