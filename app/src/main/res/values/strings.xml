@@ -9,9 +9,9 @@
 
     <!-- Notifications -->
     <string name="single_channel_name">Single Item</string>
-    <string name="single_channel_description">Single Todo Item Reminder</string>
+    <string name="single_channel_description">Lets you know when a specific item has reoccurred and is now uncompleted</string>
     <string name="single_notification_title">Something Just Came Up!</string>
-    <string name="general_channel_name">General</string>
-    <string name="general_channel_description">General Notification Description</string>
-    <string name="general_notification_title">You have work to do!</string>
+    <string name="general_channel_name">Summary</string>
+    <string name="general_channel_description">Lets you know that there are uncompleted items</string>
+    <string name="general_notification_title">There are uncompleted items on the list</string>
 </resources>

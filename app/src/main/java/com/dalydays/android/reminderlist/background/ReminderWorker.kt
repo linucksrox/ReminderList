@@ -8,6 +8,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.dalydays.android.reminderlist.R
+import com.dalydays.android.reminderlist.ReminderListApp
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.ui.MainActivity
 import kotlinx.coroutines.*
@@ -51,7 +52,7 @@ class ReminderWorker(private val context: Context, private val workerParameters:
         // Build the notification
         val notificationId = 1
 
-        val notificationBuilder = NotificationCompat.Builder(context, "reminder_channel_id")
+        val notificationBuilder = NotificationCompat.Builder(context, ReminderListApp.GENERAL_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(title)
                 .setContentText(text)
