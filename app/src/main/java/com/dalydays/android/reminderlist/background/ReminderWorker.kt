@@ -1,16 +1,12 @@
 package com.dalydays.android.reminderlist.background
 
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.dalydays.android.reminderlist.R
-import com.dalydays.android.reminderlist.ReminderListApp
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
-import com.dalydays.android.reminderlist.ui.MainActivity
+import com.dalydays.android.reminderlist.util.NotificationMaker
+import com.dalydays.android.reminderlist.util.ReminderNotificationType
 import kotlinx.coroutines.*
 
 class ReminderWorker(private val context: Context, private val workerParameters: WorkerParameters) : Worker(context, workerParameters) {
@@ -34,36 +30,11 @@ class ReminderWorker(private val context: Context, private val workerParameters:
                 toDoItem.completed = false
                 toDoItem.backgroundWorkUUID = null
                 toDoItemRepository.update(toDoItem)
-                showNotification(context, context.getString(R.string.single_notification_title), toDoItem.description)
+                NotificationMaker.showNotification(context, context.getString(R.string.single_notification_title), toDoItem.description, ReminderNotificationType.SINGLE)
             }
         }
 
         return Result.success()
-    }
-
-    private fun showNotification(context: Context, title: String, text: String) {
-
-        // Open the app when clicking the notification
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
-        // Build the notification
-        val notificationId = 1
-
-        val notificationBuilder = NotificationCompat.Builder(context, ReminderListApp.GENERAL_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-
-        // Show the notification
-        with(NotificationManagerCompat.from(context)) {
-            notify(notificationId, notificationBuilder.build())
-        }
     }
 
     override fun onStopped() {

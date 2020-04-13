@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import com.dalydays.android.reminderlist.util.ReminderNotificationChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,11 +13,6 @@ import kotlinx.coroutines.launch
 class ReminderListApp : Application() {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
-
-    companion object {
-        const val GENERAL_CHANNEL_ID = "general_channel_id"
-        const val SINGLE_CHANNEL_ID = "single_channel_id"
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -34,14 +30,14 @@ class ReminderListApp : Application() {
             val generalName = getString(R.string.general_channel_name)
             val generalDescriptionText = getString(R.string.general_channel_description)
             val generalImportance = NotificationManager.IMPORTANCE_LOW
-            val generalReminderChannel = NotificationChannel(GENERAL_CHANNEL_ID, generalName, generalImportance).apply {
+            val generalReminderChannel = NotificationChannel(ReminderNotificationChannel.GENERAL_CHANNEL, generalName, generalImportance).apply {
                 description = generalDescriptionText
             }
 
             val singleName = getString(R.string.single_channel_name)
             val singleDescriptionText = getString(R.string.single_channel_description)
             val singleImportance = NotificationManager.IMPORTANCE_DEFAULT
-            val singleReminderChannel = NotificationChannel(SINGLE_CHANNEL_ID, singleName, singleImportance).apply {
+            val singleReminderChannel = NotificationChannel(ReminderNotificationChannel.SINGLE_CHANNEL, singleName, singleImportance).apply {
                 description = singleDescriptionText
             }
 
