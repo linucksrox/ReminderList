@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="time_units_array">
+        <item>Seconds</item>
         <item>Days</item>
         <item>Weeks</item>
         <item>Months</item>

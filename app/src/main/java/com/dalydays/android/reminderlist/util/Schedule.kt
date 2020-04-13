@@ -23,13 +23,7 @@ class Schedule(val duration: Long, val timeUnit: TimeUnit) {
             calendar.add(calendarUnit, duration.toInt())
             val timeDifferenceInMillis = calendar.timeInMillis - startTimeMillis
 
-            // Scheduling is converted to DAYS for everything not smaller than a day
-            val realTimeUnit = when (calendarUnit) {
-                GregorianCalendar.SECOND -> TimeUnit.SECONDS
-                GregorianCalendar.MINUTE -> TimeUnit.MINUTES
-                GregorianCalendar.HOUR -> TimeUnit.HOURS
-                else -> TimeUnit.DAYS
-            }
+            val realTimeUnit = gregorianCalendarToTimeUnit(calendarUnit)
             val realDuration = when (realTimeUnit) {
                 TimeUnit.SECONDS -> TimeUnit.MILLISECONDS.toSeconds(timeDifferenceInMillis)
                 TimeUnit.MINUTES -> TimeUnit.MILLISECONDS.toMinutes(timeDifferenceInMillis)
@@ -38,6 +32,25 @@ class Schedule(val duration: Long, val timeUnit: TimeUnit) {
             }
 
             return Schedule(realDuration, realTimeUnit)
+        }
+
+        private fun gregorianCalendarToTimeUnit(gregorianCalendarUnit: Int): TimeUnit {
+            // Scheduling is converted to DAYS for everything not smaller than a day
+            return when (gregorianCalendarUnit) {
+                GregorianCalendar.SECOND -> TimeUnit.SECONDS
+                GregorianCalendar.MINUTE -> TimeUnit.MINUTES
+                GregorianCalendar.HOUR -> TimeUnit.HOURS
+                else -> TimeUnit.DAYS
+            }
+        }
+    }
+
+    fun toMillis(): Long {
+        return when (timeUnit) {
+            TimeUnit.SECONDS -> TimeUnit.SECONDS.toMillis(duration)
+            TimeUnit.MINUTES -> TimeUnit.MINUTES.toMillis(duration)
+            TimeUnit.HOURS -> TimeUnit.HOURS.toMillis(duration)
+            else -> TimeUnit.DAYS.toMillis(duration)
         }
     }
 }

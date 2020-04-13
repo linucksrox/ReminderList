@@ -53,4 +53,34 @@ class ScheduleTest {
         val schedule = Schedule.build(1, "Years")
         assert(schedule.duration == 365L && schedule.timeUnit == TimeUnit.DAYS)
     }
+
+    @Test
+    fun `getting toMillis for schedule of 2 Seconds should return 2000`() {
+        val schedule = Schedule.build(2, "Seconds")
+        assert(schedule.toMillis() == 2000L)
+    }
+
+    @Test
+    fun `getting toMillis for schedule of 2 Minutes should return 120000`() {
+        val schedule = Schedule.build(2, "Minutes")
+        assert(schedule.toMillis() == 120000L)
+    }
+
+    @Test
+    fun `getting toMillis for schedule of 2 Hours should return 7200000`() {
+        val schedule = Schedule.build(2, "Hours")
+        assert(schedule.toMillis() == 7200000L)
+    }
+
+    @Test
+    fun `getting toMillis for schedule of 2 Days should return 172800000`() {
+        val schedule = Schedule.build(2, "Days")
+        assert(schedule.toMillis() == 172800000L)
+    }
+
+    @Test
+    fun `getting toMillis for schedule of 2 Weeks should return 1209600000`() {
+        val schedule = Schedule.build(2, "Weeks")
+        assert(schedule.toMillis() == 1209600000L)
+    }
 }
