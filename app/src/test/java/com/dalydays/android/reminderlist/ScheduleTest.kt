@@ -83,4 +83,24 @@ class ScheduleTest {
         val schedule = Schedule.build(2, "Weeks")
         assert(schedule.toMillis() == 1209600000L)
     }
+
+    @Test
+    fun `getting toMillis for schedule of 1 Months should return between 2419200000 and 2678400000`() {
+        // between 28 and 31 days
+        val scheduleInMillis = Schedule.build(1, "Months").toMillis()
+        assert(scheduleInMillis in 2419200000L..2678400000L)
+    }
+
+    @Test
+    fun `getting toMillis for schedule of 2 Months should return between 5097600000 and 5356800000`() {
+        // between 28 and 31 days
+        val scheduleInMillis = Schedule.build(2, "Months").toMillis()
+        assert(scheduleInMillis in 5097600000L..5356800000L)
+    }
+
+    @Test
+    fun `getting toMillis for schedule of 2 Years should return between 63072000000 and 63158400000`() {
+        val scheduleInMillis = Schedule.build(2, "Years").toMillis()
+        assert(scheduleInMillis in 63072000000L..63158400000L)
+    }
 }
