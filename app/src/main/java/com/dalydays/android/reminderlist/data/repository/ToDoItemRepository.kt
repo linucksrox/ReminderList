@@ -21,6 +21,11 @@ class ToDoItemRepository(context: Context) {
     }
 
     @WorkerThread
+    fun getUncheckedItemCount(): Int {
+        return toDoItemDao.getUncheckedCount()
+    }
+
+    @WorkerThread
     suspend fun insert(toDoItem: ToDoItem) {
         toDoItemDao.insert(toDoItem)
     }

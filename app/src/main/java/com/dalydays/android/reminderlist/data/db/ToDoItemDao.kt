@@ -11,6 +11,9 @@ interface ToDoItemDao {
     @Query("SELECT * FROM item WHERE id = :id")
     fun getItem(id: Long): ToDoItem
 
+    @Query("SELECT COUNT(*) FROM item WHERE completed = 0")
+    fun getUncheckedCount(): Int
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: ToDoItem): Long
 

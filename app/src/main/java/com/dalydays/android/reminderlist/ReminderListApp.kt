@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class ReminderListApp : Application() {
 
-    private val applicationScope = CoroutineScope(Dispatchers.Default)
+    private val applicationScope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate() {
         super.onCreate()

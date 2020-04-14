@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -12,18 +13,13 @@ import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.background.ReminderWorker
 import com.dalydays.android.reminderlist.util.Event
 import com.dalydays.android.reminderlist.util.Schedule
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 
 const val TAG_NAME = "scheduledfor"
 
 class ChecklistViewModel(application: Application, deletedDescription: String) : AndroidViewModel(application) {
-
-    private var viewModelJob = Job()
-    private val checklistUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val repository = ToDoItemRepository(application)
     val allToDoItems: LiveData<List<ToDoItem>>
@@ -47,11 +43,11 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
         }
     }
 
-    private fun update(toDoItem: ToDoItem) = checklistUiScope.launch(Dispatchers.IO) {
+    private fun update(toDoItem: ToDoItem) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(toDoItem)
     }
 
-    fun onFabButtonClicked() = checklistUiScope.launch {
+    fun onFabButtonClicked() = viewModelScope.launch {
         // navigate to new item screen
         _navigateToNewToDoItem.value = Event("clicked")
     }
@@ -109,10 +105,5 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
                 update(toDoItem)
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

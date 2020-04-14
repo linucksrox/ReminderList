@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.data.db.ToDoItem
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
@@ -12,9 +13,6 @@ import kotlinx.coroutines.*
 import java.util.*
 
 class EditItemViewModel(application: Application, itemId: Long) : AndroidViewModel(application) {
-
-    private var viewModelJob = Job()
-    private val newItemUiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val repository = ToDoItemRepository(application)
 
@@ -58,7 +56,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         // If id is -1L then we're adding a new item, otherwise look up this item in the database and populate values
         if (id != -1L) {
             // Look up data
-            newItemUiScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.IO) {
                 toDoItem = repository.getItem(id)
                 withContext(Dispatchers.Main) {
                     description.value = toDoItem.description
@@ -73,7 +71,7 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         }
     }
 
-    fun onFabButtonClicked() = newItemUiScope.launch {
+    fun onFabButtonClicked() = viewModelScope.launch {
         // navigate to new item screen
         _saveItemEvent.value = Event("clicked")
     }
@@ -110,15 +108,15 @@ class EditItemViewModel(application: Application, itemId: Long) : AndroidViewMod
         _saveButtonEnabled.value = !(descriptionIsBlank)
     }
 
-    private fun insert(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
+    private fun insert(toDoItem: ToDoItem) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(toDoItem)
     }
 
-    private fun update(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
+    private fun update(toDoItem: ToDoItem) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(toDoItem)
     }
 
-    private fun delete(toDoItem: ToDoItem) = newItemUiScope.launch(Dispatchers.IO) {
+    private fun delete(toDoItem: ToDoItem) = viewModelScope.launch(Dispatchers.IO) {
         // Cancel background job if there was one
         if (!toDoItem.backgroundWorkUUID.isNullOrEmpty()) {
             WorkManager.getInstance(getApplication()).cancelWorkById(UUID.fromString(toDoItem.backgroundWorkUUID))

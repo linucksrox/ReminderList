@@ -14,5 +14,9 @@
     <string name="general_channel_name">Summary</string>
     <string name="general_channel_description">Lets you know that there are uncompleted items</string>
     <string name="general_notification_title">You have work to do!</string>
-    <string name="general_notification_text">There are unchecked items on your list!</string>
+
+    <plurals name="numberOfUncheckedItems">
+        <item quantity="one">There is %1$d unchecked item on your list!</item>
+        <item quantity="other">There are %1$d unchecked items on your list!</item>
+    </plurals>
 </resources>
