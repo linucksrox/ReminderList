@@ -24,12 +24,26 @@ class ReminderNotificationType() {
 
 class NotificationMaker {
     companion object {
-        fun showNotification(context: Context, title: String, text: String, notificationType: Int) {
+        fun showGeneralNotification(context: Context, count: Int) {
+            // No notification necessary if there are no items on the list
+            if (count > 0) {
+                val title = context.getString(R.string.general_notification_title)
+                val text = context.resources.getQuantityString(R.plurals.numberOfUncheckedItems, count, count)
+                showNotification(context, title, text, ReminderNotificationType.GENERAL)
+            }
+        }
+
+        fun showSingleNotification(context: Context, text: String) {
+            val title = context.getString(R.string.single_notification_title)
+            showNotification(context, title, text, ReminderNotificationType.SINGLE)
+        }
+
+        private fun showNotification(context: Context, title: String, text: String, notificationType: Int) {
             // Open the app when clicking the notification
             val intent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+            val pendingIntent = PendingIntent.getActivity(context, notificationType, intent, 0)
 
             val reminderChannel = when (notificationType) {
                 ReminderNotificationType.SINGLE -> ReminderNotificationChannel.SINGLE_CHANNEL

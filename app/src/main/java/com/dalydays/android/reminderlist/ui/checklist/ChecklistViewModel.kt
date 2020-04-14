@@ -64,10 +64,6 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
 
     private fun scheduleOrCancelRedoBackgroundTask(toDoItem: ToDoItem) {
         if (toDoItem.completed) {
-            // Build constraints
-//            val constraints = Constraints.Builder()
-//                    .build()
-
             // Build data that we'll send into the worker
             val itemId = requireNotNull(toDoItem.id)
             val data = Data.Builder()
@@ -83,7 +79,6 @@ class ChecklistViewModel(application: Application, deletedDescription: String) :
             val scheduleMillis = nowInMillis + schedule.toMillis()
 
             val notificationWork = OneTimeWorkRequestBuilder<ReminderWorker>()
-//                    .setConstraints(constraints)
                     .setInitialDelay(schedule.duration, schedule.timeUnit)
                     .setInputData(data)
                     .addTag("$TAG_NAME:$scheduleMillis")

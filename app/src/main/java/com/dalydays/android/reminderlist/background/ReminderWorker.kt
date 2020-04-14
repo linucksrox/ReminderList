@@ -3,11 +3,12 @@ package com.dalydays.android.reminderlist.background
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.util.NotificationMaker
-import com.dalydays.android.reminderlist.util.ReminderNotificationType
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ReminderWorker(private val context: Context, private val workerParameters: WorkerParameters) : Worker(context, workerParameters) {
 
@@ -24,13 +25,13 @@ class ReminderWorker(private val context: Context, private val workerParameters:
 
         // Update the item in the database (on a background thread)
         reminderWorkerScope.launch {
-            val toDoItem = toDoItemRepository.getItem(itemId)
             // Proceed to notify if item is still checked, otherwise if it has been unchecked then we're already done
+            val toDoItem = toDoItemRepository.getItem(itemId)
             if (toDoItem.completed) {
                 toDoItem.completed = false
                 toDoItem.backgroundWorkUUID = null
                 toDoItemRepository.update(toDoItem)
-                NotificationMaker.showNotification(context, context.getString(R.string.single_notification_title), toDoItem.description, ReminderNotificationType.SINGLE)
+                NotificationMaker.showSingleNotification(context, toDoItem.description)
             }
         }
 
