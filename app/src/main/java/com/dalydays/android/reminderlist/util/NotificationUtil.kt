@@ -51,17 +51,19 @@ class NotificationMaker {
                 else -> ReminderNotificationChannel.GENERAL_CHANNEL
             }
 
-            val notificationBuilder = NotificationCompat.Builder(context, reminderChannel)
+            val notification = NotificationCompat.Builder(context, reminderChannel)
                     .setSmallIcon(R.drawable.ic_notification)
                     .setContentTitle(title)
                     .setContentText(text)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
+                    .setOnlyAlertOnce(true)
+                    .build()
 
             // Show the notification
             with(NotificationManagerCompat.from(context)) {
-                notify(notificationType, notificationBuilder.build())
+                notify(notificationType, notification)
             }
         }
     }
