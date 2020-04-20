@@ -31,7 +31,7 @@ class ReminderWorker(private val context: Context, private val workerParameters:
                 toDoItem.completed = false
                 toDoItem.backgroundWorkUUID = null
                 toDoItemRepository.update(toDoItem)
-                NotificationMaker.showSingleNotification(context, toDoItem.description)
+                NotificationMaker.showGeneralNotification(context, toDoItemRepository.getUncheckedItemCount())
             }
         }
 
