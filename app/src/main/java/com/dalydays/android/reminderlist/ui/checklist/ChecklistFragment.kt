@@ -2,9 +2,7 @@ package com.dalydays.android.reminderlist.ui.checklist
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
@@ -102,7 +100,24 @@ class ChecklistFragment : Fragment() {
             }
         })
 
+        setHasOptionsMenu(true)
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.checklist_item_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.about -> {
+            // Go to about page
+//            this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
+            this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToAbout())
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun resetBackHandler() {
