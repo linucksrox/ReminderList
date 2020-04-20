@@ -32,7 +32,6 @@ class NotificationMaker {
                         .setContentText(text)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
                         .setOnlyAlertOnce(true)
                         .build()
 
