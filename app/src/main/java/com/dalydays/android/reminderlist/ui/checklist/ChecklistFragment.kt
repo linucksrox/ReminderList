@@ -112,8 +112,7 @@ class ChecklistFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.about -> {
-            // Go to about page
-//            this.findNavController().navigate(EditItemFragmentDirections.actionEditItemToChecklist())
+            resetBackHandler()
             this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToAbout())
             true
         }
