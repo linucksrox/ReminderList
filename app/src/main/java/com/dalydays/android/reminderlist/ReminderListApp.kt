@@ -30,12 +30,20 @@ class ReminderListApp : Application() {
             val generalName = getString(R.string.general_channel_name)
             val generalDescriptionText = getString(R.string.general_channel_description)
             val generalImportance = NotificationManager.IMPORTANCE_LOW
-            val generalReminderChannel = NotificationChannel(NotificationMaker.GENERAL_CHANNEL, generalName, generalImportance).apply {
+            val generalNotificationChannel = NotificationChannel(NotificationMaker.GENERAL_CHANNEL, generalName, generalImportance).apply {
                 description = generalDescriptionText
             }
 
+            val singleName = getString(R.string.single_channel_name)
+            val singleDescriptionText = getString(R.string.single_channel_description)
+            val singleImportance = NotificationManager.IMPORTANCE_DEFAULT
+            val singleNotificationChannel = NotificationChannel(NotificationMaker.SINGLE_CHANNEL, singleName, singleImportance).apply {
+                description = singleDescriptionText
+            }
+
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(generalReminderChannel)
+            notificationManager.createNotificationChannel(generalNotificationChannel)
+            notificationManager.createNotificationChannel(singleNotificationChannel)
         }
     }
 }

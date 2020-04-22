@@ -12,7 +12,9 @@ class NotificationMaker {
 
     companion object {
         const val GENERAL_CHANNEL = "general_channel_id"
+        const val SINGLE_CHANNEL = "single_channel_id"
         private const val GENERAL_TYPE = 1
+        private const val SINGLE_TYPE = 2
 
         fun showGeneralNotification(context: Context, count: Int) {
             // No notification necessary if there are no items on the list
@@ -20,25 +22,46 @@ class NotificationMaker {
                 val title = context.getString(R.string.general_notification_title)
                 val text = context.resources.getQuantityString(R.plurals.numberOfUncheckedItems, count, count)
 
-                // Open the app when clicking the notification
-                val intent = Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
-                val pendingIntent = PendingIntent.getActivity(context, GENERAL_TYPE, intent, 0)
+                showNotification(context, title, text, GENERAL_TYPE)
+            }
+        }
 
-                val notification = NotificationCompat.Builder(context, GENERAL_CHANNEL)
-                        .setSmallIcon(R.drawable.ic_notification)
-                        .setContentTitle(title)
-                        .setContentText(text)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setContentIntent(pendingIntent)
-                        .setOnlyAlertOnce(true)
-                        .build()
+        fun showSingleNotification(context: Context, text: String) {
+            val title = context.getString(R.string.single_notification_title)
+            showNotification(context, title, text, SINGLE_TYPE)
+        }
 
-                // Show the notification
-                with(NotificationManagerCompat.from(context)) {
-                    notify(GENERAL_TYPE, notification)
-                }
+        private fun showNotification(context: Context, title: String, text: String, type: Int) {
+            // Open the app when clicking the notification
+            val intent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val pendingIntent = PendingIntent.getActivity(context, type, intent, 0)
+
+            val channel = when(type) {
+                GENERAL_TYPE -> GENERAL_CHANNEL
+                SINGLE_TYPE -> SINGLE_CHANNEL
+                else -> GENERAL_CHANNEL
+            }
+
+            val notification = NotificationCompat.Builder(context, channel)
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+
+            if (type == GENERAL_TYPE) {
+                notification.setOnlyAlertOnce(true)
+            }
+
+            if (type == SINGLE_TYPE) {
+                notification.setAutoCancel(true)
+            }
+
+            // Show the notification
+            with(NotificationManagerCompat.from(context)) {
+                notify(type, notification.build())
             }
         }
     }
