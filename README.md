@@ -1,3 +1,5 @@
+![Run Unit Tests](https://github.com/linucksrox/ReminderList/workflows/Run%20Unit%20Tests/badge.svg)
+
 # ReminderList
 <p>
   <img src="https://user-images.githubusercontent.com/5169868/69540324-566ee880-0f54-11ea-924b-2594b4668d3d.png" width="348"/>
