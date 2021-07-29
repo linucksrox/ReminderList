@@ -102,7 +102,7 @@ class EditItemFragment : Fragment() {
 
     private fun deleteAndReturn() {
         // dialog to confirm the user wants to deleteItem the item
-        MaterialAlertDialogBuilder(context)
+        MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Delete this item?")
                 .setPositiveButton("Delete") { _, _ ->
                     // If yes, proceed to deleteItem

@@ -33,7 +33,8 @@
             android:onClick="@{() -> checklistViewModel.onFabButtonClicked()}"
             android:src="@drawable/ic_add"
             app:backgroundTint="@color/accent"
-            app:tint="@color/icons" />
+            app:tint="@color/icons"
+            android:contentDescription="@string/fab_content_description" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

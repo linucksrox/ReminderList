@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.dalydays.android.reminderlist.R
-import kotlinx.android.synthetic.main.fragment_about.view.*
+import com.dalydays.android.reminderlist.databinding.FragmentAboutBinding
 
 class AboutFragment : Fragment() {
 
     private lateinit var aboutViewModel: AboutViewModel
+    private lateinit var binding: FragmentAboutBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_about, container, false)
+        binding = FragmentAboutBinding.inflate(layoutInflater, container, false)
+        val view = binding.root
 
         val application = requireNotNull(this.activity).application
         val viewModelFactory = AboutViewModelFactory(application)
@@ -23,8 +24,8 @@ class AboutFragment : Fragment() {
         aboutViewModel = ViewModelProvider(this, viewModelFactory)
                 .get(AboutViewModel::class.java)
 
-        view.github_link.setOnClickListener {
-            aboutViewModel.onGitHubLinkClicked(requireNotNull(context))
+        binding.githubLink.setOnClickListener {
+            aboutViewModel.onGitHubLinkClicked(requireNotNull(context), view)
         }
 
         return view

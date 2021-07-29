@@ -23,4 +23,6 @@
 
     <string name="about_text">Reminder List is fully open source and written in 100% Kotlin.</string>
     <string name="link_to_github_text">View Reminder List Source Code on GitHub</string>
+    <string name="fab_content_description">New item</string>
+    <string name="edit_fab_content_description">Save</string>
 </resources>

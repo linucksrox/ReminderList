@@ -37,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch_recurring"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -101,7 +101,8 @@
             android:src="@drawable/ic_done"
             app:backgroundTint="@color/accent"
             app:saveEnabled="@{viewmodel.saveButtonEnabled}"
-            app:tint="@color/icons" />
+            app:tint="@color/icons"
+            android:contentDescription="@string/edit_fab_content_description" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -7,6 +7,8 @@
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
+/.idea/deploymentTargetDropDown.xml
+/.idea/misc.xml
 .DS_Store
 /build
 /captures

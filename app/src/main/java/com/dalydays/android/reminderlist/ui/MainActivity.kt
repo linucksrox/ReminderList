@@ -4,9 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.dalydays.android.reminderlist.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.dalydays.android.reminderlist.databinding.ActivityMainBinding
+
+private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,11 +17,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        setSupportActionBar(binding.toolbar)
 
-        navController = Navigation.findNavController(this, R.id.my_nav_host_fragment)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment)
+        if (navHostFragment != null) {
+            navController = navHostFragment.findNavController()
+        }
 
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
