@@ -8,4 +8,10 @@
         android:title="@string/menu_about_text"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/launch_notifications"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/menu_launch_notifications_text"
+        app:showAsAction="never" />
+
 </menu>

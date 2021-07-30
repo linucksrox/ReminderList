@@ -15,8 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.WorkManager
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.data.db.ToDoItem
+import com.dalydays.android.reminderlist.data.repository.ToDoItemRepository
 import com.dalydays.android.reminderlist.databinding.FragmentChecklistBinding
+import com.dalydays.android.reminderlist.util.NotificationMaker
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ChecklistFragment : Fragment() {
 
@@ -114,6 +119,16 @@ class ChecklistFragment : Fragment() {
         R.id.about -> {
             resetBackHandler()
             this.findNavController().navigate(ChecklistFragmentDirections.actionChecklistToAbout())
+            true
+        }
+        R.id.launch_notifications -> {
+            val applicationScope = CoroutineScope(Dispatchers.IO)
+            val context = requireContext()
+            val toDoItemRepository = ToDoItemRepository(context)
+            applicationScope.launch {
+                NotificationMaker.showGeneralNotification(context,
+                    toDoItemRepository.getUncheckedItemCount())
+            }
             true
         }
         else -> super.onOptionsItemSelected(item)

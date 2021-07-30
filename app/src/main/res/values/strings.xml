@@ -5,6 +5,7 @@
     <string name="edit_recurring">Add Back To List After</string>
     <string name="menu_delete_text">Delete</string>
     <string name="menu_about_text">About</string>
+    <string name="menu_launch_notifications_text">Launch Notifications</string>
     <string name="scheduled_notification">Scheduled reminder for %1$s from now</string>
     <string name="deleted_notification">Deleted %1$s</string>
 
