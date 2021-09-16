@@ -8,6 +8,8 @@ import androidx.core.app.NotificationManagerCompat
 import com.dalydays.android.reminderlist.R
 import com.dalydays.android.reminderlist.ui.MainActivity
 
+const val ONE_YEAR_IN_MILLISECONDS = 31449600000L
+
 class NotificationMaker {
 
     companion object {
@@ -21,7 +23,6 @@ class NotificationMaker {
             if (count > 0) {
                 val title = context.getString(R.string.general_notification_title)
                 val text = context.resources.getQuantityString(R.plurals.numberOfUncheckedItems, count, count)
-
                 showNotification(context, title, text, GENERAL_TYPE)
             }
         }
@@ -45,11 +46,12 @@ class NotificationMaker {
             }
 
             val notification = NotificationCompat.Builder(context, channel)
-                    .setSmallIcon(R.drawable.ic_notification)
-                    .setContentTitle(title)
-                    .setContentText(text)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setTimeoutAfter(ONE_YEAR_IN_MILLISECONDS) // notifications were timing out on Android 11 - Long.MAX_VALUE wasn't working, so let's try setting the timeout to 1 year
 
             if (type == GENERAL_TYPE) {
                 notification.setOnlyAlertOnce(true)

@@ -19,6 +19,7 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
