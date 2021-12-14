@@ -5,6 +5,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\edaly\\Desktop\\linucksrox\\reminderlist-keystore.jks')
+            keyAlias 'reminderlist-release'
+        }
+    }
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.dalydays.android.reminderlist"
@@ -19,11 +25,13 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
